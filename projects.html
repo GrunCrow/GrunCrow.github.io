@@ -104,6 +104,36 @@
             margin-right: 20px; /* Add some spacing between icons */
             font-size: 24px; /* Adjust the size as needed */
         }
+        /* Style for project boxes */
+        .project-box {
+            border: 2px solid #ccc;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 5px;
+        }
+        /* Style for images in project box */
+        .project-images {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+        .project-images img {
+            width: 150px;
+            height: 150px;
+            margin: 0 10px;
+            border-radius: 50%;
+            border: 4px solid #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        /* Style for GitHub link */
+        .github-link {
+            text-align: center;
+            margin-top: 20px;
+        }
+        .github-link a {
+            color: #333;
+            text-decoration: none;
+        }
     </style>
 </head>
 <body>
@@ -130,19 +160,20 @@
         <h2>Projects</h2>
         <p>Explore some of the projects I have contributed to, including image-based species identification, sound-based species identification, etc.</p>
         <!-- Aquí puedes agregar una lista de tus proyectos con descripciones y enlaces -->
-        <ul>
-            <li>
-                <h3>Project 1</h3>
-                <p>Description of project 1.</p>
-                <a href="#">Link to project 1</a>
-            </li>
-            <li>
-                <h3>Project 2</h3>
-                <p>Description of project 2.</p>
-                <a href="#">Link to project 2</a>
-            </li>
-            <!-- Agrega más proyectos según sea necesario -->
-        </ul>
+        <div class="project-box">
+            <h3>Combination of genetic programming and boids flock simulation</h3>
+            <p>Start Date: October 2021</p>
+            <p>End Date: February 2022</p>
+            <p>Combination of genetic programming and boids flock simulation to recreate input images with an artistic twist by limiting genes (mathematical operations) available to agents. This project was undertaken during my ERASMUS at the University of Wroclaw, in the Master Introduction to Artificial Intelligence course. There is no web page, only the link to the repository with the code and more information.</p>
+            <div class="project-images">
+                <img src="https://raw.githubusercontent.com/Daedheldir/CppSFMLBoids/main/example_img_1.gif" alt="Project Image 1">
+                <img src="https://raw.githubusercontent.com/Daedheldir/CppSFMLBoids/main/example_img_2.gif" alt="Project Image 2">
+                <img src="https://raw.githubusercontent.com/Daedheldir/CppSFMLBoids/main/example_img_4.gif" alt="Project Image 3">
+            </div>
+            <div class="github-link">
+                <a href="https://github.com/Daedheldir/CppSFMLBoids"><i class="fab fa-github"></i> Link to GitHub Repository</a>
+            </div>
+        </div>
     </section>
 
     <!-- Pie de página -->
