@@ -1,5 +1,89 @@
 <!DOCTYPE html>
 <html lang="en">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f0f0;
+            padding-bottom: 80px; /* Adjust the value according to the height of your footer */
+        }
+        header {
+            position: relative;
+            color: #fff; 
+            padding: 20px; 
+            display: flex; 
+            flex-direction: column; 
+            align-items: center; 
+            text-align: center;
+        }
+        header::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('images/backgrounds/nature_ai_dark.jpeg');
+            background-size: cover; /* Make the image cover the entire header */
+            background-repeat: no-repeat; /* Prevent the image from repeating */
+            background-position: 90% 25%; /* Center the image */
+            opacity: 0.1; /* Adjust opacity as needed */
+            z-index: 1;
+            pointer-events: none; /* Ensure that the pseudo-element doesn't intercept click events */
+        }
+        header img {
+            width: 200px; /* Adjust the width as needed */
+            height: 200px; /* Adjust the height as needed */
+            border-radius: 50%; /* Make it circular */
+            display: block;
+            margin: 0 auto 0px; /* Center horizontally and add some bottom margin */
+            border: 4px solid #fff; /* Add a white border around the image */
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Add a subtle shadow */
+        }
+        nav ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        nav ul li {
+            display: inline;
+            margin-right: 20px;
+        }
+        nav ul li a {
+            color: #fff;
+            text-decoration: none;
+        }
+        section {
+            padding: 20px;
+            margin: 20px;
+            background-color: #fff;
+            border-radius: 5px;
+        }
+        footer {
+            background-color: #555; /* Changed to lighter color */
+            color: #fff;
+            padding: 20px;
+            text-align: center;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+        }
+        /* Style for the image */
+        #presentation img {
+            width: 150px; /* Adjust the width as needed */
+            height: 150px; /* Adjust the height as needed */
+            border-radius: 50%; /* Make it circular */
+            display: block;
+            margin: 0 auto 20px; /* Center horizontally and add some bottom margin */
+            border: 4px solid #fff; /* Add a white border around the image */
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Add a subtle shadow */
+        }
+        /* Adjust color of social media icons */
+        .social-icons a {
+            color: #fff; /* Change icon color to white */
+            margin-right: 10px; /* Add some spacing between icons */
+        }
+    </style>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,9 +93,22 @@
     <!-- Add any additional meta tags, stylesheets, or scripts as needed -->
 </head>
 <body>
-    <header>
-        <!-- Optional: Add a header if needed -->
-        <h1>Social Media</h1>
+    <header style="background-color: #333; color: #fff; padding: 10px; display: flex; flex-direction: column; align-items: center; text-align: center;">
+        <!-- <img src="images/GrunCrow Lynx.jpeg" alt="GrunCrow Avatar" style="width: 150px; height: 150px; border-radius: 50%; border: 4px solid #fff; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); margin-bottom: 20px;"> -->
+        <div>
+            <h1>GrunCrow</h1>
+            <h2>Computer Scientist specialized in Computer Vision</h2>
+            <p>Passionate about AI, Deep Learning and Data Analysis</p>
+            <p>for Ecology and Conservation.</p>
+        </div>
+        <nav style="margin-top: auto;">
+            <ul style="list-style-type: none; padding: 0; display: flex; justify-content: center;">
+                <!-- <li><a href="#presentation">Presentation</a></li> -->
+                <li><a href="index.html">Home</a></li>
+                <li style="margin-right: 30px;"><a href="projects.html">Projects</a></li>
+                <li style="margin-right: 30px;"><a href="cv.html">CV</a></li>
+            </ul>
+        </nav>
     </header>
 
     <main>
