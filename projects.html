@@ -190,26 +190,66 @@
             <ul style="list-style-type: none; padding: 0; display: flex; justify-content: center;">
                 <!-- <li><a href="#presentation">Presentation</a></li> -->
                 <li style="margin-right: 30px;"><a href="index.html">Home</a></li>
+                <li style="margin-right: 30px;"><a href="publications.html">Publications</a></li>
                 <li style="margin-right: 30px;"><a href="cv.html">CV</a></li>
                 <li><a href="social.html">Social Media</a></li>
             </ul>
         </nav>
     </header>
 
-    <!-- Sección de proyectos -->
-
-    <!-- BIRDeep Project -->
-
-    <!-- TFG Project -->
+    <!--                                                  Sección de proyectos                                                   -->
 
     <section id="projects">
         <h2>Projects</h2>
         <p>Explore some of the projects I have contributed to, including image-based species identification, sound-based species identification, etc.</p>
         
-        <!-- AI-Census -->
-        <div class="project-box">
+        <!-- BIRDeep Project -->
+        <div id="birdeep-project" class="project-box">
             <div class="project-header">
-                <h3>AI-Census</h3>
+                <h3>
+                    <img src="images/projects/birdeep/logo.PNG" alt="BIRDeep Logo" style="width: 50px; height: 30px; vertical-align: middle; padding-right: 10px;">
+                    BIRDeep
+                </h3>
+                <div class="project-info">
+                    <h4>Estación Biológica de Doñana</h4>
+                    <!-- <h5>Authors: Daedheldir, GrunCrow</h5> -->
+                    <h6>October 2023 - Present</h6>
+                </div>
+            </div>
+            <p>We are currently experiencing an ecological crisis in which species, their interactions, and the services nature provides to humans are being lost at an unprecedented rate. Therefore, it is urgent to develop diagnostic systems for ecosystem health that are fast, reliable, replicable, and automatic. Changes in the migration and abundance of songbird species are indicators of ecosystem health, as the arrival and departure dates of bird species are affected by climate change. Bird diversity monitoring has been conducted so far through expert censuses, but current technological advances allow us to greatly expand the spatial and temporal scales of study through passive acoustic monitoring. The main challenge is that petabytes of data are rapidly generated, exceeding what a human expert can manually annotate in a reasonable time. Therefore, it is necessary not only to automatically record bird songs but also to detect them. This proposal aims to automatically track songbird diversity by developing the bioinformatics and deep learning tools necessary to understand spatial-temporal changes in bird communities, in order to make accurate predictions in future scenarios. To do this, we will establish a bird song monitoring cyberinfrastructure in the Doñana National Park using open-source remote recorders combined with Raspberry Pi processors, leveraging the unique scientific-technical infrastructure already existing in Doñana (ICTS). We aim to automate species identification using convolutional neural networks. This multidisciplinary proposal will combine techniques from both ecology and data science to solve three specific tasks:</p>
+            <!-- Numerated list -->
+            <ol>
+                <li>Evaluate the effect of climate change on bird communities in Doñana.</li>
+                <li>Automate the computational process of identifying bird species in large audio datasets.</li>
+                <li>Forecast future changes in bird communities under different climate change scenarios.</li>
+            </ol>
+
+            <p>The researchers involved in this proposal have experience in both ecology and data science and will apply their deep knowledge of the Doñana bird community to the latest deep learning techniques applied to audio recognition. This proposal has a dual impact: on one hand, it will allow us to reliably assess changes in avifauna as a way to understand the health status of the Doñana ecosystem; on the other hand, it will enable a significant development of automatic biodiversity monitoring techniques, paving the way for establishing an automatic monitoring network at a national or European scale.</p>
+
+            <!--
+            <div class="project-images project-images-rectangles">
+                <img src="images/projects/ai_census/mongoose.gif" alt="Project Image 2">
+                <img src="images/projects/ai_census/GIF predictions.gif" alt="Project Image 1">
+                <img src="images/projects/ai_census/mongoose.gif" alt="Project Image 3">
+            </div>
+            -->
+            <div class="github-link">
+                <a href="https://github.com/BIRDeepORG"><i class="fab fa-github"></i> Link to GitHub Organization</a>
+            </div>
+            <!--
+            <div class="project-link">
+                <a href="https://aicensus.github.io"><i class="far fa-file-alt"></i> Link to Project Page</a>
+            </div>
+            -->
+        </div>
+
+        <!-- AI-Census -->
+        <div id="ai-census-project" class="project-box">
+            <div class="project-header">
+                <h3>
+                    <img src="images/projects/ai_census/logo.png" alt="AI-Census Logo" style="width: 30px; height: 30px; vertical-align: middle; padding-right: 10px;">
+                    AI-Census
+                </h3>
                 <div class="project-info">
                     <h4>Universidad de Huelva</h4>
                     <!-- <h5>Authors: Daedheldir, GrunCrow</h5> -->
@@ -229,7 +269,6 @@
                 <li>Concluded the project by generating and conducting in-depth analysis of the final results.</li>
             </ul>
 
-            <!-- TODO: Change project images (also the format)-->
             <div class="project-images project-images-rectangles">
                 <img src="images/projects/ai_census/mongoose.gif" alt="Project Image 2">
                 <img src="images/projects/ai_census/GIF predictions.gif" alt="Project Image 1">
@@ -242,9 +281,36 @@
                 <a href="https://aicensus.github.io"><i class="far fa-file-alt"></i> Link to Project Page</a>
             </div>
         </div>
+
+        <!-- TFG Project -->
+        <div id="tfg-project" class="project-box">
+            <div class="project-header">
+                <h3>TFG: Classification of camera trap images with a convolutional neural network</h3>
+                <div class="project-info">
+                    <h4>Universidad de Huelva</h4>
+                    <!-- <h5>Authors: Daedheldir, GrunCrow</h5> -->
+                    <h6>February 2023 - November 2023</h6>
+                </div>
+            </div>
+            <p>Biodiversity studies involve direct field observations or the analysis of images, which presents a workload in terms of time and effort for specialists. In this context, this Bachelor's Thesis addresses the design and application of a classification model for camera trap images.</p>
+            <p>An 8000-image dataset from camera traps have been employed, classified by contained species, including horse, deer, fallow deer, human, wild boar, cow, and fox. Two convolutional neural networks were used as classification models: MobileNetV2 (3,088,680 parameters) and a network named Crohn’s Architecture (599,168 parameters). Training, validation, and evaluation were carried out with an 80 %, 10 %, and 10 % split, respectively. The networks achieved an accuracy rate of approximately 70 %. In-depth analysis unveiled the primary challenge of knowledge extraction from these images due to their intrinsic complexity, amplified by the limited dataset size. This observation materialized upon applying the models to a novel dataset containing 21,000 images spanning 15 diverse categories. These images showcased the subject of interest prominently against a controlled backdrop. The networks’ performance on this reference dataset significantly improved, yielding an accuracy rate exceeding 95 %.</p>
+            <p>In summary, this study emphasizes the importance of having a high-quality dataset, as it directly and significantly impacts the performance of neural networks. The achievable results with a neural network are inherently linked to the dataset’s quality and available annotations.</p>
+            
+            <div class="project-images project-images-rectangles">
+                <img src="images/projects/tfg/experiment-animals 1.png" alt="Project Image 1">
+                <img src="images/projects/tfg/conclusion.png" alt="Conclusion">
+                <img src="images/projects/tfg/experiment-veggies 1.png" alt="Project Image 2">
+            </div>
+            <div class="github-link"> 
+                <a href="https://github.com/GrunCrow/Camera-Trap-CNN-Model"><i class="fab fa-github"></i> Link to GitHub Repository</a>
+            </div>
+            <div class="project-link">
+                <a href="media/projects/tfg/TFG__Alba_Márquez_Rodríguez.pdf"><i class="far fa-file-alt"></i> Link to Project Memory</a>
+            </div>
+        </div>
         
         <!-- Boids -->
-        <div class="project-box">
+        <div id="boids-project" class="project-box">
             <div class="project-header">
                 <h3>Combination of genetic programming and boids flock simulation</h3>
                 <div class="project-info">

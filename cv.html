@@ -75,9 +75,10 @@
         }
         section {
             padding: 20px;
-            margin: 20px;
+            margin: 20px auto; /* Center the section */
             background-color: #fff;
             border-radius: 5px;
+            max-width: 1100px; /* Limit the width of the section */
         }
         footer {
             background-color: #555; /* Changed to lighter color */
@@ -104,6 +105,21 @@
             margin-right: 20px; /* Add some spacing between icons */
             font-size: 24px; /* Adjust the size as needed */
         }
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+        }
+        .section-info {
+            text-align: right;
+            padding: 0; /* Set padding to 0 */
+            margin: 0; /* Optionally, set margin to 0 */
+        }
+        .section-info h4,
+        .section-info h5,
+        .section-info h6 {
+            margin-top: 5px; /* Adjust the margin as needed */
+            margin-bottom: 5px; /* Adjust the margin as needed */
+        }
     </style>
 </head>
 <body>
@@ -120,6 +136,7 @@
                 <!-- <li><a href="#presentation">Presentation</a></li> -->
                 <li style="margin-right: 30px;"><a href="index.html">Home</a></li>
                 <li style="margin-right: 30px;"><a href="projects.html">Projects</a></li>
+                <li style="margin-right: 30px;"><a href="publications.html">Publications</a></li>
                 <li><a href="social.html">Social Media</a></li>
             </ul>
         </nav>
@@ -127,19 +144,179 @@
 
     <!-- Sección del CV -->
     <section id="cv">
-        <h2>Curriculum Vitae</h2>
-        <h3>Education</h3>
-        <p>Bachelor's degree in Computer Science, Universidad de Huelva, Spain</p>
-        <p>Currently pursuing a Master's Degree in Computing Intelligence and Internet Of Things</p>
-        
-        <h3>Experience</h3>
-        <p>ABC Wildlife Foundation - Computer Vision Intern (2021 - Present)</p>
-        <p>DEF Environmental Solutions - Data Analyst (2019 - 2021)</p>
-        
-        <!-- Agrega más secciones según sea necesario, como habilidades, certificaciones, etc. -->
+        <div style="background-color: #f9f9f9; border-radius: 5px; padding: 20px;">
+            <h1 style="text-align: center;">Curriculum Vitae</h1>
+        </div>
     </section>
 
-    <!-- Pie de página -->
+    <section id="experience">
+        <div style="background-color: #f9f9f9; border-radius: 5px; padding: 20px;">
+            <h2>Experience</h2>
+
+            <div class="section-header">
+                <h3>JAE Intro Schoolarship 2023</h3>
+                <div class="section-info">
+                    <h4>Estación Biológica de Doñana, CSIC</h4>
+                    <h5><a href="projects.html#birdeep-project">BIRDeep Project</a></h5>
+                    <h6>October 2023 - Present</h6>
+                </div>
+            </div>
+            <ul>
+                <li>Project: "BIRDEEP: Monitoring the health status of ecosystems by automatically detecting bird songs using Deep Learning”.</li>
+                <li>Development of scripts for the preprocessing and processing and management of the data.</li>
+                <li>Creation of deep learning models and analysis of results.</li>
+            </ul>
+            
+            <div class="section-header">
+                <h3>Santander/UHU Schoolarship 2022-23</h3>
+                <div class="section-info">
+                    <h4>Universidad de Huelva</h4>
+                    <h5><a href="projects.html#ai-census-project">AI-Census Project</a></h5>
+                    <h6>June 2023 - August 2023</h6>
+                </div>
+            </div>
+            <ul>
+                <li>Development of a deep learning-based model for detecting and classifying camera trap images.</li>
+                <li>Design and implementation of a hierarchical model for detection and classification of species in camera trap images.</li>
+                <li>Conclusion of the project through the generation and in-depth analysis of the results.</li>
+            </ul>
+
+            <div class="section-header">
+                <h3>Computer Specialist Technician</h3>
+                <div class="section-info">
+                    <h4>Universidad de Huelva</h4>
+                    <h5><a href="projects.html#ai-census-project">AI-Census Project</a></h5>
+                    <h6>September 2022 - November 2022</h6>
+                </div>
+            </div>
+            <ul>
+                <li>Project: "Automatic system for census and monitoring of biodiversity using deep learning techniques (DeeP Learning DL)".</li>
+                <li>Developed scripts for the preprocessing, processing and management of the data.</li>
+                <li>Created, developed, and managed Convolutional Neural Network models for images classification.</li>
+            </ul>
+        </div>
+    </section>
+
+    <section id="education">
+        <div style="background-color: #f9f9f9; border-radius: 5px; padding: 20px;">
+            <h2>Education</h2>
+
+            <div class="section-header">
+                <h3>Master's Degree Computational Intelligence and Internet Of Things</h3>
+                <div class="section-info">
+                    <h4>Universidad de Córdoba</h4>
+                    <!-- <h5>Authors: Daedheldir, GrunCrow</h5> -->
+                    <h6>October 2023 - Present</h6>
+                </div>
+            </div>
+
+            <div class="section-header">
+                <h3>Bachelor's Degree Computer Science</h3>
+                <div class="section-info">
+                    <h4>Universidad de Huelva</h4>
+                    <!-- <h5>Authors: Daedheldir, GrunCrow</h5> -->
+                    <h6>October 2019 - November 2023</h6>
+                </div>
+            </div>
+            <ul>
+                <li>Presented “Fuzzy software for estimating the viability of turbines in the use of marine currents” at V ScienCity Conference.</li>
+                <li>TFG: Classification of camera trap images with a convolutional neural network.</li>
+            </ul>
+        </div>
+    </section>
+
+    <section id="additional-education">
+        <div style="background-color: #f9f9f9; border-radius: 5px; padding: 20px;">
+            <h2>Additional Education</h2>
+
+            <div class="section-header">
+                <h3>cv4ecology: Summer Workshop on Computer Vision Methods for Ecology</h3>
+                <div class="section-info">
+                    <h4>Caltech, California, USA</h4>
+                    <h5><a href="projects.html#ai-census-project">Project: AI-Census</a></h5>
+                    <h6>August 2023 - September 2023</h6>
+                </div>
+            </div>
+            <ul>
+                <li>Participated in a three-week intensive program focusing on computer vision methods for ecological research.</li>
+                <li>Developed skills in analyzing large image, audio, and video datasets using advanced computer vision techniques.</li>
+                <li>Engaged in classroom training, hands-on projects, and one-on-one mentorship.</li>
+            </ul>
+
+            <div class="section-header">
+                <h3>ERASMUS: International Studies Program</h3>
+                <div class="section-info">
+                    <h4>Politechnika Wroclawska, Poland</h4>
+                    <h6>September 2021 - July 2022 (Whole Academic Year)</h6>
+                </div>
+            </div>
+            <ul>
+                <li><a href="projects.html#boids-project">Art generator with genetic algorithm and boids project</a></li>
+                <li>Color Detector Project</li>
+            </ul>
+        </div>
+    </section>
+
+    <section id="volunteering">
+        <div style="background-color: #f9f9f9; border-radius: 5px; padding: 20px;">
+            <h2>Volunteering</h2>
+
+            <div class="section-header">
+                <h3>Fridays For Future Huelva Coordinator</h3>
+                <div class="section-info">
+                    <h6>May 2019 - Present</h6>
+                </div>
+            </div>
+            <ul>
+                <li>Organized and participated in environmental awareness and volunteering activities</li>
+            </ul>
+
+            <div class="section-header">
+                <h3>Volunteer Staff in Wolves Summit</h3>
+                <div class="section-info">
+                    <h6>May 2022 - May 2022</h6>
+                </div>
+            </div>
+            <ul>
+                <li>Volunteer at the biggest eastern european technological conference hosted in Wroclaw, Poland</li>
+            </ul>
+        </div>
+    </section>
+
+    <section id="skills">
+        <div style="background-color: #f9f9f9; border-radius: 5px; padding: 20px; overflow-x: auto;">
+            <h2>Skills</h2>
+            <table style="width: 100%; border-collapse: collapse;">
+                <tr>
+                    <th style="padding: 12px; background-color: #ddd;">Libraries</th>
+                    <th style="padding: 12px; background-color: #ddd;">Software</th>
+                    <th style="padding: 12px; background-color: #ddd;">Coding Languages</th>
+                    <th style="padding: 12px; background-color: #ddd;">Languages</th>
+                </tr>
+                <tr>
+                    <td style="padding: 12px;">TensorFlow</td>
+                    <td style="padding: 12px;">Visual Studio Code</td>
+                    <td style="padding: 12px;">Python</td>
+                    <td style="padding: 12px;">Spanish – Native</td>
+                </tr>
+                <tr>
+                    <td style="padding: 12px;">PyTorch</td>
+                    <td style="padding: 12px;">Linux Terminals</td>
+                    <td style="padding: 12px;">C++</td>
+                    <td style="padding: 12px;">English – C1</td>
+                </tr>
+                <tr>
+                    <td style="padding: 12px;"></td>
+                    <td style="padding: 12px;"></td>
+                    <td style="padding: 12px;">SQL</td>
+                    <td style="padding: 12px;">French – B2</td>
+                </tr>
+            </table>
+        </div>
+    </section>
+    
+    
+
     <footer>
         <p>Contact: <span id="email"></span></p>
         <div class="social-icons">
@@ -158,3 +335,4 @@
     </footer>
 </body>
 </html>
+
