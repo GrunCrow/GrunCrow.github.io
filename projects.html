@@ -112,25 +112,66 @@
             border-radius: 5px;
         }
         /* Style for images in project box */
-        .project-images {
+        .project-images-circles {
             display: flex;
             justify-content: center;
             margin-bottom: 20px;
         }
-        .project-images img {
+
+        .project-images-circles img {
             width: 150px;
             height: 150px;
             margin: 0 10px;
-            border-radius: 50%;
+            border-radius: 50%; /* Circle shape */
             border: 4px solid #fff;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
+
+        /* Style for project images with rectangles */
+        .project-images-rectangles {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+
+        .project-images-rectangles img {
+            width: 384px; /* Adjust width for rectangles */
+            height: 216px; /* Adjust height for rectangles */
+            margin: 0 10px;
+            border-radius: 3px; /* Rectangle shape */
+            border: 4px solid #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .project-header {
+            display: flex;
+            justify-content: space-between;
+        }
+        .project-info {
+            text-align: right;
+            padding: 0; /* Set padding to 0 */
+            margin: 0; /* Optionally, set margin to 0 */
+        }
+        .project-info h4,
+        .project-info h5,
+        .project-info h6 {
+            margin-top: 5px; /* Adjust the margin as needed */
+            margin-bottom: 5px; /* Adjust the margin as needed */
+        }
+
         /* Style for GitHub link */
         .github-link {
             text-align: center;
             margin-top: 20px;
         }
         .github-link a {
+            color: #333;
+            text-decoration: none;
+        }
+        .project-link {
+            text-align: center;
+            margin-top: 20px;
+        }
+        .project-link a {
             color: #333;
             text-decoration: none;
         }
@@ -156,16 +197,64 @@
     </header>
 
     <!-- Sección de proyectos -->
+
+    <!-- BIRDeep Project -->
+
+    <!-- TFG Project -->
+
     <section id="projects">
         <h2>Projects</h2>
         <p>Explore some of the projects I have contributed to, including image-based species identification, sound-based species identification, etc.</p>
-        <!-- Aquí puedes agregar una lista de tus proyectos con descripciones y enlaces -->
+        
+        <!-- AI-Census -->
         <div class="project-box">
-            <h3>Combination of genetic programming and boids flock simulation</h3>
-            <p>Start Date: October 2021</p>
-            <p>End Date: February 2022</p>
-            <p>Combination of genetic programming and boids flock simulation to recreate input images with an artistic twist by limiting genes (mathematical operations) available to agents. This project was undertaken during my ERASMUS at the University of Wroclaw, in the Master Introduction to Artificial Intelligence course. There is no web page, only the link to the repository with the code and more information.</p>
-            <div class="project-images">
+            <div class="project-header">
+                <h3>AI-Census</h3>
+                <div class="project-info">
+                    <h4>Universidad de Huelva</h4>
+                    <!-- <h5>Authors: Daedheldir, GrunCrow</h5> -->
+                    <h6>September 2022 - March 2024</h6>
+                </div>
+            </div>
+            <p>Ecologists and wildlife managers often study the size, distribution and dynamic of animal populations using automated camera-traps. But, while the cameras can potentially take huge amounts of images, it doesn’t exist an automatic method for extracting the information of these images. Normally, the identification of the photographed species and the digitization of the data are carried out by technicians and it is so laborious that most of the knowledge is not exploited. Using artificial intelligence, we can classify, accurately and with low effort, large numbers of images from camera traps and automatically digitize the information on them. We aim to develop a tool for the census and monitoring of biodiversity, that helps wildlife researchers and managers in their purposes of knowing and protecting our nature.</p>
+            
+            <!-- List of task I did in this project -->
+            <ul>
+                <li>Developed and managed data preprocessing and processing scripts.</li>
+                <li>Investigated the state of the art in image classification using Deep Learning.</li>
+                <li>Implemented a network-based image classification methodology employing convolutional neural networks (CNN) for the classification of mammals in camera trap images.</li>
+                <li>Generated and analyzed research results.</li>
+                <li>Developed a detection and classification model for camera trap images.</li>
+                <li>Designed and implemented a hierarchical classification model for camera trap images.</li>
+                <li>Concluded the project by generating and conducting in-depth analysis of the final results.</li>
+            </ul>
+
+            <!-- TODO: Change project images (also the format)-->
+            <div class="project-images project-images-rectangles">
+                <img src="images/projects/ai_census/mongoose.gif" alt="Project Image 2">
+                <img src="images/projects/ai_census/GIF predictions.gif" alt="Project Image 1">
+                <img src="images/projects/ai_census/mongoose.gif" alt="Project Image 3">
+            </div>
+            <div class="github-link">
+                <a href="https://github.com/GrunCrow/cv4ecology"><i class="fab fa-github"></i> Link to GitHub Repository</a>
+            </div>
+            <div class="project-link">
+                <a href="https://aicensus.github.io"><i class="far fa-file-alt"></i> Link to Project Page</a>
+            </div>
+        </div>
+        
+        <!-- Boids -->
+        <div class="project-box">
+            <div class="project-header">
+                <h3>Combination of genetic programming and boids flock simulation</h3>
+                <div class="project-info">
+                    <h4>University of Wroclaw</h4>
+                    <h5>Authors: Daedheldir, GrunCrow</h5>
+                    <h6>October 2021 - February 2022</h6>
+                </div>
+            </div>
+            <p>Combination of genetic programming and boids flock simulation to recreate input images with an artistic twist by limiting genes (mathematical operations) available to agents. This project was undertaken during my ERASMUS at the University of Wroclaw, in the Master Introduction to Artificial Intelligence course.</p>
+            <div class="project-images project-images-circles">
                 <img src="https://raw.githubusercontent.com/Daedheldir/CppSFMLBoids/main/example_img_1.gif" alt="Project Image 1">
                 <img src="https://raw.githubusercontent.com/Daedheldir/CppSFMLBoids/main/example_img_2.gif" alt="Project Image 2">
                 <img src="https://raw.githubusercontent.com/Daedheldir/CppSFMLBoids/main/example_img_4.gif" alt="Project Image 3">
@@ -175,6 +264,7 @@
             </div>
         </div>
     </section>
+    
 
     <!-- Pie de página -->
     <footer>
