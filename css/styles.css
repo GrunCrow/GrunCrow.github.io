@@ -35,6 +35,7 @@ body::before {
     z-index: -1; /* Place the pseudo-element behind other content */
 }
 header {
+    background-color: #333;
     position: relative;
     color: #fff; 
     padding: 20px; 
@@ -78,14 +79,23 @@ body :not(header) :not(footer) p, section{
     animation: fadeIn 1s ease-in;
 }
 
+/* Style for publications.html div 
+#sections div {
+    background-color: #f9f9f9;
+    border-radius: 5px;
+    padding: 20px;
+}*/
+
 /* Navigation */
 nav ul {
     list-style-type: none;
     padding: 0;
+    display: flex;
+    justify-content: center;
 }
 nav ul li {
     display: inline;
-    margin-right: 20px;
+    margin-right: 30px;
 }
 nav ul li a {
     color: #fff;
