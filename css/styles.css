@@ -56,6 +56,11 @@ header img {
     margin: 0 auto 0px; /* Center horizontally and add some bottom margin */
     border: 4px solid #fff; /* Add a white border around the image */
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Add a subtle shadow */
+    transition: transform 0.3s ease;
+}
+
+header img:hover {
+    transform: scale(1.1); /* Add this block */
 }
 
 /* Navigation */
@@ -104,7 +109,13 @@ footer {
     margin: 0 auto 20px; /* Center horizontally and add some bottom margin */
     border: 4px solid #fff; /* Add a white border around the image */
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Add a subtle shadow */
+    transition: transform 0.3s ease;
 }
+
+#presentation img:hover {
+    transform: scale(1.1); /* Add this block */
+}
+
 /* Adjust color of social media icons */
 .social-icons a {
     color: #fff; /* Change icon color to white */
@@ -133,6 +144,44 @@ footer {
     border-radius: 50%; /* Circle shape */
     border: 4px solid #fff;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease; /* Add this line */
+}
+
+.project-images-circles img:hover {
+    transform: scale(1.1); /* Add this block */
+}
+/* Style for project section*/
+.project-images-rectangles {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+.project-images-rectangles img {
+    width: 384px; /* Adjust width for rectangles */
+    height: 216px; /* Adjust height for rectangles */
+    margin: 0 10px;
+    border-radius: 3px; /* Rectangle shape */
+    border: 4px solid #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease; /* Add this line */
+}
+.project-images-rectangles img:hover {
+    transform: scale(1.1); /* Add this block */
+}
+.project-header {
+    display: flex;
+    justify-content: space-between;
+}
+.project-info {
+    text-align: right;
+    padding: 0; /* Set padding to 0 */
+    margin: 0; /* Optionally, set margin to 0 */
+}
+.project-info h4,
+.project-info h5,
+.project-info h6 {
+    margin-top: 5px 0; /* Adjust the margin as needed */
+    /* margin-bottom: 5px; */ /* Adjust the margin as needed */
 }
 
 /* Sections styles*/
@@ -152,38 +201,10 @@ footer {
     margin-bottom: 5px; /* Adjust the margin as needed */
 }
 
-.section-info h5 a{
+.section-info a{
     color: #00004c; /* Change color to a lighter shade */
-}
-
-/* Style for project section*/
-.project-images-rectangles {
-    display: flex;
-    justify-content: center;
-    margin-bottom: 20px;
-}
-.project-images-rectangles img {
-    width: 384px; /* Adjust width for rectangles */
-    height: 216px; /* Adjust height for rectangles */
-    margin: 0 10px;
-    border-radius: 3px; /* Rectangle shape */
-    border: 4px solid #fff;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-}
-.project-header {
-    display: flex;
-    justify-content: space-between;
-}
-.project-info {
-    text-align: right;
-    padding: 0; /* Set padding to 0 */
-    margin: 0; /* Optionally, set margin to 0 */
-}
-.project-info h4,
-.project-info h5,
-.project-info h6 {
-    margin-top: 5px 0; /* Adjust the margin as needed */
-    /* margin-bottom: 5px; */ /* Adjust the margin as needed */
+    /* color: var(--link-color);*/
+    text-decoration: none;
 }
 
 /* Style for media links */
