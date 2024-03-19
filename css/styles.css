@@ -205,6 +205,11 @@ footer {
     color: #00004c; /* Change color to a lighter shade */
     /* color: var(--link-color);*/
     text-decoration: none;
+    transition: color 0.3s ease; /* Add this line */
+}
+
+.section-info a:hover {
+    color: #ff6347; /* Change to any color you like */
 }
 
 /* Style for media links */
@@ -216,4 +221,9 @@ footer {
 .link a {
     color: var(--link-color);
     text-decoration: none;
+    transition: color 0.3s ease; /* Add this line */
+}
+
+.link a:hover {
+    color: #ff6347; /* Change to any color you like */
 }
