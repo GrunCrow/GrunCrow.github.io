@@ -168,6 +168,18 @@ footer {
     margin-bottom: 20px;
 }
 
+img {
+    width: 100%;   /* or any desired width */
+    height: auto;  /* maintain aspect ratio */
+    object-fit: cover; /* resize the image to cover the container, the image might be clipped */
+}
+
+.project-images-rectangles .custom-dimensions {
+    width: 700px;
+    height: 250px;
+    object-fit: cover; /* This will ensure the aspect ratio of the image is maintained */
+}
+
 .project-images-circles img {
     width: 150px;
     height: 150px;
