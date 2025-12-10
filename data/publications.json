@@ -1,0 +1,56 @@
+[
+    {
+        "id": "ibis-2025",
+        "title": "Optimization of passive acoustic bird surveys: a global assessment of BirdNET settings",
+        "venue": "Ibis",
+        "date": "November 2025",
+        "authors": "Cristian Pérez‐Granados, David Funosas, Jon Morant, Oscar H Marín Gómez, Irene Mendoza, Miguel A Mohedano‐Munoz, Eduardo Santamaría, Giulia Bastianelli, Alba Márquez-Rodríguez, Michał Budka, Gerard Bota, José M De la Peña‐Rubio, Eladio García De La Morena, [...], Esther Sebastián‐González",
+        "doi": "https://doi.org/10.1111/ibi.70013",
+        "abstract": "BirdNET is a popular machine learning tool for automated recognition of bird sounds. However, evidence on how to optimize its settings for accurate bird monitoring remains limited. Here, we evaluate how BirdNET settings influence model performance in identifying bird vocalizations and characterizing bird communities, using 4224 1-min recordings from 67 recording locations worldwide. Giving equal importance to recall and precision, a low confidence score threshold (0.1–0.3) appears optimal for detecting bird vocalizations, whereas higher thresholds (around 0.5) are more suitable for characterizing bird communities. Based on our findings, we recommend increasing the Overlap parameter from its default value of 0 to 2 s, as this consistently improves BirdNET performance in detecting both bird vocalizations and species presence. The effect of the Sensitivity parameter varied across regions. However, a value of 0.5 maximizes global performance for community-level analyses across all confidence thresholds, and a value of 1.5 generally yields better results for vocalization-level studies, particularly at low confidence thresholds. Our findings offer practical guidance for selecting BirdNET settings in passive acoustic bird surveys, enhancing both the identification of bird vocalizations and the characterization of bird communities."
+    },
+    {
+        "id": "ecoinf-2025",
+        "title": "A bird song detector for improving bird identification through deep learning: A case study from Doñana",
+        "venue": "Ecological Informatics",
+        "date": "July 2025",
+        "authors": "Alba Márquez-Rodríguez, Miguel Ángel Mohedano-Munoz, Manuel J. Marín-Jiménez, Eduardo Santamaría-García, Giulia Bastianelli, Pedro Jordano, Irene Mendoza",
+        "doi": "https://doi.org/10.1016/j.ecoinf.2025.103254",
+        "abstract": "<p>Passive Acoustic Monitoring (PAM), which uses devices like automatic audio recorders, has become a fundamental tool in conserving and managing natural ecosystems. However, the large volume of unsupervised audio data that PAM generates poses a major challenge for extracting meaningful information. Deep Learning techniques, particularly automated species identification models based on computer vision, offer a promising solution. BirdNET, a widely used model for bird identification, has shown success in many study systems but is limited at local scale due to biases in its training data, which focus on specific locations and target sounds rather than entire soundscapes. A key challenge in bird species detection is that many recordings either lack target species or contain overlapping vocalizations, complicating automatic identification.\n To overcome these problems, we developed a three-stage pipeline for automatic bird vocalization identification in Doñana National Park (SW Spain). We deployed AudioMoth recorders in three main habitats across nine locations and manually annotated 461 minutes of audio (3,749 annotations, 34 classes). The pipeline first isolates bird vocalizations with a Bird Song Detector using spectrogram-based image processing. Then we classify species using custom classifiers trained at the local scale with BirdNET embeddings. The best detection model used synthetic background audios and an environmental sound library (ESC-50) for augmentation. Applying the Bird Song Detector before classification improved identification: combining the detector with fine-tuned BirdNET increased weighted precision (0.18 → 0.37), recall (0.21 → 0.30) and F1 (0.17 → 0.28) versus the baseline without detection. \nThese results demonstrate the effectiveness of integrating a Bird Song Detector with fine-tuned classifiers for local soundscapes and highlight the need to adapt general-purpose tools to specific ecological contexts. Automatically detecting bird species enables monitoring the health of threatened ecosystems like Doñana and supports conservation measures to reduce biodiversity loss."
+    },
+    {
+        "id": "axioms-2023",
+        "title": "Viability Analysis of Tidal Turbine Installation Using Fuzzy Logic: Case Study and Design Considerations",
+        "venue": "Axioms",
+        "date": "August 2023",
+        "authors": "Ángel M Rodríguez-Pérez, César A Rodríguez, Alba Márquez-Rodríguez, Julio J Caparros Mancera",
+        "doi": "https://doi.org/10.3390/axioms12080778",
+        "abstract": "Tidal energy represents a clean and sustainable source of energy generation that can address renewable energy challenges, especially the global challenge of optimizing alternatives for stable supply. Although tidal stream energy extraction technology is in the early stages of development, it shows great potential compared to other renewable energy sources. The main objective of this research is to provide a digital tool for the optimization of the installation of turbines through fuzzy logic. The methodology in this study includes the design and development of a fuzzy-logic-based tool for this purpose. Design criteria included parameters such as salinity, temperature, currents, depth, and water viscosity, which affect the performance of tidal turbines. These parameters are obtained from the geographic location of the installation. A decision-making system is provided to support the tool. The designed fuzzy logic system evaluates the suitability of different turbine locations and presents the results through graphics and probability of success percentages. The results indicate that currents and temperatures are the most limiting factors in terms of potential turbine locations. The program provides a practical and efficient tool for optimizing the selection of tidal turbines and generating energy from ocean currents. This tool is evaluated and validated through different cases. With this approach, the aim is to encourage the development of tidal energy and its adoption worldwide."
+    },
+    {
+        "id": "fr4fsofsssssfso-ai-conf",
+        "title": "Feature Ranking Merging: FRmgg. Application in High Dimensionality Binary Classification Problems",
+        "venue": "ICAIAA: Proceedings of 3rd International Conference on Artificial Intelligence: Advances and Applications",
+        "date": "April 2023",
+        "authors": "Alberto F Merchán, Alba Márquez-Rodríguez, Paola Santana-Morales, Antonio J Tallón-Ballesteros",
+        "doi": "https://doi.org/10.1007/978-981-19-7041-2_43",
+        "abstract": "This paper introduces a framework for feature selection. Firstly, it establishes a percentage in order to set a cut-off point in the context of feature ranking based on feature selection. Secondly, it combines a couple of feature ranking methods using a common percentage from those features. This combination has a weak to a strong influence in the class label that is run in an independent way and merges the solutions achieved by every ranking-based feature selection. The proposed methodology has been called Feature Ranking merging (FRmgg). It has been tested with three high-dimensionality binary classification data sets, which have been assessed with three classifiers and two measures have been reported. The results are acceptable since the feature space reduction is convenient compared to the raw data set and the results in some cases are better."
+    },
+    {
+        "id": "fr4fsofsssssfso-softcomp",
+        "title": "Feature Ranking for Feature Sorting and Feature Selection, and Feature Sorting: FR4(FSoFS)$$ $$FSo",
+        "venue": "International Workshop on Soft Computing Models in Industrial and Environmental Applications",
+        "date": "October 2022",
+        "authors": "Antonio J Tallón-Ballesteros, Alba Márquez-Rodríguez, Yaoyang Wu, Paola Santana-Morales, Simon Fong",
+        "doi": "https://doi.org/10.1007/978-3-031-18050-7_56",
+        "abstract": "This paper introduces a framework for feature selection. Firstly, it establishes a percentage in order to set a cut-off point in the context of feature ranking based on feature selection. Secondly, it combines a couple of feature ranking methods using a common percentage from those features. This combination has a weak to a strong influence in the class label that is run in an independent way and merges the solutions achieved by every ranking-based feature selection. The proposed methodology has been called Feature Ranking merging (FRmgg). It has been tested with three high-dimensionality binary classification data sets, which have been assessed with three classifiers and two measures have been reported. The results are acceptable since the feature space reduction is convenient compared to the raw data set and the results in some cases are better."
+    },
+    {
+        "id": "fr4fsss2-iwinac",
+        "title": "Feature Ranking for Feature Sorting and Feature Selection: FR4(FS)$$^2",
+        "venue": "IWINAC: International Work-Conference on the Interplay between Natural and Artificial Computation",
+        "date": "May 2022",
+        "authors": "Paola Santana-Morales, Alberto F Merchán, Alba Márquez-Rodríguez, Antonio J Tallón-Ballesteros",
+        "doi": "https://doi.org/10.1007/978-3-031-06527-9_54",
+        "abstract": "This paper proposes a methodology to feature sorting as well as feature selection in the context of supervised machine learning algorithms. Feature sorting has been revealed as a step which may play a paramount role in machine learning. Nonetheless, the scalability is an important drawback. This paper proposes to add a further stage in order to only retain attributes with a positive influence (att+) and limiting them in a predefined percentage of att+ set. This contribution aims at introducing a new methodology where all attributes are not included in the data mining task but also the positive influence ones till a certain limit. We have followed two different types of sorting by means of different feature ranking methods. The approach has been assessed in three binary problems with a number of features between 1000 and 10000, and a number of instances from 200 to 7000; the test-bed includes challenging data sets from NIPS 2003. According to the experimental results for InfoGain and GainRatio the 90% of the attributes with positive influence are enough to get results in most of the cases comparable to the results with raw data taking into account that the required time to train the classifiers is shorter and hence in the non-required time we may be able to process more instances."
+    }
+]

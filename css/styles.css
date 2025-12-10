@@ -9,7 +9,13 @@
 }
 
 :root {
-    --link-color: #333;
+    --bg: #f4f6fb;
+    --card: #ffffff;
+    --text: #1f2430;
+    --muted: #566077;
+    --primary: #2d6cdf;
+    --accent: #ff7a59;
+    --border: #e4e7ef;
 }
 
 body {
@@ -19,6 +25,8 @@ body {
     background-color: #f0f0f0;
     padding-bottom: 7.5%; /* Adjust the value according to the height of your footer */
     position: relative; /* Ensure proper positioning of pseudo-element */
+    background-color: var(--bg);
+    color: var(--text);
 }
 body::before {
     content: "";
@@ -47,6 +55,7 @@ header {
     flex-direction: column; 
     align-items: center; 
     text-align: center;
+    padding: 28px 16px;
 }
 header::before {
     content: "";
@@ -91,10 +100,12 @@ nav ul {
     padding: 0;
     display: flex;
     justify-content: center;
+    gap: 18px;
+    flex-wrap: wrap;
 }
 nav ul li {
     display: inline;
-    margin-right: 30px;
+    margin-right: 0;
 }
 nav ul li a {
     color: #fff;
@@ -107,6 +118,22 @@ nav ul li a:hover {
 nav a {
     color: var(--link-color);
     text-decoration: none;
+}
+
+.page {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 24px 16px 96px;
+}
+
+.card {
+    background: var(--card);
+    border-radius: 12px;
+    padding: 24px;
+    margin: 18px 0;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.06);
+    border: 1px solid var(--border);
+    animation: fadeIn 0.8s ease-in;
 }
 
 section {
@@ -132,6 +159,7 @@ footer {
     bottom: 0;
     width: 100%;
     height: 10%;
+    padding: 12px 16px;
 }
 /* Style for the image */
 #presentation img {
@@ -304,4 +332,33 @@ img {
 
 .link a:hover {
     color: #ff6347; /* Change to any color you like */
+}
+
+/* Footer spacing fix on mobile */
+@media (max-width: 640px) {
+    header {
+        text-align: center;
+    }
+    .pub-meta {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    .page {
+        padding: 20px 12px 96px;
+    }
+}
+.pub-meta {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    color: var(--muted);
+    font-size: 0.95rem;
+}
+.pub-meta span {
+    display: block;
+    line-height: 1.4;
+}
+.pub-meta .pill {
+    display: inline-flex;
+    align-self: flex-start;
 }
