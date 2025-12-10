@@ -1,0 +1,99 @@
+[
+    {
+    "id": "sibecol_aeet-2025",
+    "title": "Optimizing BirdNET for local ecosystems, fine-tuning for ecoacoustic monitoring",
+    "conference": "III meeting of the Iberian Ecological Society (SIBECOL) & XVII National Conference of the Spanish Association of Terrestrial Ecology (AEET)",
+    "organization": "SIBECOL & AEET",
+    "location": "Pontevedra, Spain",
+    "date": "June 2025",
+    "type": "oral",
+    "featured": true,
+    "award": "Best predoctoral multidisciplinary oral communication",
+    "description": "Passive Acoustic Monitoring (PAM) is increasingly central to biodiversity research, yet the performance of bioacoustic foundational models—such as BirdNET and Perch—varies widely depending on environmental noise, species community, and recording conditions. In this work, we evaluated how BirdNET can be adapted and fine-tuned for project-specific ecological monitoring needs through two contrasting case studies: (1) terrestrial bird migration monitoring using autonomous recorders in Cádiz and Tarifa, and (2) underwater soundscape analysis for marine biodiversity assessment. We outlined a complete workflow for validating and adapting BirdNET predictions, including dataset curation, manual validation supported by a custom open-source Python web application, and targeted fine-tuning for local conditions. Across both case studies, we showed where foundational models offer strong baseline performance, where they fail (e.g., high false positive rates, environmental mismatch), and which components require substantial modification when transferring them to new ecosystems.",    "images": [
+        "images/congresses/2025aeetsibecol/models.png",
+        "images/congresses/2025aeetsibecol/prize.png",
+        "images/congresses/2025aeetsibecol/slide_birdnet.png"
+    ]
+    },
+    {
+    "id": "26seo-2025",
+    "title": "From prediction to accuracy in the validation of BirdNET in acoustic identification of birds in local ecosystems",
+    "conference": "XXVI Spanish Congress of Ornithology",
+    "organization": "SEO BirdLife",
+    "location": "Valencia, Spain",
+    "date": "February 2025",
+    "type": "poster",
+    "featured": false,
+    "description": "Passive acoustic monitoring (PAM) has become a very useful tool in monitoring animal movement, allowing continuous data capture in inaccessible places in an affordable manner. However, PAMs produce a large volume of information, the processing and analysis of which can be complex.For the analysis of this data, Artificial Intelligence tools such as BirdNET emerge, which automate the identification of species from acoustic recordings, significantly reducing analysis time. These tools, however, have limitations due to biases in the training data,focused mainly on the regions where they were developed and, in focal areas with hardly any ambient noise. This generates errors such as confusion between species, species absent in the region, and misinterpretation of environmental sounds. In this study,The detection and self-identification capacity of BirdNet is analyzed in the Bay of Cádiz, being a crucial area for the conservation of migratory and resident birds. For this, we use data collected by a PAM recorder permanently installed at the University Institute of Marine Research - INMAR, University of Cádiz. Recordings made between April and August 2024 have been analyzed, captured at specific times (3 hours at dusk and 3 hours at dawn),generating a total of 618 hours of audio. The results show that BirdNET predictions are not reliable for target species without manual validation. To address this limitation, we developed a web app that allows validating and correcting BirdNET predictions in a simple and efficient way.After analyzing more than 400 segments of the target species, the results of manual validations show that the majority of BirdNET predictions are incorrect and that they are mostly confused with other species. However, the validation of audios identified by BirdNet for those species shows a high rate of positive identifications (~0.87%). Our results demonstrate that BirdNET offers limited results in the identification of common species in the Bay of Cádiz,possibly due to biases in the training data. However, the tool can be used preliminarily and trained with local environmental data and situations (fine-tuning) to adjust its validation algorithm to thereby improve the quality of the predictions.",
+    "images": [
+        "images/congresses/26seo/2025_seo_poster.png"
+    ],
+    "links": [
+        {"type": "pdf", "url": "https://doi.org/10.13140/RG.2.2.18169.58729", "label": "Poster"}
+    ]
+    },
+    {
+    "id": "ijornadasecoinformaticas-2024",
+    "title": "From prediction to accuracy in the validation of BirdNET in acoustic identification of birds in local ecosystems",
+    "conference": "I Jornadas Ecoinformáticas",
+    "organization": "AEET (Asociación Española de Ecología Terrestre)",
+    "location": "Universidad de Alcalá de Henares, Madrid, Spain",
+    "date": "November 2024",
+    "type": "oral",
+    "featured": false,
+    "description": "We assessed the performance of BirdNET, an AI tool for automatic species identification, using passive acoustic monitoring (PAM) data collected from the Bay of Cádiz. PAM provides continuous data from remote areas but generates large volumes of audio, which are challenging to process. BirdNET aims to automate species identification, yet its accuracy is affected by training data biases, particularly for species and environments not represented in the dataset. Our study focused on two common wader species in the Bay of Cádiz: the common sandpiper (Actitis hypoleucos) and the common redshank (Tringa totanus). Using a Song Meter Mini 2 recorder, we collected 618 hours of audio between April and August 2024. BirdNET's initial predictions for these species were unreliable, often confusing them with other local species such as the Common Nightingale (Luscinia megarhynchos) and the Eurasian Collared dove (Streptopelia decaocto). To address this, we developed a Python-based web app to manually validate and correct BirdNET's predictions. Our validation of more than 400 segments revealed that while BirdNET performs poorly for the target species, it yields high accuracy for the misidentified species. These findings highlight BirdNET's limitations in identifying species not well-represented in its training data but suggest that fine-tuning the model with local acoustic data could improve its accuracy. This study emphasizes the importance of validating AI-generated data and demonstrates how local acoustic data can enhance species identification in complex environments.",
+    "images": [
+        "images/congresses/ijornadasecoinformaticas/seanimalmove presentation.jpeg",
+        "images/congresses/ijornadasecoinformaticas/AEET - I Jornadas Ecoinformáticas.png",
+        "images/congresses/ijornadasecoinformaticas/appintroduction.jpeg"
+    ],
+    "links": [
+      {"type": "web", "url": "https://ecoinf.quarto.pub/iecoinf/", "label": "Conference Website"}
+    ]
+  },
+  {
+    "id": "vwec-2024",
+    "title": "Decoding the Sounds of Doñana: Advancements in Bird Detection and Identification Through Deep Learning",
+    "conference": "V World Ecoacoustics Congress",
+    "location": "Universidad Autónoma de Madrid, Madrid, Spain",
+    "date": "July 2024",
+    "type": "oral",
+    "featured": true,
+    "description": "Passive acoustic monitoring through the use of devices such as automatic audio recorders has emerged as a fundamental tool in the conservation and management of natural ecosystems. However, this practice presents a significant challenge given it generates a large volume of data that does not have human supervision. In order to obtain valid information for ecoacoustics studies, the main bottleneck now is to manage large datasets of acoustic recordings for identifying species of interest. Automated species detection methods using deep learning techniques are paramount for this. In this communication, we present a multi-stage process for automatic analysis of bird recordings from Doñana National Park (SW Spain) obtained through AudioMoths thanks to the BIRDeep project. Although existing Deep Learning models such as BirdNET have shown success in bird identification in other study systems, they did not present satisfactory results for the most abundant species of Doñana, likely due to inadequate training on Doñana's specific data and its bias on focal sounds, rather than entire soundscapes. Consequently, we annotated about 600 minutes of audio data at three different habitats and trained our own model. By using the Mel spectrogram as a graphical representation of bird audio data, we show how this technique can be leveraged to apply image processing methods and computer vision in the analysis of acoustic data analysis. For this, it is critical the availability of labeled, high-quality datasets. In conclusion, our advances show that general-purpose tools may not always be the best solution in deep learning and ecoacoustics, emphasizing the importance of adapting these tools to the specific problem being addressed. By fine-tuning deep learning models and techniques to the unique characteristics of ecoacoustic data from a specific context, researchers can improve the accuracy and efficiency of biodiversity monitoring efforts.",
+    "images": [
+      "images/congresses/vwec/communication.jpeg",
+      "images/congresses/vwec/1.png",
+      "images/congresses/vwec/24.png"
+    ]
+  },
+  {
+    "id": "secem-xvi-2023",
+    "title": "Beyond phototrapping: the role of artificial intelligence in the transformation of images into data. Options, challenges and solutions",
+    "conference": "SECEM XVI",
+    "organization": "AEET (Asociación Española de Ecología Terrestre)",
+    "location": "Granollers, Barcelona, Spain",
+    "date": "December 2023",
+    "type": "oral",
+    "featured": false,
+    "description": "La innovación tecnológica de las últimas décadas y la disminución de costes han transformado la adquisición y análisis de datos. El fototrampeo se ha destacado como una herramienta no invasiva ampliamente utilizada para recolectar información sobre la abundancia y distribución de mamíferos, especialmente aquellos de mayor tamaño. A pesar de la abundante información disponible para el despliegue de cámaras de fototrampeo en el campo, persiste una falta de conocimiento entre los mastozoólogos en relación al procesamiento y manejo efectivo de la gran cantidad de imágenes generadas por esta tecnología. La gestión de imágenes y la extracción de datos plantean desafíos significativos que es esencial abordar, junto con el conocimiento de las herramientas disponibles en la actualidad para superar estos desafíos. En la Universidad de Huelva, un equipo multidisciplinario compuesto por ecólogos, expertos en visión por computadora, informáticos e ingenieros electrónicos, se ha unido para monitorear a los mamíferos medianos y grandes en el Parque Nacional de Doñana. Para lograrlo, hemos establecido un proyecto de Ciencia Ciudadana en Zooniverse y desarrollado un modelo de Red Neuronal Convolucional (CNN, por sus siglas en inglés). Desde su inicio en octubre de 2020, el proyecto de Ciencia Ciudadana ha clasificado más de un millón y medio de imágenes, mientras que el modelo CNN ha procesado todas las imágenes generadas por nuestra red de cámaras de fototrampeo (más de 4 millones) a una velocidad de aproximadamente 10 imágenes por segundo, con una precisión y sensibilidad cercanas al 95% para la mayoría de las especies. A lo largo de este proyecto, hemos acumulado una valiosa experiencia en diversas herramientas y metodologías disponibles para convertir imágenes en datos de distribución y abundancia. En la presentación ilustraremos estos conocimientos, destacando el estado actual de la inteligencia artificial en este ámbito, las herramientas disponibles y algunos aspectos prácticos esenciales para obtener información ecológica confiable.",
+    "images": [
+      "images/photos/congress/secem xvi/agouti.png",
+      "images/congresses/secem xvi/presentation img.png",
+      "images/photos/congress/secem xvi/presentation.png"
+    ]
+  },
+  {
+    "id": "sciencity-2022",
+    "title": "Fuzzy Software for the Estimation of the Viability of Turbines in the Use of Marine Currents",
+    "conference": "ScienCity 2022",
+    "location": "Universidad de Huelva, Huelva, Spain",
+    "date": "November 2022",
+    "type": "oral",
+    "featured": false,
+    "description": "The usable energy of marine currents is one of the alternatives for clean and sustainable that can be explored with greater depth and rigor to address the problem current energy [1]. This work describes the design, implementation and development process of a software developed to select the characteristics of the turbine to be placed in an environment aquatic affected by marine currents. Based on the hydrodynamic parameters and conditions of the study area (current speed, water depth, water temperature, salinity) is possible to estimate the power generated and the corresponding performance that different types of turbines according to different operating regimes [2,3]. For this, the computer program developed uses a Fuzzy Logic methodology that allows decisions to be made depending on intermediate values taken by the hydrodynamic variables that characterize the study area. The rules heuristics used by the developed system are learned using a database for the calibration. This computer application serves as a support for decision making in the initial stages of a project to select and install turbines for the use of the energy from ocean currents.",
+    "images": [
+      "images/congresses/sciencity2022/experimentation.png",
+      "images/congresses/sciencity2022/results.png"
+    ]
+  }
+]

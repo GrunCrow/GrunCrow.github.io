@@ -916,3 +916,41 @@ footer {
         align-items: flex-start;
     }
 }
+
+.congresses-sidebar .congress-link {
+    font-size: 0.85rem;
+    color: var(--muted);
+    padding-left: 18px;
+    text-decoration: none;
+    padding: 8px 10px 8px 18px;
+    border-radius: 6px;
+    transition: all 0.2s ease;
+    display: block;
+}
+
+.congresses-sidebar .congress-link:hover {
+    background: var(--bg);
+    color: var(--primary);
+}
+
+.congresses-sidebar .congress-link.active {
+    color: var(--primary);
+    font-weight: 600;
+}
+
+/* Award badge animation */
+.pill:has(.fa-trophy) {
+    animation: subtle-glow 2s ease-in-out infinite;
+}
+
+@keyframes subtle-glow {
+    0%, 100% { box-shadow: 0 0 5px rgba(255, 215, 0, 0.3); }
+    50% { box-shadow: 0 0 15px rgba(255, 215, 0, 0.5); }
+}
+
+/* Responsive poster layout */
+@media (max-width: 968px) {
+    .project-box > div[style*="grid-template-columns"] {
+        grid-template-columns: 1fr !important;
+    }
+}
