@@ -1,0 +1,221 @@
+{
+  "profile": {
+    "name": "Alba Márquez-Rodríguez",
+    "title": "Computer Scientist",
+    "subtitle": "Computer Vision & AI",
+    "image": "images/photos/profile/bachelor-prom.jpg"
+  },
+  "experience": [
+    {
+      "id": "ai-scientist",
+      "position": "AI Scientist",
+      "organization": "DeTect",
+      "startDate": "November 2025",
+      "endDate": "Present",
+      "isPresent": true,
+      "featured": true,
+      "project": null,
+      "description": null,
+      "responsibilities": []
+    },
+    {
+      "id": "licensed-researcher",
+      "position": "Licensed Researcher",
+      "organization": "INMAR (Instituto Universitario de Investigación Marina) - UCA",
+      "startDate": "June 2024",
+      "endDate": "Aug 2025",
+      "isPresent": false,
+      "featured": false,
+      "project": {
+        "title": "SEANIMALMOVE: Monitoring the movement and population dynamics of marine and coastal vertebrates",
+        "link": "projects.html#seanimalmove-project"
+      },
+      "responsibilities": [
+        "Development of scripts for preprocessing and management of large-scale marine data",
+        "Statistical analysis and visualization of movement patterns"
+      ]
+    },
+    {
+      "id": "jae-researcher",
+      "position": "JAE Intro Scholarship Research Assistant",
+      "organization": "Estación Biológica de Doñana, CSIC",
+      "startDate": "Oct 2023",
+      "endDate": "Apr 2024",
+      "isPresent": false,
+      "featured": false,
+      "project": {
+        "title": "BIRDeep: Ecosystem health monitoring through automated bird song detection using Deep Learning",
+        "link": "projects.html#birdeep-project"
+      },
+      "responsibilities": [
+        "Data preprocessing and pipeline development for audio data",
+        "Deep learning model development and performance analysis"
+      ]
+    },
+    {
+      "id": "santander-scholar",
+      "position": "Santander/UHU Research Scholar",
+      "organization": "Universidad de Huelva",
+      "startDate": "Jun 2023",
+      "endDate": "Aug 2023",
+      "isPresent": false,
+      "featured": false,
+      "project": {
+        "title": "AI-Census: Deep learning-based camera trap image analysis",
+        "link": "projects.html#ai-census-project"
+      },
+      "responsibilities": [
+        "Hierarchical deep learning model design for species detection and classification",
+        "Comprehensive results analysis and model optimization"
+      ]
+    },
+    {
+      "id": "computer-specialist",
+      "position": "Computer Specialist Technician",
+      "organization": "Universidad de Huelva",
+      "startDate": "Sep 2022",
+      "endDate": "Nov 2022",
+      "isPresent": false,
+      "featured": false,
+      "project": {
+        "title": "AI-Census: Biodiversity census using deep learning techniques",
+        "link": "projects.html#ai-census-project"
+      },
+      "responsibilities": [
+        "Data preprocessing and management pipeline development",
+        "CNN model creation and image classification"
+      ]
+    }
+  ],
+  "education": [
+    {
+      "id": "phd",
+      "degree": "PhD candidate in Computer Science",
+      "institution": "Universidad de Cádiz",
+      "startDate": "Dec 2025",
+      "endDate": "Present",
+      "isPresent": true,
+      "featured": true,
+      "details": null
+    },
+    {
+      "id": "masters",
+      "degree": "Master's Degree in Computational Intelligence & IoT",
+      "institution": "Universidad de Córdoba",
+      "startDate": "Oct 2023",
+      "endDate": "Sep 2024",
+      "isPresent": false,
+      "featured": false,
+      "details": null
+    },
+    {
+      "id": "bachelor",
+      "degree": "Bachelor's Degree in Computer Science",
+      "institution": "Universidad de Huelva",
+      "startDate": "Oct 2019",
+      "endDate": "Nov 2023",
+      "isPresent": false,
+      "featured": false,
+      "details": [
+        "Presented \"Fuzzy software for estimating turbine viability in marine current applications\" at V ScienCity Conference",
+        "Thesis: Classification of camera trap images using Convolutional Neural Networks"
+      ]
+    }
+  ],
+  "certifications": [
+    {
+      "id": "cv4ecology",
+      "title": "cv4ecology: Computer Vision Methods for Ecology",
+      "institution": "Caltech, California, USA",
+      "startDate": "Aug 2023",
+      "endDate": "Sep 2023",
+      "isPresent": false,
+      "description": "Intensive 3-week summer workshop on advanced computer vision techniques for ecological research. Gained expertise in analyzing large-scale image, audio, and video datasets through hands-on projects and mentorship."
+    },
+    {
+      "id": "erasmus",
+      "title": "ERASMUS: International Exchange Program",
+      "institution": "Politechnika Wrocławska, Poland",
+      "startDate": "Sep 2021",
+      "endDate": "Jul 2022",
+      "isPresent": false,
+      "description": null,
+      "projects": [
+        {
+          "title": "Art generator using genetic algorithms and boids simulation",
+          "link": "projects.html#boids-project"
+        },
+        "Color detection and computer vision projects"
+      ]
+    }
+  ],
+  "skills": [
+    {
+      "category": "AI & Computer Vision",
+      "icon": "fa-brain",
+      "items": [
+        "Deep Learning & Neural Networks",
+        "Computer Vision (CNN, Object Detection)",
+        "Data Analysis & Preprocessing"
+      ]
+    },
+    {
+      "category": "ML Frameworks",
+      "icon": "fa-cube",
+      "items": [
+        "TensorFlow",
+        "PyTorch",
+        "Scikit-learn"
+      ]
+    },
+    {
+      "category": "Programming Languages",
+      "icon": "fa-code",
+      "items": [
+        "Python (Primary)",
+        "C++",
+        "Java",
+        "SQL"
+      ]
+    },
+    {
+      "category": "Tools & Software",
+      "icon": "fa-tools",
+      "items": [
+        "VS Code",
+        "Linux / Terminal",
+        "Git / GitHub",
+        "Jupyter Notebooks"
+      ]
+    },
+    {
+      "category": "Languages",
+      "icon": "fa-globe",
+      "items": [
+        "Spanish (Native)",
+        "English (C1)",
+        "French (B2)"
+      ]
+    }
+  ],
+  "volunteering": [
+    {
+      "id": "fff",
+      "position": "Fridays For Future Huelva - Coordinator",
+      "organization": null,
+      "startDate": "May 2019",
+      "endDate": "Present",
+      "isPresent": true,
+      "description": "Organized and led environmental awareness initiatives and community volunteering activities focused on climate action and sustainability."
+    },
+    {
+      "id": "wolves",
+      "position": "Wolves Summit - Volunteer Staff",
+      "organization": "Wrocław, Poland",
+      "startDate": "May 2022",
+      "endDate": "May 2022",
+      "isPresent": false,
+      "description": "Staff volunteer at Eastern Europe's largest technology conference, supporting conference operations and attendee experience."
+    }
+  ]
+}

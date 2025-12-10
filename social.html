@@ -6,64 +6,263 @@
     <link rel="icon" type="image/png" href="images/logos/gruncrow-ai.png">
     <link rel="stylesheet" href="css/styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-    <title>Projects</title>
+    <title>Alba Márquez-Rodríguez - CV</title>
 </head>
-<!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-EPGY5EF08T"></script>
 <script>
     window.dataLayer = window.dataLayer || [];
     function gtag(){dataLayer.push(arguments);}
     gtag('js', new Date());
-
     gtag('config', 'G-EPGY5EF08T');
 </script>
 <body>
-    <header style="background-color: #333; color: #fff; padding: 10px; display: flex; flex-direction: column; align-items: center; text-align: center;">
-        <!-- <img src="images/GrunCrow Lynx.jpeg" alt="GrunCrow Avatar" style="width: 150px; height: 150px; border-radius: 50%; border: 4px solid #fff; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); margin-bottom: 20px;"> -->
+    <header>
         <div>
-            <h1>Alba Márquez-Rodríguez - GrunCrow</h1>
-            <h2>Computer Scientist specialized in Computer Vision</h2>
-            <p>Passionate about AI, Deep Learning and Data Analysis</p>
-            <p>for Ecology and Conservation.</p>
+            <h1>Alba Márquez-Rodríguez</h1>
+            <h2>Computer Scientist specialized in Artificial Intelligence</h2>
         </div>
-        <nav style="margin-top: auto;">
-            <ul style="list-style-type: none; padding: 0; display: flex; justify-content: center;">
-                <!-- <li><a href="#presentation">Presentation</a></li> -->
+        <nav>
+            <ul>
                 <li><a href="index.html">Home</a></li>
-                <li style="margin-right: 30px;"><a href="projects.html">Projects</a></li>
-                <li style="margin-right: 30px;"><a href="publications.html">Publications</a></li>
-                <li style="margin-right: 30px;"><a href="congresses.html">Congresses</a></li>
+                <li><a href="publications.html">Publications</a></li>
+                <li><a href="projects.html">Projects</a></li>
+                <li><a href="congresses.html">Congresses</a></li>
                 <li><a href="events.html">Events</a></li>
-                <li style="margin-right: 30px;"><a href="cv.html">CV</a></li>
+                <li><a href="cv.html">CV</a></li>
             </ul>
         </nav>
     </header>
 
-    <main>
-        <!-- Your social media highlights go here -->
-        <section id="linkedin">
-            <h2>LinkedIn</h2>
-            <a href="https://www.linkedin.com/in/alba-quez-guez/" target="_blank" id="linkedin">
-                <i class="fab fa-linkedin"></i> Visita mi perfil de LinkedIn
-            </a>
-            <!-- Placeholder for LinkedIn profile preview -->
-        </section>
+    <main class="social-container">
+        <!-- Sidebar Navigation -->
+        <aside class="social-sidebar">
+            <h3>Connect With Me</h3>
+            <nav class="social-nav">
+                <a href="#linkedin" class="social-nav-link active">
+                    <i class="fab fa-linkedin"></i> LinkedIn
+                </a>
+                <a href="#twitter" class="social-nav-link">
+                    <i class="fab fa-twitter"></i> Twitter
+                </a>
+                <a href="#github" class="social-nav-link">
+                    <i class="fab fa-github"></i> GitHub
+                </a>
+                <a href="#scholar" class="social-nav-link">
+                    <i class="fas fa-graduation-cap"></i> Google Scholar
+                </a>
+                <a href="#orcid" class="social-nav-link">
+                    <i class="fas fa-id-badge"></i> ORCID
+                </a>
+                <a href="#mastodon" class="social-nav-link">
+                    <i class="fab fa-mastodon"></i> Mastodon
+                </a>
+            </nav>
+        </aside>
 
-        <section id="twitter">
-            <h2>Twitter</h2>
-            <a href="https://www.twitter.com/GrunCrow/" target="_blank">
-                <i class="fab fa-twitter"></i> Visita mi perfil de Twitter
-            </a>
-            <!-- Placeholder for most liked tweet -->
-        </section>
+        <!-- Main Content -->
+        <div class="social-content">
+            <!-- Intro Section -->
+            <section class="card" style="margin-bottom: 32px;">
+                <h2><i class="fas fa-share-alt"></i> Follow my journey</h2>
+                <p>Stay updated with my latest research, projects, and thoughts on AI and ecology.</p>
+            </section>
 
-        <section id="github">
-            <h2>GitHub</h2>
-            <a href="https://github.com/GrunCrow" target="_blank">
-                <i class="fab fa-github"></i> Visita mi perfil de GitHub
-            </a>
-            <!-- Placeholder for GitHub profile preview -->
-        </section>
+            <!-- LinkedIn Section -->
+            <section id="linkedin" class="social-section">
+                <h2><i class="fab fa-linkedin"></i> LinkedIn</h2>
+                <div class="social-platform-card featured-card">
+                    <div class="social-header">
+                        <div class="social-platform-info">
+                            <h3>Professional network</h3>
+                            <p>Stay connected with my professional journey, publications, and career updates</p>
+                        </div>
+                        <a href="https://www.linkedin.com/in/alba-quez-guez/" target="_blank" rel="noopener" class="social-button">
+                            <i class="fab fa-linkedin"></i> Visit Profile
+                        </a>
+                    </div>
+                    <div class="social-stats">
+                        <div class="stat">
+                            <span class="stat-label">Focus areas</span>
+                            <span class="stat-value">AI • Computer vision • Ecology</span>
+                        </div>
+                        <div class="stat">
+                            <span class="stat-label">Recent activity</span>
+                            <span class="stat-value">Articles, publications, congresses, events...</span>
+                        </div>
+                    </div>
+                    <!-- LinkedIn Feed Embed (Optional - requires LinkedIn script) -->
+                    <div class="platform-embed">
+                        <p style="color: var(--muted); text-align: center; padding: 24px;">
+                            <i class="fas fa-info-circle"></i> Visit my LinkedIn profile to see my latest posts, publications, and professional updates.
+                        </p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- GitHub Section -->
+            <section id="github" class="social-section">
+                <h2><i class="fab fa-github"></i> GitHub</h2>
+                <div class="social-platform-card">
+                    <div class="social-header">
+                        <div class="social-platform-info">
+                            <h3>Open Source Projects</h3>
+                            <p>Explore my code repositories, contributions, and collaborative projects</p>
+                        </div>
+                        <a href="https://github.com/GrunCrow" target="_blank" rel="noopener" class="social-button">
+                            <i class="fab fa-github"></i> View GitHub
+                        </a>
+                    </div>
+                    <div class="social-stats">
+                        <div class="stat">
+                            <span class="stat-label">Primary Language</span>
+                            <span class="stat-value">Python</span>
+                        </div>
+                        <div class="stat">
+                            <span class="stat-label">Focus</span>
+                            <span class="stat-value">AI • Computer Vision • Data</span>
+                        </div>
+                    </div>
+                    <div class="platform-embed">
+                        <div id="github-repos" style="color: var(--muted); text-align: center; padding: 24px;">
+                            <i class="fas fa-code"></i> Loading repositories...
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Google Scholar Section -->
+            <section id="scholar" class="social-section">
+                <h2><i class="fas fa-graduation-cap"></i> Google Scholar</h2>
+                <div class="social-platform-card">
+                    <div class="social-header">
+                        <div class="social-platform-info">
+                            <h3>Academic Profile</h3>
+                            <p>Track my publications, citations, and academic contributions</p>
+                        </div>
+                        <a href="https://scholar.google.com/citations?user=oKUhJ9EAAAAJ" target="_blank" rel="noopener" class="social-button">
+                            <i class="fas fa-graduation-cap"></i> View Profile
+                        </a>
+                    </div>
+                    <div class="social-stats">
+                        <div class="stat">
+                            <span class="stat-label">Research Areas</span>
+                            <span class="stat-value">Computer Vision • AI • Ecology</span>
+                        </div>
+                        <div class="stat">
+                            <span class="stat-label">View Full</span>
+                            <span class="stat-value">Publications Page</span>
+                        </div>
+                    </div>
+                    <div class="platform-embed">
+                        <p style="color: var(--muted); text-align: center; padding: 24px;">
+                            <i class="fas fa-info-circle"></i> Visit Google Scholar to see my complete publication record and citation metrics.
+                        </p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ORCID Section -->
+            <section id="orcid" class="social-section">
+                <h2><i class="fas fa-id-badge"></i> ORCID</h2>
+                <div class="social-platform-card">
+                    <div class="social-header">
+                        <div class="social-platform-info">
+                            <h3>Researcher Identifier</h3>
+                            <p>ORCID iD: 0000-0003-2960-7757</p>
+                        </div>
+                        <a href="https://orcid.org/0000-0003-2960-7757" target="_blank" rel="noopener" class="social-button">
+                            <i class="fas fa-id-badge"></i> View ORCID
+                        </a>
+                    </div>
+                    <div class="social-stats">
+                        <div class="stat">
+                            <span class="stat-label">Persistent ID</span>
+                            <span class="stat-value">0000-0003-2960-7757</span>
+                        </div>
+                        <div class="stat">
+                            <span class="stat-label">Purpose</span>
+                            <span class="stat-value">Academic Attribution</span>
+                        </div>
+                    </div>
+                    <div class="platform-embed">
+                        <p style="color: var(--muted); text-align: center; padding: 24px;">
+                            <i class="fas fa-info-circle"></i>
+                        </p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Mastodon Section -->
+            <section id="mastodon" class="social-section">
+                <h2><i class="fab fa-mastodon"></i> Mastodon</h2>
+                <div class="social-platform-card">
+                    <div class="social-header">
+                        <div class="social-platform-info">
+                            <h3>Decentralized social network</h3>
+                            <!-- <p>Connect on the federated social platform focused on privacy and community</p> -->
+                        </div>
+                        <a href="https://mastodon.social/@GrunCrow" target="_blank" rel="noopener" class="social-button">
+                            <i class="fab fa-mastodon"></i> Follow
+                        </a>
+                    </div>
+                    <div class="social-stats">
+                        <div class="stat">
+                            <span class="stat-label">Instance</span>
+                            <span class="stat-value">mastodon.social</span>
+                        </div>
+                        <!-- <div class="stat">
+                            <span class="stat-label">Philosophy</span>
+                            <span class="stat-value">Privacy & Community</span>
+                        </div> -->
+                    </div>
+                    <div class="platform-embed">
+                        <p style="color: var(--muted); text-align: center; padding: 24px;">
+                            <i class="fas fa-info-circle"></i>Visit my Mastodon profile for discussions about technology, research, and initiatives.
+                        </p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Twitter/X Section -->
+            <section id="twitter" class="social-section">
+                <h2><i class="fab fa-twitter"></i> Twitter / X</h2>
+                <div class="social-platform-card">
+                    <div class="social-header">
+                        <div class="social-platform-info">
+                            <!-- <h3>Real-time updates</h3> -->
+                            <p>Follow my thoughts on technology, research, and initiatives.</p>
+                        </div>
+                        <a href="https://x.com/GrunCrow" target="_blank" rel="noopener" class="social-button">
+                            <i class="fab fa-twitter"></i> Follow
+                        </a>
+                    </div>
+                    <div class="social-stats">
+                        <div class="stat">
+                            <span class="stat-label">Topics</span>
+                            <span class="stat-value">AI • Research • Conservation</span>
+                        </div>
+                        <div class="stat">
+                            <span class="stat-label">Engagement</span>
+                            <span class="stat-value">Discussions & Ideas</span>
+                        </div>
+                    </div>
+                    <!-- Twitter Timeline Embed -->
+                    <div class="platform-embed">
+                        <a class="twitter-timeline" data-height="500" href="https://twitter.com/GrunCrow?ref_src=twsrc%5Etfw">
+                            Tweets by GrunCrow
+                        </a>
+                    </div>
+                </div>
+            </section>
+        </div>
     </main>
+
+    <div id="footer-placeholder"></div>
+
+    <script src="https://platform.twitter.com/widgets.js" async></script>
+    <script src="js/footer.js"></script>
+    <script src="js/links.js"></script>
+    <script src="js/scripts.js"></script>
+    <script src="js/social.js"></script>
 </body>
 </html>

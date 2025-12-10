@@ -7,37 +7,25 @@
     <link rel="stylesheet" href="css/styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <title>Alba Márquez-Rodríguez - CV</title>
-    <style>
-        section {
-            width: 70%;
-        }
-    </style>
 </head>
-<!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-EPGY5EF08T"></script>
 <script>
     window.dataLayer = window.dataLayer || [];
     function gtag(){dataLayer.push(arguments);}
     gtag('js', new Date());
-
     gtag('config', 'G-EPGY5EF08T');
 </script>
 <body>
     <header>
-        <!-- <img src="images/GrunCrow Lynx.jpeg" alt="GrunCrow Avatar" style="width: 150px; height: 150px; border-radius: 50%; border: 4px solid #fff; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); margin-bottom: 20px;"> -->
         <div>
             <h1>Alba Márquez-Rodríguez</h1>
-            <h2>Computer Scientist specialized in Computer Vision</h2>
-            <p>Passionate about AI, Deep Learning and Data Analysis</p>
-            <p>for Ecology and Conservation.</p>
+            <h2>Computer Scientist specialized in Artificial Intelligence</h2>
         </div>
         <nav>
             <ul>
-                <!-- <li><a href="#presentation">Presentation</a></li> -->
                 <li><a href="index.html">Home</a></li>
-                <li><a href="projects.html">Projects</a></li>
-                <li><a href="researchprojects.html">Research Projects</a></li>
                 <li><a href="publications.html">Publications</a></li>
+                <li><a href="projects.html">Projects</a></li>
                 <li><a href="congresses.html">Congresses</a></li>
                 <li><a href="events.html">Events</a></li>
                 <li><a href="social.html">Social Media</a></li>
@@ -45,214 +33,54 @@
         </nav>
     </header>
 
-    <!-- Sección del CV -->
-    <section id="presentation">
-        <div style="background-color: #f9f9f9; border-radius: 5px; padding: 20px; display: flex; flex-direction: column; align-items: center; text-align: center;">
-            <!-- Center the image above the text -->
-            <img src="images/photos/profile/bachelor-prom.jpg" alt="Alba Photo">
-            <h1>Alba Márquez-Rodríguez</h1>
+    <main class="cv-container">
+        <!-- Sidebar Navigation -->
+        <aside class="cv-sidebar">
+            <div class="cv-profile"></div>
+            <nav class="cv-nav">
+                <h3>Navigation</h3>
+                <a href="#experience" class="cv-nav-link">Experience</a>
+                <a href="#education" class="cv-nav-link">Education</a>
+                <a href="#certifications" class="cv-nav-link">Certifications</a>
+                <a href="#skills" class="cv-nav-link">Skills</a>
+                <a href="#volunteering" class="cv-nav-link">Volunteering</a>
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <div class="cv-content">
+            <section id="experience" class="cv-section">
+                <h2><i class="fas fa-briefcase"></i> Experience</h2>
+                <div id="experience-content"></div>
+            </section>
+
+            <section id="education" class="cv-section">
+                <h2><i class="fas fa-graduation-cap"></i> Education</h2>
+                <div id="education-content"></div>
+            </section>
+
+            <section id="certifications" class="cv-section">
+                <h2><i class="fas fa-certificate"></i> Certifications & Specialized Training</h2>
+                <div id="certifications-content"></div>
+            </section>
+
+            <section id="skills" class="cv-section">
+                <h2><i class="fas fa-code"></i> Technical Skills</h2>
+                <div id="skills-content"></div>
+            </section>
+
+            <section id="volunteering" class="cv-section">
+                <h2><i class="fas fa-handshake"></i> Volunteering & Community</h2>
+                <div id="volunteering-content"></div>
+            </section>
         </div>
-    </section>
-
-    <section id="experience">
-        <div style="background-color: #f9f9f9; border-radius: 5px; padding: 20px;">
-            <h2>Experience</h2>
-
-            <div class="section-header">
-                <h3>Licensed Researcher</h3>
-                <div class="section-info">
-                    <h4>INMAR (Instituto Universitario de Investigación Marina) - UCA (Universidad de Cádiz)</h4>
-                    <h5><a href="projects.html#seanimalmove-project">SEANIMALMOVE Project</a></h5>
-                    <h6>June 2024 - August 2025</h6>
-                </div>
-            </div>
-            <ul>
-                <li>Project: "SEANIMALMOVE: Monitoring the movement and population dynamics of marine and coastal vertebrates in the face of anthropogenic impacts in a global change scenario.”</li>
-                <li>Development of scripts for the preprocessing and processing and management of the data.</li>
-            </ul>
-
-            <div class="section-header">
-                <h3>JAE Intro Schoolarship 2023</h3>
-                <div class="section-info">
-                    <h4>Estación Biológica de Doñana, CSIC</h4>
-                    <h5><a href="projects.html#birdeep-project">BIRDeep Project</a></h5>
-                    <h6>October 2023 - April 2024</h6>
-                </div>
-            </div>
-            <ul>
-                <li>Project: "BIRDEEP: Monitoring the health status of ecosystems by automatically detecting bird songs using Deep Learning”.</li>
-                <li>Development of scripts for the preprocessing and processing and management of the data.</li>
-                <li>Creation of deep learning models and analysis of results.</li>
-            </ul>
-            
-            <div class="section-header">
-                <h3>Santander/UHU Schoolarship 2022-23</h3>
-                <div class="section-info">
-                    <h4>Universidad de Huelva</h4>
-                    <h5><a href="projects.html#ai-census-project">AI-Census Project</a></h5>
-                    <h6>June 2023 - August 2023</h6>
-                </div>
-            </div>
-            <ul>
-                <li>Development of a deep learning-based model for detecting and classifying camera trap images.</li>
-                <li>Design and implementation of a hierarchical model for detection and classification of species in camera trap images.</li>
-                <li>Conclusion of the project through the generation and in-depth analysis of the results.</li>
-            </ul>
-
-            <div class="section-header">
-                <h3>Computer Specialist Technician</h3>
-                <div class="section-info">
-                    <h4>Universidad de Huelva</h4>
-                    <h5><a href="projects.html#ai-census-project">AI-Census Project</a></h5>
-                    <h6>September 2022 - November 2022</h6>
-                </div>
-            </div>
-            <ul>
-                <li>Project: "Automatic system for census and monitoring of biodiversity using deep learning techniques (DeeP Learning DL)".</li>
-                <li>Developed scripts for the preprocessing, processing and management of the data.</li>
-                <li>Created, developed, and managed Convolutional Neural Network models for images classification.</li>
-            </ul>
-        </div>
-    </section>
-
-    <section id="education">
-        <div style="background-color: #f9f9f9; border-radius: 5px; padding: 20px;">
-            <h2>Education</h2>
-
-            <div class="section-header">
-                <h3>Master's Degree Computational Intelligence and Internet Of Things</h3>
-                <div class="section-info">
-                    <h4>Universidad de Córdoba</h4>
-                    <!-- <h5>Authors: Daedheldir, GrunCrow</h5> -->
-                    <h6>October 2023 - Present</h6>
-                </div>
-            </div>
-
-            <div class="section-header">
-                <h3>Bachelor's Degree Computer Science</h3>
-                <div class="section-info">
-                    <h4>Universidad de Huelva</h4>
-                    <!-- <h5>Authors: Daedheldir, GrunCrow</h5> -->
-                    <h6>October 2019 - November 2023</h6>
-                </div>
-            </div>
-            <ul>
-                <li>Presented “Fuzzy software for estimating the viability of turbines in the use of marine currents” at V ScienCity Conference.</li>
-                <li>TFG: Classification of camera trap images with a convolutional neural network.</li>
-            </ul>
-        </div>
-    </section>
-
-    <section id="additional-education">
-        <div style="background-color: #f9f9f9; border-radius: 5px; padding: 20px;">
-            <h2>Additional Education</h2>
-
-            <div class="section-header">
-                <h3>cv4ecology: Summer Workshop on Computer Vision Methods for Ecology</h3>
-                <div class="section-info">
-                    <h4>Caltech, California, USA</h4>
-                    <h5><a href="projects.html#ai-census-project">Project: AI-Census</a></h5>
-                    <h6>August 2023 - September 2023</h6>
-                </div>
-            </div>
-            <ul>
-                <li>Participated in a three-week intensive program focusing on computer vision methods for ecological research.</li>
-                <li>Developed skills in analyzing large image, audio, and video datasets using advanced computer vision techniques.</li>
-                <li>Engaged in classroom training, hands-on projects, and one-on-one mentorship.</li>
-            </ul>
-
-            <div class="section-header">
-                <h3>ERASMUS: International Studies Program</h3>
-                <div class="section-info">
-                    <h4>Politechnika Wroclawska, Poland</h4>
-                    <h6>September 2021 - July 2022 (Whole Academic Year)</h6>
-                </div>
-            </div>
-            <ul>
-                <li><a href="projects.html#boids-project">Art generator with genetic algorithm and boids project</a></li>
-                <li>Color Detector Project</li>
-            </ul>
-        </div>
-    </section>
-
-    <section id="volunteering">
-        <div style="background-color: #f9f9f9; border-radius: 5px; padding: 20px;">
-            <h2>Volunteering</h2>
-
-            <div class="section-header">
-                <h3>Fridays For Future Huelva Coordinator</h3>
-                <div class="section-info">
-                    <h6>May 2019 - Present</h6>
-                </div>
-            </div>
-            <ul>
-                <li>Organized and participated in environmental awareness and volunteering activities</li>
-            </ul>
-
-            <div class="section-header">
-                <h3>Volunteer Staff in Wolves Summit</h3>
-                <div class="section-info">
-                    <h6>May 2022 - May 2022</h6>
-                </div>
-            </div>
-            <ul>
-                <li>Volunteer at the biggest eastern european technological conference hosted in Wroclaw, Poland</li>
-            </ul>
-        </div>
-    </section>
-
-    <section id="skills">
-        <div style="background-color: #f9f9f9; border-radius: 5px; padding: 20px; overflow-x: auto;">
-            <h2>Skills</h2>
-            <table style="width: 100%; border-collapse: collapse;">
-                <tr>
-                    <th style="padding: 12px; background-color: #ddd;">Skills</th>
-                    <th style="padding: 12px; background-color: #ddd;">Libraries</th>
-                    <th style="padding: 12px; background-color: #ddd;">Software</th>
-                    <th style="padding: 12px; background-color: #ddd;">Coding Languages</th>
-                    <th style="padding: 12px; background-color: #ddd;">Languages</th>
-                </tr>
-                <tr>
-                    <td style="padding: 12px;">Computer Vision</td>
-                    <td style="padding: 12px;">TensorFlow</td>
-                    <td style="padding: 12px;">Visual Studio Code</td>
-                    <td style="padding: 12px;">Python</td>
-                    <td style="padding: 12px;">Spanish – Native</td>
-                </tr>
-                <tr>
-                    <td style="padding: 12px;">Data Analysis</td>
-                    <td style="padding: 12px;">PyTorch</td>
-                    <td style="padding: 12px;">Linux Terminals</td>
-                    <td style="padding: 12px;">C++</td>
-                    <td style="padding: 12px;">English – C1</td>
-                </tr>
-                <tr>
-                    <td style="padding: 12px;">Data preprocessing</td>
-                    <td style="padding: 12px;"></td>
-                    <td style="padding: 12px;"></td>
-                    <td style="padding: 12px;">SQL</td>
-                    <td style="padding: 12px;">French – B2</td>
-                </tr>
-                <tr>
-                    <td style="padding: 12px;"></td>
-                    <td style="padding: 12px;"></td>
-                    <td style="padding: 12px;"></td>
-                    <td style="padding: 12px;">Java</td>
-                    <td style="padding: 12px;"></td>
-                </tr>
-            </table>
-        </div>
-    </section>
-    
-    
-    
+    </main>
 
     <div id="footer-placeholder"></div>
-    
+
     <script src="js/footer.js"></script>
     <script src="js/links.js"></script>
     <script src="js/scripts.js"></script>
-
+    <script src="js/cv.js"></script>
 </body>
 </html>
-

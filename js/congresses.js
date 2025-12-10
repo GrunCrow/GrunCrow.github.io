@@ -96,6 +96,17 @@ function renderCongress(congress) {
                 }).join('')}
            </div>` : '';
 
+    // Handle description with "read more" feature (>300 chars)
+    const descriptionHTML = congress.description.length > 300
+        ? `<p style="margin: 12px 0; line-height: 1.6; color: var(--text);">
+             <span id="desc-short-${congress.id}">${congress.description.substring(0, 300)}...</span>
+             <span id="desc-full-${congress.id}" style="display: none;">${congress.description}</span>
+             <button onclick="document.getElementById('desc-short-${congress.id}').style.display = document.getElementById('desc-short-${congress.id}').style.display === 'none' ? 'inline' : 'none'; document.getElementById('desc-full-${congress.id}').style.display = document.getElementById('desc-full-${congress.id}').style.display === 'none' ? 'inline' : 'none';" style="background: none; border: none; color: var(--primary); font-weight: 600; cursor: pointer; padding: 0; margin-left: 4px; text-decoration: underline; font-size: 0.95rem; display: inline;">
+               <span id="btn-text-${congress.id}">Read more</span>
+             </button>
+           </p>`
+        : `<p style="margin: 12px 0; line-height: 1.6; color: var(--text);">${congress.description}</p>`;
+
     // Different layout for poster vs oral
     if (congress.type === 'poster' && congress.images && congress.images.length > 0) {
         // Poster layout: text left, poster right
@@ -130,7 +141,7 @@ function renderCongress(congress) {
                 
                 <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px; align-items: start; margin-top: 16px;">
                     <div>
-                        <p>${congress.description}</p>
+                        ${descriptionHTML}
                         ${links}
                     </div>
                     <div style="position: sticky; top: 120px;">
@@ -178,7 +189,7 @@ function renderCongress(congress) {
                         ${awardBadge}
                     </div>
                 </div>
-                <p>${congress.description}</p>
+                ${descriptionHTML}
                 ${images}
                 ${links}
             </div>
