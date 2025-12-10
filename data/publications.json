@@ -1,5 +1,14 @@
 [
     {
+        "id": "gec-2025",
+        "title": "The cost of choice: energy-based breeding strategies for a sensitive species in natural versus managed coastal habitats",
+        "venue": "Global Ecology and Conservation",
+        "date": "November 2025",
+        "authors": "Andrés De la Cruz, José Manuel Reyes-González, Alberto Álvarez, Yana Korneeva, Nuria Martín, Laura Rollán, Juliette Lemaire, Andrea Forján, Manuel Couso, Alejandro Pérez-Hurtado, Macarena Castro, Jorge M Pereira, Vitor H Paiva, Jaime A Ramos, Afonso D Rocha, Alba Márquez-Rodríguez, Gonzalo M Arroyo",
+        "doi": "https://doi.org/10.1016/j.gecco.2025.e03972",
+        "abstract": "Global change stressors, including coastal habitat degradation driven by human activities, pose a major threat to coastal species, forcing them to adjust behavioural strategies and shift to alternative human-managed habitats. These shifts are concerning, as alternative habitats may not offer the same ecological benefits as natural ones. We used the Little Tern (Sternula albifrons), a coastal seabird sensitive to human disturbance, as a model to investigate foraging strategies across habitats with different land uses. Understanding how this key species interacts with diverse coastal habitats is critical for conservation. Using high-resolution GPS data from lightweight miniature trackers, we monitored movement ecology and energy expenditure of breeding individuals in two contrasting habitats: natural beaches and salinas (saltworks or saltpans) in the Bay of Cádiz (Southwest Europe). Birds nesting on beaches exhibited smaller home ranges and shorter, more frequent foraging trips than those in salinas, reflecting potentially higher habitat quality and higher hatching success. Despite this, some birds still nested in salinas, where they showed lower energy expenditure, possibly reflecting the restricted-access nature of these habitats and the relatively undisturbed conditions they provide compared with the frequently visited beaches. Our findings underline the importance of a dual conservation strategy: protecting natural breeding sites while enhancing the ecological value of human-made habitats. Ensuring the functionality of both habitat types is essential for the resilience and long-term viability of sensitive coastal species facing rapid environmental change."
+    },
+    {
         "id": "ibis-2025",
         "title": "Optimization of passive acoustic bird surveys: a global assessment of BirdNET settings",
         "venue": "Ibis",
@@ -10,6 +19,7 @@
     },
     {
         "id": "ecoinf-2025",
+        "featured": true,
         "title": "A bird song detector for improving bird identification through deep learning: A case study from Doñana",
         "venue": "Ecological Informatics",
         "date": "July 2025",

@@ -13,7 +13,7 @@
     --card: #ffffff;
     --text: #1f2430;
     --muted: #566077;
-    --primary: #2d6cdf;
+    --primary: #00004c;
     --accent: #ff7a59;
     --border: #e4e7ef;
 }
@@ -361,4 +361,100 @@ img {
 .pub-meta .pill {
     display: inline-flex;
     align-self: flex-start;
+}
+
+.featured-card {
+    border: 2px solid var(--primary);
+    background: linear-gradient(170deg, #e0e4ff 0%, #ffffff 100%);
+    padding: 24px;
+    border-radius: 12px;
+    margin: 18px 0;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.06);
+    position: relative;
+    overflow: hidden;
+}
+
+.featured-card .project-info {
+    position: relative;
+    z-index: 2;
+}
+
+.featured-card h3 {
+    color: var(--primary);
+    margin-bottom: 12px;
+}
+
+.featured-card p {
+    margin-bottom: 12px;
+    line-height: 1.6;
+}
+
+.publications-container {
+    display: flex;
+    gap: 32px;
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 24px 16px 96px;
+}
+
+.publications-sidebar {
+    position: sticky;
+    top: 20px;
+    width: 280px;
+    height: fit-content;
+    background: var(--card);
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.06);
+    border: 1px solid var(--border);
+}
+
+.publications-sidebar h3 {
+    margin-top: 0;
+    font-size: 1.1rem;
+    color: var(--text);
+    margin-bottom: 16px;
+}
+
+.publications-sidebar nav {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.publications-sidebar a {
+    color: var(--muted);
+    text-decoration: none;
+    padding: 8px 12px;
+    border-radius: 6px;
+    font-size: 0.9rem;
+    transition: all 0.2s;
+    display: block;
+}
+
+.publications-sidebar a:hover {
+    background: var(--bg);
+    color: var(--primary);
+}
+
+.publications-sidebar a.active {
+    background: var(--primary);
+    color: white;
+    font-weight: 600;
+}
+
+.publications-content {
+    flex: 1;
+    min-width: 0;
+}
+
+/* Hide sidebar on mobile */
+@media (max-width: 968px) {
+    .publications-container {
+        flex-direction: column;
+    }
+    .publications-sidebar {
+        position: static;
+        width: 100%;
+    }
 }
