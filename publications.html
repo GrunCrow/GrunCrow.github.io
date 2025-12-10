@@ -40,6 +40,40 @@
         </nav>
     </header>
 
+    <!-- New publication: Ibis 2025 -->
+    <section id="publication-ibis-2025">
+        <div style="background-color: #f9f9f9; border-radius: 5px; padding: 20px;">
+            <div class="section-header">
+                <h3><a href="https://doi.org/10.1111/ibi.70013" target="_blank">Optimization of passive acoustic bird surveys: a global assessment of BirdNET settings</a></h3>
+                <div class="section-info">
+                    <h5>Ibis</h5>
+                    <h6>Authors: Cristian Pérez‐Granados, …, <strong>Alba Márquez‑Rodríguez</strong>, …, Esther Sebastián‑González</h6>
+                    <h6>November 2025</h6>
+                </div>
+            </div>
+            <p>BirdNET is a popular machine learning tool for automated recognition of bird sounds. However, evidence on how to optimize its settings for accurate bird monitoring remains limited. Here, we evaluate how BirdNET settings influence model performance in identifying bird vocalizations and characterizing bird communities, using 4224 1-min recordings from 67 recording locations worldwide. Giving equal importance to recall and precision, a low confidence score threshold (0.1–0.3) appears optimal for detecting bird vocalizations, whereas higher thresholds (around 0.5) are more suitable for characterizing bird communities. Based on our findings, we recommend increasing the Overlap parameter from its default value of 0 to 2 s, as this consistently improves BirdNET performance in detecting both bird vocalizations and species presence. The effect of the Sensitivity parameter varied across regions. However, a value of 0.5 maximizes global performance for community-level analyses across all confidence thresholds, and a value of 1.5 generally yields better results for vocalization-level studies, particularly at low confidence thresholds. Our findings offer practical guidance for selecting BirdNET settings in passive acoustic bird surveys, enhancing both the identification of bird vocalizations and the characterization of bird communities.</p>
+        </div>
+    </section>
+
+    <!-- New latest publication -->
+    <section id="publication-ecoinf-2025">
+        <div style="background-color: #f9f9f9; border-radius: 5px; padding: 20px;">
+            <div class="section-header">
+                <h3><a href="https://doi.org/10.1016/j.ecoinf.2025.103254" target="_blank">A bird song detector for improving bird identification through deep learning: A case study from Doñana</a></h3>
+                <div class="section-info">
+                    <h5><a href="https://doi.org/10.1016/j.ecoinf.2025.103254" target="_blank">Ecological Informatics</a></h5>
+                    <h6>Authors: <strong>Alba Márquez-Rodríguez</strong>, Miguel Ángel Mohedano-Munoz, Manuel J. Marín-Jiménez, Eduardo Santamaría-García, Giulia Bastianelli, Pedro Jordano, Irene Mendoza</h6>
+                    <h6>DOI: <a href="https://doi.org/10.1016/j.ecoinf.2025.103254" target="_blank">10.1016/j.ecoinf.2025.103254</a></h6>
+                    <h6>July 2025</h6>
+                </div>
+            </div>
+            <p>Passive Acoustic Monitoring (PAM), which uses devices like automatic audio recorders, has become a fundamental tool in conserving and managing natural ecosystems. However, the large volume of unsupervised audio data that PAM generates poses a major challenge for extracting meaningful information. Deep Learning techniques, particularly automated species identification models based on computer vision, offer a promising solution. BirdNET, a widely used model for bird identification, has shown success in many study systems but is limited at local scale due to biases in its training data, which focus on specific locations and target sounds rather than entire soundscapes. A key challenge in bird species detection is that many recordings either lack target species or contain overlapping vocalizations, complicating automatic identification.</p>
+            <p>To overcome these problems, we developed a three-stage pipeline for automatic bird vocalization identification in Doñana National Park (SW Spain). We deployed AudioMoth recorders in three main habitats across nine locations and manually annotated 461 minutes of audio (3,749 annotations, 34 classes). The pipeline first isolates bird vocalizations with a Bird Song Detector using spectrogram-based image processing. Then we classify species using custom classifiers trained at the local scale with BirdNET embeddings. The best detection model used synthetic background audios and an environmental sound library (ESC-50) for augmentation. Applying the Bird Song Detector before classification improved identification: combining the detector with fine-tuned BirdNET increased weighted precision (0.18 → 0.37), recall (0.21 → 0.30) and F1 (0.17 → 0.28) versus the baseline without detection.</p>
+            <p>These results demonstrate the effectiveness of integrating a Bird Song Detector with fine-tuned classifiers for local soundscapes and highlight the need to adapt general-purpose tools to specific ecological contexts. Automatically detecting bird species enables monitoring the health of threatened ecosystems like Doñana and supports conservation measures to reduce biodiversity loss.</p>
+            <!-- <p><strong>Key Words:</strong> Passive Acoustic Monitoring, Deep Learning, Ecoacoustics, BIRDeep, AudioMoths</p> -->
+        </div>
+    </section>
+
     <!-- Sección de publicaciones -->
 
     <section id="publication-fr4fsofsssssfso">
@@ -49,7 +83,8 @@
             <div class="section-header">
                 <h3>Viability Analysis of Tidal Turbine Installation Using Fuzzy Logic: Case Study and Design Considerations</h3>
                 <div class="section-info">
-                    <h4>Universidad de Huelva</h4>
+                    <h5>axioms</h5>
+                    <h6>Authors: Ángel M Rodríguez-Pérez, César A Rodríguez, <strong>Alba Márquez-Rodríguez</strong>, Julio J Caparros Mancera</h6>
                     <!-- <h5>Authors: Daedheldir, GrunCrow</h5> -->
                     <h6>August 2023</h6>
                 </div>
@@ -65,7 +100,8 @@
             <div class="section-header">
                 <h3>Feature Ranking Merging: FRmgg. Application in High Dimensionality Binary Classification Problems</h3>
                 <div class="section-info">
-                    <h4>Universidad de Huelva</h4>
+                    <h5>Proceedings of 3rd International Conference on Artificial Intelligence: Advances and Applications</h5>
+                    <h6>Authors: Alberto F Merchán, <strong>Alba Márquez-Rodríguez</strong>, Paola Santana-Morales, Antonio J Tallón-Ballesteros</h6>
                     <!-- <h5>Authors: Daedheldir, GrunCrow</h5> -->
                     <h6>April 2023</h6>
                 </div>
@@ -81,7 +117,8 @@
             <div class="section-header">
                 <h3>Feature Ranking for Feature Sorting and Feature Selection, and Feature Sorting: FR4(FSoFS)$$ $$FSo</h3>
                 <div class="section-info">
-                    <h4>Universidad de Huelva</h4>
+                    <h5>International Workshop on Soft Computing Models in Industrial and Environmental Applications</h5>
+                    <h6>Authors: Antonio J Tallón-Ballesteros, <strong>Alba Márquez-Rodríguez</strong>, Yaoyang Wu, Paola Santana-Morales, Simon Fong</h6>
                     <!-- <h5>Authors: Daedheldir, GrunCrow</h5> -->
                     <h6>October 2022</h6>
                 </div>
@@ -98,8 +135,9 @@
             <div class="section-header">
                 <h3>Feature Ranking for Feature Sorting and Feature Selection: FR4(FS)$$^2</h3>
                 <div class="section-info">
-                    <h4>Universidad de Huelva</h4>
+                    <h5>International Work-Conference on the Interplay between Natural and Artificial Computation</h5>
                     <!-- <h5>Authors: Daedheldir, GrunCrow</h5> -->
+                    <h6>Authors: Paola Santana-Morales, Alberto F Merchán, <strong>Alba Márquez-Rodríguez</strong>, Antonio J Tallón-Ballesteros</h6>
                     <h6>May 2022</h6>
                 </div>
             </div>
