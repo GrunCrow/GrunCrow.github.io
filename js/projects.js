@@ -58,7 +58,7 @@ function renderProject(proj) {
            </div>` : '';
 
     const tasks = proj.tasks && proj.tasks.length
-        ? `<h4>Key Contributions:</h4><ul>${proj.tasks.map(t => `<li>${t}</li>`).join('')}</ul>` : '';
+        ? `<h4>Contributions:</h4><ul>${proj.tasks.map(t => `<li>${t}</li>`).join('')}</ul>` : '';
 
     const objectives = proj.objectives && proj.objectives.length
         ? `<h4>Objectives:</h4><ol>${proj.objectives.map(o => `<li>${o}</li>`).join('')}</ol>` : '';
