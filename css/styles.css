@@ -21,8 +21,10 @@
 body {
     font-family: Arial, sans-serif;
     margin: 0;
-    padding: 0;
-    padding-bottom: 7.5%;
+    padding: 0;            /* remove extra bottom padding */
+    min-height: 100vh;     /* ensure full height */
+    display: flex;
+    flex-direction: column;
     position: relative;
     background-color: var(--bg);
     color: var(--text);
@@ -215,30 +217,35 @@ nav a {
 
 section {
     padding: 20px;
-    margin: 20px auto;
-    background-color: #fff;
+    margin: 20px 0;
+    background-color: transparent; /* No background for sections */
     border-radius: 5px;
-    width: 95%;
-    height: 95%;
-    /* max-width: 1100px; */
-}
-.section-content {
-    display: flex;
-    justify-content: space-between;
+    width: auto;
+    height: auto;
 }
 
-footer {
-    background-color: #555; /* Changed to lighter color */
-    color: #fff;
-    padding: 10px;
-    text-align: center;
-    position: fixed;
-    bottom: 0;
-    width: 100%;
-    height: 10%;
-    padding: 12px 16px;
+/* Keep white background only for card sections */
+section.card {
+    background-color: #fff;
 }
-/* Style for the image */
+
+/* Project boxes have white background */
+.project-box {
+    background: #fff; /* White background for each project */
+    border: 2px solid #ccc;
+    padding: 20px;
+    margin-bottom: 20px;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+}
+
+.project-box.featured-card {
+    border: 2px solid var(--primary);
+    background: linear-gradient(170deg, #e0e4ff 0%, #ffffff 100%);
+}
+
+/* Style for presentation section */
 #presentation img {
     width: 150px; /* Adjust the width as needed */
     height: 150px; /* Adjust the height as needed */
@@ -309,60 +316,76 @@ footer {
 img {
     width: 100%;   /* or any desired width */
     height: auto;  /* maintain aspect ratio */
-    object-fit: cover; /* resize the image to cover the container, the image might be clipped */
+    object-fit: contain; /* resize the image to cover the container, the image might be clipped */
 }
 
-.project-images-rectangles .custom-dimensions {
-    width: 700px;
-    height: 250px;
-    object-fit: cover; /* This will ensure the aspect ratio of the image is maintained */
-}
-
-.project-images-circles img {
-    width: 150px;
-    height: 150px;
-    margin: 0 10px;
-    border-radius: 50%; /* Circle shape */
-    border: 4px solid #fff;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s ease; /* Add this line */
-}
-
-.project-images-circles img:hover {
-    transform: scale(1.1); /* Add this block */
-}
-/* Style for project section*/
-.project-images-rectangles {
-    display: flex;
-    justify-content: center;
+/* Project card */
+.project-box {
+    border: 2px solid #ccc;
+    padding: 20px;
     margin-bottom: 20px;
+    border-radius: 8px;
+    overflow: hidden; /* prevent children from spilling out */
 }
-.project-images-rectangles img {
-    width: 384px; /* Adjust width for rectangles */
-    height: 216px; /* Adjust height for rectangles */
-    margin: 0 10px;
-    border-radius: 3px; /* Rectangle shape */
-    border: 4px solid #fff;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s ease; /* Add this line */
-}
-.project-images-rectangles img:hover {
-    transform: scale(1.1); /* Add this block */
-}
-.project-header {
+
+/* Logo beside project title */
+.project-header h3 {
     display: flex;
-    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
 }
-.project-info {
-    text-align: right;
-    padding: 0; /* Set padding to 0 */
-    margin: 0; /* Optionally, set margin to 0 */
+.project-header h3 img {
+    width: 40px;
+    height: 28px;
+    object-fit: contain;
+    margin: 0;
+    flex-shrink: 0;
 }
-.project-info h4,
-.project-info h5,
-.project-info h6 {
-    margin-top: 5px 0; /* Adjust the margin as needed */
-    /* margin-bottom: 5px; */ /* Adjust the margin as needed */
+
+/* Rectangle image grid */
+.project-images-rectangles {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 12px;
+    margin: 12px 0 6px;
+    align-items: start;
+}
+
+.project-images-rectangles img {
+    width: 100%;
+    height: auto;              /* let the image keep its natural aspect ratio */
+    max-height: 260px;         /* cap very tall images */
+    object-fit: contain;       /* no cropping */
+    background: #ffffff00;          /* avoid transparency edges */
+    border-radius: 6px;
+    border: 4px solid #ffffff00;
+    /* box-shadow: 0 0 10px rgba(0,0,0,0.1); */
+    transition: transform 0.2s ease;
+}
+
+.project-images-rectangles img:hover {
+    transform: scale(1.02);
+}
+
+/* Circle images (if used) */
+.project-images-circles {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 12px;
+    justify-items: center;
+    margin: 12px 0 6px;
+}
+.project-images-circles img {
+    width: 140px;
+    height: 140px;
+    object-fit: cover;
+    border-radius: 50%;
+    border: 4px solid #fff;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    transition: transform 0.2s ease;
+}
+.project-images-circles img:hover {
+    transform: scale(1.02);
 }
 
 /* Sections styles*/
@@ -476,15 +499,20 @@ img {
 
 .publications-sidebar {
     position: sticky;
-    top: 20px;
+    top: 100px;
     width: 280px;
     height: fit-content;
+    max-height: calc(100vh - 120px);
     background: var(--card);
     border-radius: 12px;
     padding: 20px;
     box-shadow: 0 10px 30px rgba(0,0,0,0.06);
     border: 1px solid var(--border);
+    flex-shrink: 0;
+    overflow: hidden; /* Prevent scrollbar on container */
 }
+
+
 
 .publications-sidebar h3 {
     margin-top: 0;
@@ -685,5 +713,206 @@ img {
     
     .focus-grid {
         grid-template-columns: 1fr;
+    }
+}
+
+/* Projects layout with sidebar */
+.projects-page-container {
+    display: flex;
+    gap: 32px;
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 24px 16px 96px;
+    align-items: flex-start;
+}
+
+.projects-sidebar {
+    position: sticky;
+    top: 100px;
+    width: 280px;
+    max-height: calc(100vh - 120px);
+    overflow-y: auto;
+    background: var(--card);
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.06);
+    border: 1px solid var(--border);
+    flex-shrink: 0;
+    z-index: 5;
+}
+
+
+
+.projects-sidebar nav {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.projects-sidebar .section-link,
+.projects-sidebar .project-link {
+    text-decoration: none;
+    padding: 8px 10px;
+    border-radius: 6px;
+    transition: all 0.2s ease;
+    display: block;
+}
+
+.projects-sidebar .section-link {
+    font-weight: 700;
+    color: var(--text);
+    border-left: 3px solid transparent;
+}
+
+.projects-sidebar .section-link:hover {
+    background: var(--bg);
+    border-left-color: var(--primary);
+}
+
+.projects-sidebar .section-link.active {
+    background: var(--primary);
+    color: #fff;
+    border-left-color: var(--accent);
+}
+
+.projects-sidebar .project-link {
+    font-size: 0.9rem;
+    color: var(--muted);
+    padding-left: 18px;
+}
+
+.projects-sidebar .project-link:hover {
+    background: var(--bg);
+    color: var(--primary);
+}
+
+.projects-sidebar .project-link.active {
+    color: var(--primary);
+    font-weight: 600;
+}
+
+.projects-main-content {
+    flex: 1;
+    min-width: 0;
+    position: relative;
+    z-index: 1;
+}
+
+.projects-main-content section {
+    width: auto;
+    height: auto;
+    margin: 0 0 20px 0;
+}
+
+/* Keep project images contained */
+.project-images-rectangles img {
+    width: 100%;
+    height: auto;
+    max-height: 260px;
+    object-fit: contain;
+    /* background: #fff; */
+    border-radius: 6px;
+    /* border: 4px solid #fff; */
+    box-shadow: 0 0 10px rgba(0,0,0,0.08);
+    transition: transform 0.2s ease;
+    position: relative;
+    z-index: 1;
+}
+.project-images-rectangles img:hover {
+    transform: scale(1.02);
+    z-index: 1;
+}
+
+/* Footer stays below content */
+footer {
+    position: static;
+    width: 100%;
+    padding: 16px 12px;
+    margin-top: 32px;
+    background: #555;
+    color: #fff;
+    text-align: center;
+    z-index: 10;
+}
+
+/* New footer styles */
+.site-footer {
+    background: #555;
+    color: #f5f5f5;
+    padding: 28px 16px 20px;
+    margin-top: 32px;
+}
+
+.footer-grid {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    gap: 16px;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+}
+
+.footer-col h3,
+.footer-col h4 {
+    margin: 0 0 10px;
+    color: #fff;
+}
+
+.footer-col p {
+    margin: 0;
+    color: #d0d3dc;
+}
+
+.footer-links {
+    display: grid;
+    gap: 8px;
+}
+
+.footer-links a {
+    color: #d0d3dc;
+    text-decoration: none;
+    font-size: 0.95rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    transition: color 0.2s ease;
+}
+
+.footer-links a:hover {
+    color: #ff7a59;
+}
+
+.footer-bottom {
+    max-width: 1200px;
+    margin: 18px auto 0;
+    padding-top: 12px;
+    border-top: 1px solid #222;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.9rem;
+    color: #b8bdc7;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.back-to-top {
+    color: #b8bdc7;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.back-to-top:hover {
+    color: #ff7a59;
+}
+
+@media (max-width: 640px) {
+    .footer-grid {
+        grid-template-columns: 1fr;
+    }
+    .footer-bottom {
+        flex-direction: column;
+        align-items: flex-start;
     }
 }

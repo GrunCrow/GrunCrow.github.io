@@ -1,5 +1,13 @@
+document.addEventListener('DOMContentLoaded', () => {
+    const emailEl = document.getElementById('email');
+    const emailLink = document.getElementById('email-link');
+    if (emailEl && typeof email !== 'undefined') {
+        emailEl.textContent = email;
+        if (emailLink) emailLink.href = `mailto:${email}`;
+    }
+});
+
 // Set email and social media links
-document.getElementById("email").textContent = email;
 document.getElementById("linkedin").href = linkedin;
 document.getElementById("twitter").href = twitter;
 document.getElementById("github").href = github;

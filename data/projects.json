@@ -1,0 +1,135 @@
+[
+  {
+    "id": "seanimalmove",
+    "type": "research",
+    "featured": false,
+    "title": "SEANIMALMOVE",
+    "organization": "Universidad de Cádiz",
+    "period": "June 2024 - Present",
+    "status": "completed",
+    "tags": ["Deep Learning", "Acoustic Monitoring", "Conservation"],
+    "description": "Development of deep learning models for automated classification of avian sounds and submarine acoustic soundscapes.",
+    "tasks": [],
+    "links": [
+      {"type": "github", "url": "https://github.com/SEANIMALMOVE", "label": "GitHub Organization"}
+    ]
+  },
+  {
+    "id": "birdeep",
+    "type": "research",
+    "featured": false,
+    "title": "BIRDeep",
+    "logo": "images/projects/birdeep/logo.PNG",
+    "organization": "Estación Biológica de Doñana",
+    "period": "October 2023 - Present",
+    "status": "completed",
+    "tags": ["Bird Monitoring", "Deep Learning", "Climate Change"],
+    "description": "Automatically tracking songbird diversity by developing bioinformatics and deep learning tools to understand spatial-temporal changes in bird communities.",
+    "objectives": [
+      "Evaluate the effect of climate change on bird communities in Doñana",
+      "Automate the computational process of identifying bird species in large audio datasets",
+      "Forecast future changes in bird communities under different climate change scenarios"
+    ],
+    "links": [
+      {"type": "github", "url": "https://github.com/BIRDeepORG", "label": "GitHub Organization"}
+    ]
+  },
+  {
+    "id": "ai-census",
+    "type": "research",
+    "title": "AI-Census",
+    "logo": "images/projects/ai_census/logo.png",
+    "organization": "Universidad de Huelva",
+    "period": "September 2022 - March 2024",
+    "status": "completed",
+    "tags": ["Camera Traps", "CNN", "Wildlife Monitoring"],
+    "description": "Developing AI tools for automated classification and census of biodiversity from camera trap images.",
+    "tasks": [
+      "Developed and managed data preprocessing and processing scripts",
+      "Investigated state of the art in image classification using Deep Learning",
+      "Implemented CNN-based image classification for mammals in camera trap images",
+      "Designed hierarchical classification model for camera trap images",
+      "Generated and analyzed final research results"
+    ],
+    "images": [
+      "images/projects/ai_census/mongoose.gif",
+      "images/projects/ai_census/GIF predictions.gif"
+    ],
+    "links": [
+      {"type": "github", "url": "https://github.com/GrunCrow/cv4ecology", "label": "GitHub Repository"},
+      {"type": "web", "url": "https://aicensus.github.io", "label": "Project Page"}
+    ]
+  },
+  {
+    "id": "audiotate",
+    "type": "personal",
+    "featured": true,
+    "title": "Audiotate: Audio Segments Validator & Annotator",
+    "organization": "SEANIMALMOVE",
+    "period": "July 2024 - Present",
+    "status": "ongoing",
+    "tags": ["Python", "Gradio", "Audio Annotation", "Tool"],
+    "description": "Lightweight Python-based application built with Gradio for efficient annotation and validation of short audio segments.",
+    "images": ["images/projects/birdnet-predictions-validator-app/app.png"],
+    "links": [
+      {"type": "github", "url": "https://github.com/SEANIMALMOVE/Audiotate_Audio-Segments-Validator-Annotator", "label": "GitHub Repository"}
+    ]
+  },
+  {
+    "id": "tfm",
+    "type": "personal",
+    "title": "Master's Thesis: Bird Audio Classification with Deep Learning",
+    "organization": "Universidad de Córdoba",
+    "period": "October 2023 - September 2024",
+    "status": "completed",
+    "tags": ["YOLOv8", "BirdNET", "PAM", "Doñana"],
+    "description": "Multi-stage bird vocalization identification using YOLOv8-based Bird Song Detector and fine-tuned BirdNET for species classification at local scale.",
+    "images": [
+      "images/projects/tfm/1.png",
+      "images/projects/tfm/26.png",
+      "images/projects/tfm/48.png"
+    ],
+    "links": [
+      {"type": "github", "url": "https://github.com/GrunCrow/BIRDeep_BirdSongDetector_NeuralNetworks", "label": "GitHub Repository"},
+      {"type": "pdf", "url": "media/projects/tfm/TFM_Alba.pdf", "label": "Project Memory"}
+    ]
+  },
+  {
+    "id": "tfg",
+    "type": "personal",
+    "title": "Bachelor's Thesis: Camera Trap Image Classification with CNN",
+    "organization": "Universidad de Huelva",
+    "period": "February 2023 - November 2023",
+    "status": "completed",
+    "tags": ["MobileNetV2", "CNN", "Camera Traps"],
+    "description": "Design and application of classification models (MobileNetV2 and custom architecture) for camera trap images.",
+    "images": [
+      "images/projects/tfg/experiment-animals 1.png",
+      "images/projects/tfg/conclusion.png",
+      "images/projects/tfg/experiment-veggies 1.png"
+    ],
+    "links": [
+      {"type": "github", "url": "https://github.com/GrunCrow/Camera-Trap-CNN-Model", "label": "GitHub Repository"},
+      {"type": "pdf", "url": "media/projects/tfg/TFG__Alba_Márquez_Rodríguez.pdf", "label": "Project Memory"}
+    ]
+  },
+  {
+    "id": "boids",
+    "type": "personal",
+    "title": "Genetic Programming & Boids Simulation",
+    "organization": "University of Wroclaw",
+    "authors": "Daedheldir, GrunCrow",
+    "period": "October 2021 - February 2022",
+    "status": "completed",
+    "tags": ["Genetic Programming", "ERASMUS", "Simulation"],
+    "description": "Combination of genetic programming and boids flock simulation to recreate input images with an artistic twist.",
+    "images": [
+      "https://raw.githubusercontent.com/Daedheldir/CppSFMLBoids/main/example_img_1.gif",
+      "https://raw.githubusercontent.com/Daedheldir/CppSFMLBoids/main/example_img_2.gif",
+      "https://raw.githubusercontent.com/Daedheldir/CppSFMLBoids/main/example_img_4.gif"
+    ],
+    "links": [
+      {"type": "github", "url": "https://github.com/Daedheldir/CppSFMLBoids", "label": "GitHub Repository"}
+    ]
+  }
+]

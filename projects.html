@@ -6,7 +6,7 @@
     <link rel="icon" type="image/png" href="images/logos/gruncrow-ai.png">
     <link rel="stylesheet" href="css/styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-    <title>Projects</title>
+    <title>Alba Márquez-Rodríguez - Projects</title>
 </head>
 <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-EPGY5EF08T"></script>
@@ -14,23 +14,17 @@
     window.dataLayer = window.dataLayer || [];
     function gtag(){dataLayer.push(arguments);}
     gtag('js', new Date());
-
     gtag('config', 'G-EPGY5EF08T');
 </script>
 <body>
     <header>
-        <!-- <img src="images/GrunCrow Lynx.jpeg" alt="GrunCrow Avatar" style="width: 150px; height: 150px; border-radius: 50%; border: 4px solid #fff; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); margin-bottom: 20px;"> -->
         <div>
             <h1>Alba Márquez-Rodríguez - GrunCrow</h1>
             <h2>Computer Scientist specialized in Computer Vision</h2>
-            <p>Passionate about AI, Deep Learning and Data Analysis</p>
-            <p>for Ecology and Conservation.</p>
         </div>
         <nav>
             <ul>
-                <!-- <li><a href="#presentation">Presentation</a></li> -->
                 <li><a href="index.html">Home</a></li>
-                <li><a href="researchprojects.html">Research Projects</a></li>
                 <li><a href="publications.html">Publications</a></li>
                 <li><a href="congresses.html">Congresses</a></li>
                 <li><a href="events.html">Events</a></li>
@@ -40,129 +34,20 @@
         </nav>
     </header>
 
-    <!--                                                  Sección de proyectos                                                   -->
-
-    <section id="projects">
-        <h2>Projects</h2>
-        <p>Explore some of the projects I have been involved in.</p>
-        <p>They are mainly innovative projects at the intersection of Artificial Intelligence, Computer Vision, and biodiversity conservation. These projects delve into cutting-edge technologies such as generative AI and neural network-based classifiers and detection systems, all aimed at advancing ecological research and biodiversity monitoring.</p>
-    </section>
-
-    <section id="Audiotate: Audio segments validator annotator">
-        <!-- TFG Project -->
-        <div id="audiotate-segments-validator-app-project" class="project-box">
-            <div class="project-header">
-                <h3>Audiotate: Audio segments validator annotator</h3>
-                <div class="project-info">
-                    <h4>SEANIMALMOVE</h4>
-                    <!-- <h5>Authors: Daedheldir, GrunCrow</h5> -->
-                    <h6>July 2024 - Present</h6>
-                </div>
-            </div>
-            <p>Audiotate: Audio Segments Validator–Annotator is a lightweight, Python-based application built with Gradio that enables users to efficiently annotate and validate short audio segments.</p>
-            <p>It is designed for researchers, ecologists, sound analysts, and developers who need a simple, intuitive interface to review, correct, or label short audio clips—either unlabeled samples or predictions from deep learning models (e.g., BirdNET, Perch, or any other classifiers).</p>
-            
-            <div class="project-images project-images-rectangles">
-                <img src="images/projects/birdnet-predictions-validator-app/app.png" alt="App overview">
-                <!-- <img src="images/projects/tfm/26.png" alt="Project Image 2">
-                <img src="images/projects/tfm/48.png" alt="Conclusion"> -->
-            </div>
-            <div class="link"> 
-                <a href="https://github.com/SEANIMALMOVE/Audiotate_Audio-Segments-Validator-Annotator"><i class="fab fa-github"></i> Link to GitHub Repository</a>
-            </div>
-        </div>
-    </section>
-    
-    <section id="tfm">
-        <!-- TFG Project -->
-        <div id="tfm-project" class="project-box">
-            <div class="project-header">
-                <h3>TFM: Application of Deep Learning techniques in the Classification of Bird Audio for Environmental Monitoring in Doñana</h3>
-                <div class="project-info">
-                    <h4>Universidad de Córdoba</h4>
-                    <!-- <h5>Authors: Daedheldir, GrunCrow</h5> -->
-                    <h6>October 2023 - September 2024</h6>
-                </div>
-            </div>
-            <p>Passive acoustic monitoring (PAM) that uses devices like automatic audio recorders has become a fundamental tool in conserving and managing natural ecosystems. However, this practice generates a large volume of unsupervised audio data, and extracting valid information for environmental monitoring is a significant challenge. It is then critically necessary to use methods that leverage Deep Learning techniques for automating species detection. BirdNET is a model trained for bird identification that has succeeded in many study systems, especially in North America or Europe, but it results inadequate for other regions due to insufficient training and its bias on focal sounds rather than entire soundscapes. Another added problem for species detection is that many audios recorded in PAM programs are empty of sounds of species of interest or these sounds overlap. This study presents a multi-stage process for automatically identifying bird vocalizations that includes first a YOLOv8-based Bird Song Detector, and second, a fine-tuned BirdNET for species classification at a local scale with enhanced detection accuracy. As a study case, we applied this Bird Song Detector to audio recordings collected in Doñana National Park (SW Spain) as a part of the BIRDeep project. We annotated 461 minutes of audio data from three main habitats across nine different locations within Doñana, resulting in 3749 annotations representing 38 different classes. Mel spectrograms were employed as graphical representations of bird audio data, facilitating the application of image processing methods. Several detectors were trained in different experiments, which included data augmentation and hyperparameter exploration to improve the model’s robustness. The model giving the best results included the creation of synthetic background audios with data augmentation and the use of an environmental sound library. This proposed pipeline using the Bird Song Detector as a preliminary step, significantly improves BirdNET detections by increasing True Positives by approximately 281.97%, and reducing False Negatives by about 62.03%, thus demonstrating a novel and effective approach for bird species identification. Our findings underscore the importance of adapting general-purpose tools to address specific challenges in biodiversity monitoring. The experimental results show that fine-tuning Deep Learning models that account for the unique characteristics of specific ecological contexts can substantially enhance the accuracy and efficiency of PAM's efforts.</p>
-            
-            <div class="project-images project-images-rectangles">
-                <img src="images/projects/tfm/1.png" alt="Project Image 1">
-                <img src="images/projects/tfm/26.png" alt="Project Image 2">
-                <img src="images/projects/tfm/48.png" alt="Conclusion">
-            </div>
-            <div class="link"> 
-                <a href="https://github.com/GrunCrow/BIRDeep_BirdSongDetector_NeuralNetworks"><i class="fab fa-github"></i> Link to GitHub Repository</a>
-            </div>
-            <div class="link">
-                <a href="media/projects/tfm/TFM_Alba.pdf"><i class="far fa-file-alt"></i> Link to Project memory</a>
-            </div>
-        </div>
-    </section>
-
-    <section id="tfg">
-        <!-- TFG Project -->
-        <div id="tfg-project" class="project-box">
-            <div class="project-header">
-                <h3>TFG: Classification of camera trap images with a convolutional neural network</h3>
-                <div class="project-info">
-                    <h4>Universidad de Huelva</h4>
-                    <!-- <h5>Authors: Daedheldir, GrunCrow</h5> -->
-                    <h6>February 2023 - November 2023</h6>
-                </div>
-            </div>
-            <p>Biodiversity studies involve direct field observations or the analysis of images, which presents a workload in terms of time and effort for specialists. In this context, this Bachelor's Thesis addresses the design and application of a classification model for camera trap images.</p>
-            <p>An 8000-image dataset from camera traps have been employed, classified by contained species, including horse, deer, fallow deer, human, wild boar, cow, and fox. Two convolutional neural networks were used as classification models: MobileNetV2 (3,088,680 parameters) and a network named Crohn’s Architecture (599,168 parameters). Training, validation, and evaluation were carried out with an 80 %, 10 %, and 10 % split, respectively. The networks achieved an accuracy rate of approximately 70 %. In-depth analysis unveiled the primary challenge of knowledge extraction from these images due to their intrinsic complexity, amplified by the limited dataset size. This observation materialized upon applying the models to a novel dataset containing 21,000 images spanning 15 diverse categories. These images showcased the subject of interest prominently against a controlled backdrop. The networks’ performance on this reference dataset significantly improved, yielding an accuracy rate exceeding 95%.</p>
-            <p>In summary, this study emphasizes the importance of having a high-quality dataset, as it directly and significantly impacts the performance of neural networks. The achievable results with a neural network are inherently linked to the dataset’s quality and available annotations.</p>
-            
-            <div class="project-images project-images-rectangles">
-                <img src="images/projects/tfg/experiment-animals 1.png" alt="Project Image 1">
-                <img src="images/projects/tfg/conclusion.png" alt="Conclusion">
-                <img src="images/projects/tfg/experiment-veggies 1.png" alt="Project Image 2">
-            </div>
-            <div class="link"> 
-                <a href="https://github.com/GrunCrow/Camera-Trap-CNN-Model"><i class="fab fa-github"></i> Link to GitHub Repository</a>
-            </div>
-            <div class="link">
-                <a href="media/projects/tfg/TFG__Alba_Márquez_Rodríguez.pdf"><i class="far fa-file-alt"></i> Link to Project Memory</a>
-            </div>
-        </div>
-    </section>
-
-    <section id="boids">
-        <!-- Boids -->
-        <div id="boids-project" class="project-box">
-            <div class="project-header">
-                <h3>Combination of genetic programming and boids flock simulation</h3>
-                <div class="project-info">
-                    <h4>University of Wroclaw</h4>
-                    <h5>Authors: Daedheldir, GrunCrow</h5>
-                    <h6>October 2021 - February 2022</h6>
-                </div>
-            </div>
-            <p>Combination of genetic programming and boids flock simulation to recreate input images with an artistic twist by limiting genes (mathematical operations) available to agents. This project was undertaken during my ERASMUS at the University of Wroclaw, in the Master Introduction to Artificial Intelligence course.</p>
-            <div class="project-images project-images-circles">
-                <img src="https://raw.githubusercontent.com/Daedheldir/CppSFMLBoids/main/example_img_1.gif" alt="Project Image 1">
-                <img src="https://raw.githubusercontent.com/Daedheldir/CppSFMLBoids/main/example_img_2.gif" alt="Project Image 2">
-                <img src="https://raw.githubusercontent.com/Daedheldir/CppSFMLBoids/main/example_img_4.gif" alt="Project Image 3">
-            </div>
-            <div class="link">
-                <a href="https://github.com/Daedheldir/CppSFMLBoids"><i class="fab fa-github"></i> Link to GitHub Repository</a>
-            </div>
-        </div>
-    </section>
-    
-
-    <!-- Pie de página -->
-    <footer>
-        <p>Contact: <span id="email"></span></p>
-        <aside class="social-icons">
-            <a href="#" id="linkedin"><i class="fab fa-linkedin"></i></a>
-            <a href="#" id="twitter"><i class="fab fa-twitter"></i></a>
-            <a href="#" id="github"><i class="fab fa-github"></i></a>
+    <main class="projects-page-container">
+        <aside class="projects-sidebar">
+            <h3>Jump to</h3>
+            <nav id="projects-nav"></nav>
         </aside>
-    </footer>
+        <div id="projects-container" class="projects-main-content"></div>
+    </main>
+
+    <div id="footer-placeholder"></div>
+
     <script src="js/links.js"></script>
     <script src="js/scripts.js"></script>
+    <script src="js/projects.js"></script>
+    <script src="js/footer.js"></script>
+    
 </body>
 </html>
