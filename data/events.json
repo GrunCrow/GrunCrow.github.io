@@ -1,0 +1,45 @@
+[
+    {
+        "id": "ml-workshop-2024",
+        "title": "Online Workshop: Machine Learning for Biodiversity Monitoring",
+        "type": "workshop",
+        "link": "https://mlcv.inf.tu-dresden.de/workshop-eco2scape.html",
+        "videoLink": "https://example.com/workshop-recording", 
+        "organizer": "Technische Universität Dresden",
+        "speakers": "Alba Márquez-Rodríguez",
+        "date": "August 12th, 2024",
+        "location": "Online",
+        "locationType": "online",
+        "description": "During this workshop, we presented our latest research on the development of a bird song detector pipeline for the Doñana National Park. We discussed the challenges of working with acoustic data and the strategies we used to overcome them. We also presented the best model we obtained and the confusion matrix results, showing the performance of our model in identifying bird species.",
+        "images": [
+            "images/events/ml-workshop/1.png",
+            "images/events/ml-workshop/22.png",
+            "images/events/ml-workshop/36.png"
+        ]
+    },
+    {
+        "id": "ecoinf-seminario-2024",
+        "title": "Seminario: El papel de la IA en la ecología, cómo transformar imágenes en datos",
+        "type": "seminar",
+        "link": "https://www.youtube.com/watch?v=txJfuPeodQw",
+        "videoLink": "https://www.youtube.com/watch?v=txJfuPeodQw",
+        "organizer": "Grupo de Ecoinformática de la AEET",
+        "speakers": "Alba Márquez-Rodríguez y Antón Álvarez",
+        "date": "May 29th, 2024",
+        "location": "Online",
+        "locationType": "online",
+        "description": "El seminario pretende explorar la creciente intersección entre la inteligencia artificial (IA) y la ecología, centrándose en cómo la IA puede transformar imágenes en datos para impulsar la investigación y la conservación de la naturaleza. El seminario aborda la definición de IA y su relevancia en el contexto ecológico, destacando casos prácticos que ilustran su aplicación en la recolección y análisis de datos ecológicos. El objetivo principal de la charla es familiarizar a las personas participantes con el potencial y las aplicaciones prácticas de la IA en el campo de la ecología. Se discutirán herramientas y técnicas específicas de IA que ya están disponibles y se exploran errores comunes que suelen cometerse desde la perspectiva de la ecología al utilizar estas tecnologías. Además, se enfatiza la importancia de una colaboración interdisciplinaria entre ecólogos y expertos en IA para abordar los desafíos ambientales de manera efectiva. En resumen, la charla busca inspirar a los participantes a considerar cómo la IA puede mejorar y ampliar su trabajo en la conservación y comprensión de los ecosistemas naturales.",
+        "links": [
+            {"text": "Awesome Remote Sensing Foundation Models", "url": "https://github.com/agentmorris/Awesome-Remote-Sensing-Foundation-Models"},
+            {"text": "Camera Trap ML Survey", "url": "https://github.com/agentmorris/camera-trap-ml-survey"},
+            {"text": "EcoAssist", "url": "https://addaxdatascience.com/ecoassist/"},
+            {"text": "Grounding DINO", "url": "https://huggingface.co/docs/transformers/model_doc/grounding-dino"},
+            {"text": "AI for Conservation Slack", "url": "https://aiforconservation.slack.com/join/shared_invite/zt-2jxl41cwx-TBbsOOcvTEvh0JKdu5JaJg#/shared-invite/email"}
+        ],
+        "images": [
+            "images/events/ecoinformatica-seminario/first slide.png",
+            "images/events/ecoinformatica-seminario/Seminario AEET 2024.gif",
+            "images/events/ecoinformatica-seminario/26.png"
+        ]
+    }
+]
