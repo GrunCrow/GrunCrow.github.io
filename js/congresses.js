@@ -1,3 +1,5 @@
+const { escapeHtml, safeId, safeUrl, truncate, initScrollSpy } = window.SiteUtils;
+
 async function loadCongresses() {
     const container = document.getElementById('congresses-container');
     const nav = document.getElementById('congresses-nav');
@@ -63,7 +65,11 @@ async function loadCongresses() {
 
         container.innerHTML = contentHTML;
         setupCongressInteractions(container);
-        setupScrollSpy();
+        initScrollSpy({
+            linkSelector: '.congresses-sidebar a',
+            sectionSelector: '[id^="congress-"], #featured-congresses, #all-congresses',
+            offset: 150
+        });
     } catch (err) {
         if (container) container.innerHTML = '<p>Could not load congresses.</p>';
         console.error(err);
@@ -224,64 +230,6 @@ function setupCongressInteractions(container) {
             showTarget.classList.remove('project-hidden');
         }
     });
-}
-
-function escapeHtml(value) {
-    return String(value ?? '')
-        .replace(/&/g, '&amp;')
-        .replace(/</g, '&lt;')
-        .replace(/>/g, '&gt;')
-        .replace(/"/g, '&quot;')
-        .replace(/'/g, '&#39;');
-}
-
-function safeId(value) {
-    return String(value ?? '')
-        .toLowerCase()
-        .replace(/[^a-z0-9_-]/g, '-')
-        .replace(/-+/g, '-')
-        .replace(/^-|-$/g, '') || 'item';
-}
-
-function safeUrl(value) {
-    if (!value) return '';
-    try {
-        const url = new URL(String(value), window.location.origin);
-        if (!['http:', 'https:'].includes(url.protocol)) return '';
-        return escapeHtml(url.toString());
-    } catch {
-        return '';
-    }
-}
-
-function truncate(str, maxLen = 60) {
-    return str.length > maxLen ? str.substring(0, maxLen) + '...' : str;
-}
-
-function setupScrollSpy() {
-    const links = document.querySelectorAll('.congresses-sidebar a');
-    const sections = document.querySelectorAll('[id^="congress-"], #featured-congresses, #all-congresses, #awarded-congresses');
-
-    function highlightNav() {
-        let current = '';
-        sections.forEach(section => {
-            const sectionTop = section.offsetTop;
-            const sectionHeight = section.clientHeight;
-            if (window.scrollY >= (sectionTop - 150)) {
-                current = section.getAttribute('id');
-            }
-        });
-
-        links.forEach(link => {
-            link.classList.remove('active');
-            if (link.getAttribute('href') === `#${current}`) {
-                link.classList.add('active');
-            }
-        });
-    }
-
-    window.addEventListener('scroll', highlightNav);
-    highlightNav();
 }
 
 document.addEventListener('DOMContentLoaded', loadCongresses);

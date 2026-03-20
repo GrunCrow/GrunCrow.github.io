@@ -1,3 +1,5 @@
+const { escapeHtml, safeId, safeUrl, truncate, initScrollSpy } = window.SiteUtils;
+
 async function loadProjects() {
     const container = document.getElementById('projects-container');
     const nav = document.getElementById('projects-nav');
@@ -40,7 +42,11 @@ async function loadProjects() {
 
         setupProjectInteractions(container);
 
-        setupScrollSpy();
+        initScrollSpy({
+            linkSelector: '.projects-sidebar a',
+            sectionSelector: 'section[id], .project-box[id]',
+            offset: 120
+        });
     } catch (err) {
         if (container) container.innerHTML = '<p>Could not load projects.</p>';
         console.error(err);
@@ -180,54 +186,6 @@ function setupProjectInteractions(container) {
             target.style.display = 'none';
             target.classList.add('project-hidden');
         }
-    });
-}
-
-function escapeHtml(value) {
-    return String(value ?? '')
-        .replace(/&/g, '&amp;')
-        .replace(/</g, '&lt;')
-        .replace(/>/g, '&gt;')
-        .replace(/"/g, '&quot;')
-        .replace(/'/g, '&#39;');
-}
-
-function safeId(value) {
-    return String(value ?? '')
-        .toLowerCase()
-        .replace(/[^a-z0-9_-]/g, '-')
-        .replace(/-+/g, '-')
-        .replace(/^-|-$/g, '') || 'item';
-}
-
-function safeUrl(value) {
-    if (!value) return '';
-    try {
-        const url = new URL(String(value), window.location.origin);
-        if (!['http:', 'https:'].includes(url.protocol)) return '';
-        return escapeHtml(url.toString());
-    } catch {
-        return '';
-    }
-}
-
-function truncate(text, max = 52) {
-    return text.length > max ? text.slice(0, max) + '…' : text;
-}
-
-function setupScrollSpy() {
-    const links = document.querySelectorAll('.projects-sidebar a');
-    const targets = document.querySelectorAll('section[id], .project-box[id]');
-    window.addEventListener('scroll', () => {
-        let current = '';
-        targets.forEach(sec => {
-            if (window.scrollY >= sec.offsetTop - 120) {
-                current = sec.id;
-            }
-        });
-        links.forEach(link => {
-            link.classList.toggle('active', link.getAttribute('href') === `#${current}`);
-        });
     });
 }
 

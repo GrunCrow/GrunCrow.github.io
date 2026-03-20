@@ -13,7 +13,47 @@ async function injectFooter() {
     }
 }
 
+const LAST_UPDATED_CACHE_KEY = 'gruncrow:last-updated';
+const LAST_UPDATED_CACHE_TTL_MS = 1000 * 60 * 60 * 6;
+
+function readCachedValue(cacheKey, ttlMs) {
+    try {
+        const raw = localStorage.getItem(cacheKey);
+        if (!raw) return null;
+        const parsed = JSON.parse(raw);
+        if (!parsed || !parsed.timestamp || !parsed.value) return null;
+        if (Date.now() - parsed.timestamp > ttlMs) return null;
+        return parsed.value;
+    } catch {
+        return null;
+    }
+}
+
+function writeCachedValue(cacheKey, value) {
+    try {
+        localStorage.setItem(cacheKey, JSON.stringify({
+            timestamp: Date.now(),
+            value
+        }));
+    } catch {
+        // Ignore cache write errors (private mode/quota)
+    }
+}
+
+function updateLastUpdatedText(formattedDate) {
+    const lastUpdatedElement = document.getElementById('last-updated');
+    if (lastUpdatedElement && formattedDate) {
+        lastUpdatedElement.textContent = `Last updated: ${formattedDate}`;
+    }
+}
+
 async function fetchLastUpdated() {
+    const cachedDate = readCachedValue(LAST_UPDATED_CACHE_KEY, LAST_UPDATED_CACHE_TTL_MS);
+    if (cachedDate) {
+        updateLastUpdatedText(cachedDate);
+        return;
+    }
+
     try {
         const response = await fetch('https://api.github.com/repos/GrunCrow/GrunCrow.github.io/commits?per_page=1');
         const data = await response.json();
@@ -25,11 +65,9 @@ async function fetchLastUpdated() {
                 month: 'short',
                 day: 'numeric'
             });
-            
-            const lastUpdatedElement = document.getElementById('last-updated');
-            if (lastUpdatedElement) {
-                lastUpdatedElement.textContent = `Last updated: ${formattedDate}`;
-            }
+
+            writeCachedValue(LAST_UPDATED_CACHE_KEY, formattedDate);
+            updateLastUpdatedText(formattedDate);
         }
     } catch (e) {
         console.error('Failed to fetch last update date', e);

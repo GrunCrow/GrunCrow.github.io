@@ -1,3 +1,5 @@
+const { escapeHtml, safeId, safeUrl, initScrollSpy } = window.SiteUtils;
+
 async function loadPublications() {
     const container = document.getElementById('publications-list');
     const featuredContainer = document.getElementById('featured-publications');
@@ -50,8 +52,11 @@ async function loadPublications() {
                 </div>
             `;
             
-            // Highlight active section on scroll
-            setupScrollSpy();
+            initScrollSpy({
+                linkSelector: '.publications-sidebar a',
+                sectionSelector: '.card[id^="publication-"], h2[id$="-section"]',
+                offset: 100
+            });
         }
             
     } catch (err) {
@@ -123,56 +128,6 @@ function renderPublication(pub, isFeatured) {
         </div>
     </section>
     `;
-}
-
-    function escapeHtml(value) {
-        return String(value ?? '')
-            .replace(/&/g, '&amp;')
-            .replace(/</g, '&lt;')
-            .replace(/>/g, '&gt;')
-            .replace(/"/g, '&quot;')
-            .replace(/'/g, '&#39;');
-    }
-
-    function safeId(value) {
-        return String(value ?? '')
-            .toLowerCase()
-            .replace(/[^a-z0-9_-]/g, '-')
-            .replace(/-+/g, '-')
-            .replace(/^-|-$/g, '') || 'item';
-    }
-
-    function safeUrl(value) {
-        if (!value) return '';
-        try {
-            const url = new URL(String(value), window.location.origin);
-            if (!['http:', 'https:'].includes(url.protocol)) return '';
-            return escapeHtml(url.toString());
-        } catch {
-            return '';
-        }
-    }
-
-function setupScrollSpy() {
-    const links = document.querySelectorAll('.publications-sidebar a');
-    const sections = document.querySelectorAll('.card[id^="publication-"], h2[id$="-section"]');
-    
-    window.addEventListener('scroll', () => {
-        let current = '';
-        sections.forEach(section => {
-            const sectionTop = section.offsetTop;
-            if (window.pageYOffset >= sectionTop - 100) {
-                current = section.getAttribute('id');
-            }
-        });
-        
-        links.forEach(link => {
-            link.classList.remove('active');
-            if (link.getAttribute('href') === `#${current}`) {
-                link.classList.add('active');
-            }
-        });
-    });
 }
 
 document.addEventListener('DOMContentLoaded', loadPublications);

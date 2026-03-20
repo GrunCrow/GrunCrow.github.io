@@ -1,3 +1,5 @@
+const { escapeHtml, safeId, safeUrl, initScrollSpy } = window.SiteUtils;
+
 async function loadEvents() {
     const container = document.getElementById('events-container');
     const sidebarNav = document.getElementById('events-nav');
@@ -20,8 +22,11 @@ async function loadEvents() {
                 return `<a href="#event-${eventId}">${title}${(event.title || '').length > 50 ? '...' : ''}</a>`;
             }).join('');
             
-            // Highlight active section on scroll
-            setupEventsScrollSpy();
+            initScrollSpy({
+                linkSelector: '.events-sidebar a',
+                sectionSelector: '.event-card[id^="event-"]',
+                offset: 100
+            });
         }
     } catch (err) {
         container.innerHTML = '<p>Could not load events.</p>';
@@ -99,56 +104,6 @@ function renderEvent(event) {
             ${videoButtonHtml}
         </section>
     `;
-}
-
-function escapeHtml(value) {
-    return String(value ?? '')
-        .replace(/&/g, '&amp;')
-        .replace(/</g, '&lt;')
-        .replace(/>/g, '&gt;')
-        .replace(/"/g, '&quot;')
-        .replace(/'/g, '&#39;');
-}
-
-function safeId(value) {
-    return String(value ?? '')
-        .toLowerCase()
-        .replace(/[^a-z0-9_-]/g, '-')
-        .replace(/-+/g, '-')
-        .replace(/^-|-$/g, '') || 'item';
-}
-
-function safeUrl(value) {
-    if (!value) return '';
-    try {
-        const url = new URL(String(value), window.location.origin);
-        if (!['http:', 'https:'].includes(url.protocol)) return '';
-        return escapeHtml(url.toString());
-    } catch {
-        return '';
-    }
-}
-
-function setupEventsScrollSpy() {
-    const links = document.querySelectorAll('.events-sidebar a');
-    const sections = document.querySelectorAll('.event-card[id^="event-"]');
-    
-    window.addEventListener('scroll', () => {
-        let current = '';
-        sections.forEach(section => {
-            const sectionTop = section.offsetTop;
-            if (window.pageYOffset >= sectionTop - 100) {
-                current = section.getAttribute('id');
-            }
-        });
-        
-        links.forEach(link => {
-            link.classList.remove('active');
-            if (link.getAttribute('href') === `#${current}`) {
-                link.classList.add('active');
-            }
-        });
-    });
 }
 
 document.addEventListener('DOMContentLoaded', loadEvents);

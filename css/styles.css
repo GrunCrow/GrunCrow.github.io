@@ -14,8 +14,17 @@
     --text: #3e495d;
     --muted: #566077;
     --primary: #00004c;
+    --primary-hover: #0056b3;
     --accent: #ff7a59;
     --border: #e4e7ef;
+    --link-color: var(--primary);
+    --header-bg: #333333;
+    --header-text: #ffffff;
+    --footer-bg: #555555;
+    --footer-text: #f5f5f5;
+    --footer-muted: #d0d3dc;
+    --footer-bottom-text: #b8bdc7;
+    --footer-border: #222222;
 
     --pill-info-bg: #e3f2fd;
     --pill-info-text: #1565c0;
@@ -40,13 +49,41 @@
 body {
     font-family: Arial, sans-serif;
     margin: 0;
-    padding: 0;            /* remove extra bottom padding */
-    min-height: 100vh;     /* ensure full height */
+    padding: 0;
+    min-height: 100vh;
     display: flex;
     flex-direction: column;
     position: relative;
     background-color: var(--bg);
     color: var(--text);
+}
+
+.skip-to-content {
+    position: absolute;
+    left: -9999px;
+    top: auto;
+    z-index: 10000;
+    background: var(--primary);
+    color: #ffffff;
+    padding: 10px 14px;
+    border-radius: 6px;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.skip-to-content:focus,
+.skip-to-content:focus-visible {
+    left: 12px;
+    top: 12px;
+    outline: 3px solid var(--accent);
+    outline-offset: 2px;
+}
+
+a:focus-visible,
+button:focus-visible,
+[role="button"]:focus-visible {
+    outline: 3px solid var(--accent);
+    outline-offset: 2px;
 }
 
 /* Keep content headings in the original dark blue tone */
@@ -65,6 +102,53 @@ main h4 {
 .cv-content p,
 .social-content p {
     color: var(--text);
+}
+
+/* Improve readability for long-form scientific and workshop text */
+.event-content p,
+.event-content li,
+.pub-abstract p,
+.project-description,
+.congress-description,
+.project-box p,
+.cv-description,
+.cv-responsibilities li,
+.work-item p {
+    text-align: justify;
+    text-justify: inter-word;
+}
+
+/* Keep spacing rhythm consistent in descriptive blocks */
+.event-content p,
+.pub-abstract p,
+.project-description,
+.congress-description,
+.project-box p,
+.cv-description {
+    line-height: 1.7;
+    margin-bottom: 12px;
+}
+
+.event-content ul,
+.cv-responsibilities,
+.project-collapsible-list {
+    margin-top: 10px;
+}
+
+/* Avoid large word gaps on small screens when text is justified */
+@media (max-width: 768px) {
+    .event-content p,
+    .event-content li,
+    .pub-abstract p,
+    .project-description,
+    .congress-description,
+    .project-box p,
+    .cv-description,
+    .cv-responsibilities li,
+    .work-item p {
+        text-align: left;
+        hyphens: auto;
+    }
 }
 body::before {
     content: "";
@@ -85,11 +169,11 @@ body :not(header) :not(footer) p, section{
 }
 
 header {
-    background-color: #333;
+    background-color: var(--header-bg);
     position: sticky;
     top: 0;
     z-index: 1000;
-    color: #fff; 
+    color: var(--header-text);
     padding: 16px 20px;
     display: flex; 
     flex-direction: row;
@@ -166,7 +250,7 @@ nav ul li {
 }
 
 nav ul li a {
-    color: #fff;
+    color: var(--header-text);
     text-decoration: none;
     padding: 8px 12px;
     border-radius: 4px;
@@ -176,11 +260,16 @@ nav ul li a {
 
 nav ul li a:hover {
     background-color: rgba(255, 255, 255, 0.1);
-    color: #ff6347;
+    color: var(--accent);
+}
+
+nav ul li a:focus-visible {
+    background-color: rgba(255, 255, 255, 0.1);
+    color: var(--accent);
 }
 
 /* Responsive header */
-@media (max-width: 968px) {
+@media (max-width: 960px) {
     header {
         flex-direction: column;
         text-align: center;
@@ -214,32 +303,6 @@ nav ul li a:hover {
     padding: 20px;
 }*/
 
-/* Navigation */
-nav ul {
-    list-style-type: none;
-    padding: 0;
-    display: flex;
-    justify-content: center;
-    gap: 18px;
-    flex-wrap: wrap;
-}
-nav ul li {
-    display: inline;
-    margin-right: 0;
-}
-nav ul li a {
-    color: #fff;
-    text-decoration: none;
-    transition: color 0.3s ease; /* Add this line */
-}
-nav ul li a:hover {
-    color: #ff6347; /* Change to any color you like */
-}
-nav a {
-    color: var(--link-color);
-    text-decoration: none;
-}
-
 .page {
     max-width: 1100px;
     margin: 0 auto;
@@ -258,7 +321,7 @@ body:has(.events-container) .page {
     }
 }
 
-@media (max-width: 968px) {
+@media (max-width: 960px) {
     body:has(.events-container) .page {
         max-width: 100%;
     }
@@ -395,12 +458,13 @@ img {
 
 /* Special layout for events with 3 images */
 .events-content .project-images-rectangles {
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(auto-fit, minmax(240px, 320px));
+    justify-content: center;
     gap: 16px;
 }
 
 /* Responsive adjustments for event images */
-@media (max-width: 968px) {
+@media (max-width: 960px) {
     .events-content .project-images-rectangles {
         grid-template-columns: repeat(2, 1fr);
         gap: 12px;
@@ -478,7 +542,7 @@ img {
 }
 
 .section-info a:hover {
-    color: #ff6347; /* Change to any color you like */
+    color: var(--accent); /* Change to any color you like */
 }
 
 /* Style for media links */
@@ -494,7 +558,7 @@ img {
 }
 
 .link a:hover {
-    color: #ff6347; /* Change to any color you like */
+    color: var(--accent); /* Change to any color you like */
 }
 
 /* Footer spacing fix on mobile */
@@ -510,6 +574,7 @@ img {
         padding: 20px 12px 96px;
     }
 }
+
 .pub-meta {
     display: flex;
     flex-direction: column;
@@ -518,10 +583,12 @@ img {
     font-size: 0.95rem;
     justify-content: space-between; /* Ensure venue and badges are aligned on a single row */
 }
+
 .pub-meta span {
     display: block;
     line-height: 1.4;
 }
+
 .pub-meta .pill {
     display: inline-flex;
     align-self: flex-start;
@@ -679,12 +746,14 @@ img {
     padding: 24px 16px 96px;
 }
 
-.publications-sidebar {
+/* Shared sidebar component */
+.site-sidebar {
     position: sticky;
     top: 100px;
     width: 280px;
     height: fit-content;
     max-height: calc(100vh - 120px);
+    overflow-y: auto;
     background: var(--card);
     border-radius: 12px;
     padding: 20px;
@@ -696,42 +765,40 @@ img {
     z-index: 5;
 }
 
-.publications-sidebar h3 {
+.site-sidebar h3 {
     margin-top: 0;
     margin-bottom: 16px;
     font-size: 1.1rem;
     color: var(--text);
-    flex-shrink: 0; /* Don't shrink the heading */
+    flex-shrink: 0;
 }
 
-.publications-sidebar nav {
+.site-sidebar-nav {
     display: flex;
     flex-direction: column;
     gap: 8px;
-    overflow-y: auto;
-    overflow-x: hidden;
-    min-height: 0; /* Important for flex children to shrink properly */
+    min-height: 0;
 }
 
-/* Scrollbar styling for sidebar nav */
-.publications-sidebar nav::-webkit-scrollbar {
+/* Shared scrollbar styling for sidebars */
+.site-sidebar::-webkit-scrollbar {
     width: 6px;
 }
 
-.publications-sidebar nav::-webkit-scrollbar-track {
+.site-sidebar::-webkit-scrollbar-track {
     background: transparent;
 }
 
-.publications-sidebar nav::-webkit-scrollbar-thumb {
+.site-sidebar::-webkit-scrollbar-thumb {
     background: var(--border);
     border-radius: 3px;
 }
 
-.publications-sidebar nav::-webkit-scrollbar-thumb:hover {
+.site-sidebar::-webkit-scrollbar-thumb:hover {
     background: var(--muted);
 }
 
-.publications-sidebar a {
+.site-sidebar a {
     color: var(--muted);
     text-decoration: none;
     padding: 8px 12px;
@@ -742,15 +809,19 @@ img {
     flex-shrink: 0;
 }
 
-.publications-sidebar a:hover {
+.site-sidebar a:hover {
     background: var(--bg);
     color: var(--primary);
 }
 
-.publications-sidebar a.active {
+.site-sidebar a.active {
     background: var(--primary);
     color: white;
     font-weight: 600;
+}
+
+.publications-sidebar {
+    padding: 20px;
 }
 
 .sidebar-section {
@@ -787,59 +858,7 @@ img {
 }
 
 .events-sidebar {
-    position: sticky;
-    top: 100px;
-    width: 280px;
-    height: fit-content;
-    max-height: calc(100vh - 120px);
-    background: var(--card);
-    border-radius: 12px;
     padding: 20px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.06);
-    border: 1px solid var(--border);
-    flex-shrink: 0;
-    display: flex;
-    flex-direction: column;
-    z-index: 5;
-}
-
-.events-sidebar h3 {
-    margin-top: 0;
-    margin-bottom: 16px;
-    font-size: 1.1rem;
-    color: var(--text);
-    flex-shrink: 0;
-}
-
-.events-sidebar nav {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-    overflow-y: auto;
-    overflow-x: hidden;
-    min-height: 0;
-}
-
-.events-sidebar a {
-    color: var(--muted);
-    text-decoration: none;
-    padding: 8px 12px;
-    border-radius: 6px;
-    font-size: 0.9rem;
-    transition: all 0.2s;
-    display: block;
-    flex-shrink: 0;
-}
-
-.events-sidebar a:hover {
-    background: var(--bg);
-    color: var(--primary);
-}
-
-.events-sidebar a.active {
-    background: var(--primary);
-    color: white;
-    font-weight: 600;
 }
 
 .events-content {
@@ -956,7 +975,7 @@ img {
 }
 
 /* Mobile responsiveness for events */
-@media (max-width: 968px) {
+@media (max-width: 960px) {
     .events-container {
         flex-direction: column;
     }
@@ -982,7 +1001,7 @@ img {
 }
 
 /* Hide sidebar on mobile */
-@media (max-width: 968px) {
+@media (max-width: 960px) {
     .publications-container {
         flex-direction: column;
     }
@@ -1155,26 +1174,7 @@ img {
 }
 
 .projects-sidebar {
-    position: sticky;
-    top: 100px;
-    width: 280px;
-    max-height: calc(100vh - 120px);
-    overflow-y: auto;
-    background: var(--card);
-    border-radius: 12px;
     padding: 20px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.06);
-    border: 1px solid var(--border);
-    flex-shrink: 0;
-    z-index: 5;
-}
-
-
-
-.projects-sidebar nav {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
 }
 
 .projects-sidebar .section-link,
@@ -1215,7 +1215,7 @@ img {
 }
 
 .projects-sidebar .project-link.active {
-    color: var(--primary);
+    color: #fff;
     font-weight: 600;
 }
 
@@ -1257,7 +1257,7 @@ footer {
     width: 100%;
     padding: 16px 12px;
     margin-top: 32px;
-    background: #555;
+    background: var(--footer-bg);
     color: #fff;
     text-align: center;
     z-index: 10;
@@ -1265,8 +1265,8 @@ footer {
 
 /* New footer styles */
 .site-footer {
-    background: #555;
-    color: #f5f5f5;
+    background: var(--footer-bg);
+    color: var(--footer-text);
     padding: 28px 16px 20px;
     margin-top: 32px;
 }
@@ -1287,7 +1287,7 @@ footer {
 
 .footer-col p {
     margin: 0;
-    color: #d0d3dc;
+    color: var(--footer-muted);
 }
 
 .footer-links {
@@ -1296,7 +1296,7 @@ footer {
 }
 
 .footer-links a {
-    color: #d0d3dc;
+    color: var(--footer-muted);
     text-decoration: none;
     font-size: 0.95rem;
     display: inline-flex;
@@ -1313,18 +1313,18 @@ footer {
     max-width: 1200px;
     margin: 18px auto 0;
     padding-top: 12px;
-    border-top: 1px solid #222;
+    border-top: 1px solid var(--footer-border);
     display: flex;
     justify-content: space-between;
     align-items: center;
     font-size: 0.9rem;
-    color: #b8bdc7;
+    color: var(--footer-bottom-text);
     flex-wrap: wrap;
     gap: 10px;
 }
 
 .back-to-top {
-    color: #b8bdc7;
+    color: var(--footer-bottom-text);
     text-decoration: none;
     display: inline-flex;
     align-items: center;
@@ -1352,7 +1352,7 @@ footer {
 }
 
 .congresses-sidebar .congress-link.active {
-    color: var(--primary);
+    color: #fff;
     font-weight: 600;
 }
 
@@ -1367,7 +1367,7 @@ footer {
 }
 
 /* Responsive poster/project layouts */
-@media (max-width: 968px) {
+@media (max-width: 960px) {
     .congress-poster-layout {
         grid-template-columns: 1fr;
     }
@@ -1402,37 +1402,8 @@ footer {
     background: linear-gradient(to right, transparent, var(--border), transparent);
 }
 
-/* Scrollbar styling for congresses sidebar nav */
-.congresses-sidebar::-webkit-scrollbar {
-    width: 6px;
-}
-
-.congresses-sidebar::-webkit-scrollbar-track {
-    background: transparent;
-}
-
-.congresses-sidebar::-webkit-scrollbar-thumb {
-    background: var(--border);
-    border-radius: 3px;
-}
-
-.congresses-sidebar::-webkit-scrollbar-thumb:hover {
-    background: var(--muted);
-}
-
 .congresses-sidebar {
-    position: sticky;
-    top: 100px;
-    width: 280px;
-    max-height: calc(100vh - 120px);
-    overflow-y: auto;
-    background: var(--card);
-    border-radius: 12px;
     padding: 20px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.06);
-    border: 1px solid var(--border);
-    flex-shrink: 0;
-    z-index: 5;
 }
 
 /* CV Styles */
@@ -1446,18 +1417,7 @@ footer {
 }
 
 .cv-sidebar {
-    position: sticky;
-    top: 100px;
-    width: 280px;
-    max-height: calc(100vh - 120px);
-    overflow-y: auto;
-    background: var(--card);
-    border-radius: 12px;
     padding: 24px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.06);
-    border: 1px solid var(--border);
-    flex-shrink: 0;
-    z-index: 5;
 }
 
 .cv-profile {
@@ -1531,24 +1491,6 @@ footer {
     color: white;
     font-weight: 600;
     border-left-color: var(--accent);
-}
-
-/* Scrollbar for CV sidebar */
-.cv-sidebar::-webkit-scrollbar {
-    width: 6px;
-}
-
-.cv-sidebar::-webkit-scrollbar-track {
-    background: transparent;
-}
-
-.cv-sidebar::-webkit-scrollbar-thumb {
-    background: var(--border);
-    border-radius: 3px;
-}
-
-.cv-sidebar::-webkit-scrollbar-thumb:hover {
-    background: var(--muted);
 }
 
 .cv-content {
@@ -1706,7 +1648,7 @@ footer {
 }
 
 /* Responsive CV */
-@media (max-width: 968px) {
+@media (max-width: 960px) {
     .cv-container {
         flex-direction: column;
     }
@@ -1765,18 +1707,7 @@ footer {
 }
 
 .social-sidebar {
-    position: sticky;
-    top: 100px;
-    width: 280px;
-    max-height: calc(100vh - 120px);
-    overflow-y: auto;
-    background: var(--card);
-    border-radius: 12px;
     padding: 24px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.06);
-    border: 1px solid var(--border);
-    flex-shrink: 0;
-    z-index: 5;
 }
 
 .social-sidebar h3 {
@@ -1816,24 +1747,6 @@ footer {
     color: white;
     font-weight: 600;
     border-left-color: var(--accent);
-}
-
-/* Scrollbar for social sidebar */
-.social-sidebar::-webkit-scrollbar {
-    width: 6px;
-}
-
-.social-sidebar::-webkit-scrollbar-track {
-    background: transparent;
-}
-
-.social-sidebar::-webkit-scrollbar-thumb {
-    background: var(--border);
-    border-radius: 3px;
-}
-
-.social-sidebar::-webkit-scrollbar-thumb:hover {
-    background: var(--muted);
 }
 
 .social-content {
@@ -2013,7 +1926,7 @@ footer {
 }
 
 /* Responsive Social */
-@media (max-width: 968px) {
+@media (max-width: 960px) {
     .social-container {
         flex-direction: column;
     }
@@ -2194,7 +2107,7 @@ footer {
 }
 
 .button.accent-button:hover {
-    background: #ff6a48;
+    background: var(--accent);
     transform: translateY(-2px);
     box-shadow: 0 4px 12px rgba(255, 122, 89, 0.3);
 }

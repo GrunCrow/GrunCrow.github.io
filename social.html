@@ -3,41 +3,44 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Social profiles and research community links for Alba Marquez-Rodriguez, including LinkedIn, GitHub, Scholar, ORCID, and Mastodon.">
     <link rel="icon" type="image/png" href="images/logos/gruncrow-ai.png">
     <link rel="stylesheet" href="css/styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-    <title>Alba Márquez-Rodríguez - CV</title>
+    <title>Alba Márquez-Rodríguez - Social Media</title>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-EPGY5EF08T"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-EPGY5EF08T');
+    </script>
 </head>
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-EPGY5EF08T"></script>
-<script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-    gtag('config', 'G-EPGY5EF08T');
-</script>
 <body>
+    <a class="skip-to-content" href="#main-content">Skip to main content</a>
     <header>
         <div>
             <h1>Alba Márquez-Rodríguez</h1>
-            <h2>Computer Scientist specialized in Artificial Intelligence</h2>
+            <h2>Computer scientist specialized in Artificial Intelligence</h2>
         </div>
         <nav>
             <ul>
                 <li><a href="index.html">Home</a></li>
-                <li><a href="publications.html">Publications</a></li>
                 <li><a href="projects.html">Projects</a></li>
+                <li><a href="publications.html">Publications</a></li>
                 <li><a href="congresses.html">Congresses</a></li>
                 <li><a href="events.html">Talks & Events</a></li>
                 <li><a href="cv.html">CV</a></li>
+                <li><a href="social.html">Social Media</a></li>
             </ul>
         </nav>
     </header>
 
-    <main class="social-container">
+    <main id="main-content" class="social-container">
         <!-- Sidebar Navigation -->
-        <aside class="social-sidebar">
+        <aside class="social-sidebar site-sidebar">
             <h3>Connect With Me</h3>
-            <nav class="social-nav">
+            <nav class="social-nav site-sidebar-nav">
                 <a href="#linkedin" class="social-nav-link active">
                     <i class="fab fa-linkedin"></i> LinkedIn
                 </a>
@@ -263,6 +266,7 @@
     <script src="js/footer.js"></script>
     <script src="js/links.js"></script>
     <script src="js/scripts.js"></script>
+    <script src="js/site-utils.js"></script>
     <script src="js/social.js"></script>
 </body>
 </html>

@@ -3,21 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="AI and ecology projects by Alba Marquez-Rodriguez, including deep learning, computer vision, and biodiversity monitoring applications.">
     <link rel="icon" type="image/png" href="images/logos/gruncrow-ai.png">
     <link rel="stylesheet" href="css/styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <title>Alba Márquez-Rodríguez - Projects</title>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-EPGY5EF08T"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-EPGY5EF08T');
+    </script>
 </head>
-<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-EPGY5EF08T"></script>
-<script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-
-    gtag('config', 'G-EPGY5EF08T');
-</script>
 <body>
+    <a class="skip-to-content" href="#main-content">Skip to main content</a>
     <header>
         <div>
             <h1>Alba Márquez-Rodríguez</h1>
@@ -26,6 +26,7 @@
         <nav>
             <ul>
                 <li><a href="index.html">Home</a></li>
+                <li><a href="projects.html">Projects</a></li>
                 <li><a href="publications.html">Publications</a></li>
                 <li><a href="congresses.html">Congresses</a></li>
                 <li><a href="events.html">Talks & Events</a></li>
@@ -35,10 +36,10 @@
         </nav>
     </header>
 
-    <main class="projects-page-container">
-        <aside class="projects-sidebar">
+    <main id="main-content" class="projects-page-container">
+        <aside class="projects-sidebar site-sidebar">
             <h3>Jump to</h3>
-            <nav id="projects-nav"></nav>
+            <nav id="projects-nav" class="site-sidebar-nav"></nav>
         </aside>
         <div id="projects-container" class="projects-main-content"></div>
     </main>
@@ -47,6 +48,7 @@
 
     <script src="js/links.js"></script>
     <script src="js/scripts.js"></script>
+    <script src="js/site-utils.js"></script>
     <script src="js/projects.js"></script>
     <script src="js/footer.js"></script>
     

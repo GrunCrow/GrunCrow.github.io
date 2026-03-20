@@ -1,90 +1,125 @@
 // Social Media Page Script
 function setupSocialNavigation() {
+    const { initScrollSpy } = window.SiteUtils;
+
     const navLinks = document.querySelectorAll('.social-nav-link');
-    
+
     navLinks.forEach(link => {
-        link.addEventListener('click', (e) => {
+        link.addEventListener('click', () => {
             navLinks.forEach(l => l.classList.remove('active'));
             link.classList.add('active');
         });
     });
 
-    // Scroll-spy for navigation
-    window.addEventListener('scroll', () => {
-        let current = '';
-        document.querySelectorAll('[id^="linkedin"], [id^="twitter"], [id^="github"], [id^="scholar"], [id^="orcid"], [id^="mastodon"]').forEach(section => {
-            const sectionTop = section.offsetTop;
-            if (window.scrollY >= (sectionTop - 200)) {
-                current = section.getAttribute('id');
-            }
-        });
-
-        navLinks.forEach(link => {
-            link.classList.remove('active');
-            if (link.getAttribute('href').includes(current)) {
-                link.classList.add('active');
-            }
-        });
+    initScrollSpy({
+        linkSelector: '.social-nav-link',
+        sectionSelector: '.social-section[id]',
+        offset: 200,
+        match: 'contains'
     });
 }
 
 // Fetch GitHub user information
-async function loadGitHubInfo() {
+const GITHUB_PROFILE_CACHE_KEY = 'gruncrow:github-profile';
+const GITHUB_PROFILE_CACHE_TTL_MS = 1000 * 60 * 60 * 6;
+
+function readCachedJson(cacheKey, ttlMs) {
     try {
-        const res = await fetch('https://api.github.com/users/GrunCrow');
-        const user = await res.json();
-        
-        const container = document.getElementById('github-repos');
-        
-        container.innerHTML = `
-            <div class="github-info-card github-info-center">
-            <div class="github-info-header github-info-header-vertical">
-                <img src="${user.avatar_url}" alt="${user.name}" class="github-avatar">
-                <div class="github-info-details github-info-center">
-                    <h4>${user.name || user.login}</h4>
-                    <p class="github-bio">${user.bio || 'Developer & Open Source Enthusiast'}</p>
-                    <div class="github-stats-inline github-stats-centered">
-                        <div class="stat-item">
-                        <span class="stat-num">${user.public_repos}</span>
-                        <span class="stat-label">Repositories</span>
-                        </div>
-                        <div class="stat-item">
-                        <span class="stat-num">${user.followers}</span>
-                        <span class="stat-label">Followers</span>
-                        </div>
-                        <div class="stat-item">
-                        <span class="stat-num">${user.following}</span>
-                        <span class="stat-label">Following</span>
-                        </div>
+        const raw = localStorage.getItem(cacheKey);
+        if (!raw) return null;
+        const parsed = JSON.parse(raw);
+        if (!parsed || !parsed.timestamp || !parsed.value) return null;
+        if (Date.now() - parsed.timestamp > ttlMs) return null;
+        return parsed.value;
+    } catch {
+        return null;
+    }
+}
+
+function writeCachedJson(cacheKey, value) {
+    try {
+        localStorage.setItem(cacheKey, JSON.stringify({
+            timestamp: Date.now(),
+            value
+        }));
+    } catch {
+        // Ignore cache write errors (private mode/quota)
+    }
+}
+
+function renderGitHubUser(user) {
+    const container = document.getElementById('github-repos');
+    if (!container) return;
+
+    container.innerHTML = `
+        <div class="github-info-card github-info-center">
+        <div class="github-info-header github-info-header-vertical">
+            <img src="${user.avatar_url}" alt="${user.name}" class="github-avatar">
+            <div class="github-info-details github-info-center">
+                <h4>${user.name || user.login}</h4>
+                <p class="github-bio">${user.bio || 'Developer & Open Source Enthusiast'}</p>
+                <div class="github-stats-inline github-stats-centered">
+                    <div class="stat-item">
+                    <span class="stat-num">${user.public_repos}</span>
+                    <span class="stat-label">Repositories</span>
+                    </div>
+                    <div class="stat-item">
+                    <span class="stat-num">${user.followers}</span>
+                    <span class="stat-label">Followers</span>
+                    </div>
+                    <div class="stat-item">
+                    <span class="stat-num">${user.following}</span>
+                    <span class="stat-label">Following</span>
                     </div>
                 </div>
             </div>
-            <div class="github-info-body github-info-center">
-                <p><strong>Member Since:</strong> ${new Date(user.created_at).toLocaleDateString()}</p>
+        </div>
+        <div class="github-info-body github-info-center">
+            <p><strong>Member Since:</strong> ${new Date(user.created_at).toLocaleDateString()}</p>
+        </div>
+        </div>
+    `;
+}
+
+function renderGitHubFallback() {
+    const container = document.getElementById('github-repos');
+    if (!container) return;
+
+    container.innerHTML = `
+        <div class="github-info-card">
+            <h4>GitHub Profile</h4>
+            <p class="meta-note github-fallback-note">
+                Explore my open source projects, contributions, and collaborative work.
+            </p>
+            <div class="github-info-body">
+                <ul class="github-fallback-list">
+                    <li><strong>Languages:</strong> Python, C++, Java, SQL</li>
+                    <li><strong>Focus Areas:</strong> AI, Computer vision, Data science</li>
+                    <li><strong>Interests:</strong> Open Source, Ecology Tech, Deep Learning</li>
+                </ul>
             </div>
-            </div>
-        `;
+            <a href="https://github.com/GrunCrow" target="_blank" rel="noopener noreferrer" class="github-profile-btn">
+                <i class="fab fa-github"></i> Visit GitHub Profile
+            </a>
+        </div>
+    `;
+}
+
+async function loadGitHubInfo() {
+    const cachedUser = readCachedJson(GITHUB_PROFILE_CACHE_KEY, GITHUB_PROFILE_CACHE_TTL_MS);
+    if (cachedUser) {
+        renderGitHubUser(cachedUser);
+        return;
+    }
+
+    try {
+        const res = await fetch('https://api.github.com/users/GrunCrow');
+        const user = await res.json();
+        writeCachedJson(GITHUB_PROFILE_CACHE_KEY, user);
+        renderGitHubUser(user);
     } catch (err) {
         console.error('Error loading GitHub info:', err);
-        const container = document.getElementById('github-repos');
-        container.innerHTML = `
-            <div class="github-info-card">
-                <h4>GitHub Profile</h4>
-                <p class="meta-note github-fallback-note">
-                    Explore my open source projects, contributions, and collaborative work.
-                </p>
-                <div class="github-info-body">
-                    <ul class="github-fallback-list">
-                        <li><strong>Languages:</strong> Python, C++, Java, SQL</li>
-                        <li><strong>Focus Areas:</strong> AI, Computer vision, Data science</li>
-                        <li><strong>Interests:</strong> Open Source, Ecology Tech, Deep Learning</li>
-                    </ul>
-                </div>
-                <a href="https://github.com/GrunCrow" target="_blank" rel="noopener noreferrer" class="github-profile-btn">
-                    <i class="fab fa-github"></i> Visit GitHub Profile
-                </a>
-            </div>
-        `;
+        renderGitHubFallback();
     }
 }
 

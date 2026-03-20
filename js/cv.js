@@ -1,3 +1,5 @@
+const { escapeHtml, safeUrl, initScrollSpy } = window.SiteUtils;
+
 async function loadCV() {
     try {
         const res = await fetch('data/cv.json');
@@ -15,7 +17,12 @@ async function loadCV() {
         loadVolunteering(cv.volunteering);
 
         // Initialize scroll-spy
-        setupScrollSpy();
+        initScrollSpy({
+            linkSelector: '.cv-nav-link',
+            sectionSelector: '.cv-section[id]',
+            offset: 200,
+            runOnInit: false
+        });
     } catch (err) {
         console.error('Error loading CV:', err);
     }
@@ -253,51 +260,6 @@ function renderVolunteeringEntry(item) {
             ${description}
         </div>
     `;
-}
-
-function escapeHtml(value) {
-    return String(value ?? '')
-        .replace(/&/g, '&amp;')
-        .replace(/</g, '&lt;')
-        .replace(/>/g, '&gt;')
-        .replace(/"/g, '&quot;')
-        .replace(/'/g, '&#39;');
-}
-
-function safeUrl(value) {
-    if (!value) return '';
-    try {
-        const url = new URL(String(value), window.location.origin);
-        if (!['http:', 'https:'].includes(url.protocol)) return '';
-        return escapeHtml(url.toString());
-    } catch {
-        return '';
-    }
-}
-
-function setupScrollSpy() {
-    const links = document.querySelectorAll('.cv-nav-link');
-    const sections = document.querySelectorAll('[id$="-content"]');
-
-    function highlightNav() {
-        let current = '';
-        sections.forEach(section => {
-            const sectionTop = section.offsetTop;
-            if (window.scrollY >= (sectionTop - 200)) {
-                current = section.getAttribute('id').replace('-content', '');
-            }
-        });
-
-        links.forEach(link => {
-            link.classList.remove('active');
-            if (current && link.getAttribute('href').includes(current)) {
-                link.classList.add('active');
-            }
-        });
-    }
-
-    window.addEventListener('scroll', highlightNav);
-    // Don't call highlightNav() on page load, wait for user to scroll
 }
 
 document.addEventListener('DOMContentLoaded', loadCV);
