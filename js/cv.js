@@ -10,6 +10,7 @@ async function loadCV() {
         loadExperience(cv.experience);
         loadEducation(cv.education);
         loadCertifications(cv.certifications);
+        loadPublicationsSummary();
         loadSkills(cv.skills);
         loadVolunteering(cv.volunteering);
 
@@ -49,6 +50,27 @@ function getPillStyle(isPresent) {
     };
 }
 
+function formatWorkType(workType) {
+    if (!workType) return '';
+    if (workType === 'onsite') return 'On-site';
+    return workType.charAt(0).toUpperCase() + workType.slice(1);
+}
+
+function renderMetaPills(item) {
+    const parts = [];
+
+    if (item.workType) {
+        parts.push(`<span class="pill" style="background:#f3e5f5;color:#6a1b9a;border-color:#e1bee7;"><i class="fas fa-laptop-house"></i> ${formatWorkType(item.workType)}</span>`);
+    }
+
+    if (item.location) {
+        parts.push(`<span class="pill" style="background:#e8f5e9;color:#2e7d32;border-color:#c8e6c9;"><i class="fas fa-map-marker-alt"></i> ${item.location}</span>`);
+    }
+
+    if (parts.length === 0) return '';
+    return `<div class="cv-meta-pills">${parts.join('')}</div>`;
+}
+
 function loadExperience(items) {
     const container = document.getElementById('experience-content');
     if (!container) return;
@@ -68,6 +90,8 @@ function renderExperienceEntry(item) {
         ? `<ul class="cv-responsibilities">${item.responsibilities.map(r => `<li>${r}</li>`).join('')}</ul>`
         : '';
 
+    const metaPills = renderMetaPills(item);
+
     return `
         <div class="cv-entry ${item.featured ? 'featured-card' : ''}">
             <div class="cv-entry-header">
@@ -75,7 +99,7 @@ function renderExperienceEntry(item) {
                     <h3>${item.position}</h3>
                     <p class="cv-organization">${item.organization}</p>
                 </div>
-                <div class="cv-period">${pill}</div>
+                <div class="cv-period">${pill}${metaPills}</div>
             </div>
             ${project}
             ${responsibilities}
@@ -98,6 +122,8 @@ function renderEducationEntry(item) {
         ? `<ul class="cv-responsibilities">${item.details.map(d => `<li>${d}</li>`).join('')}</ul>`
         : '';
 
+    const metaPills = renderMetaPills(item);
+
     return `
         <div class="cv-entry ${item.featured ? 'featured-card' : ''}">
             <div class="cv-entry-header">
@@ -105,7 +131,7 @@ function renderEducationEntry(item) {
                     <h3>${item.degree}</h3>
                     <p class="cv-organization">${item.institution}</p>
                 </div>
-                <div class="cv-period">${pill}</div>
+                <div class="cv-period">${pill}${metaPills}</div>
             </div>
             ${details}
         </div>
@@ -134,6 +160,8 @@ function renderCertificationEntry(item) {
         }).join('')}</ul>`
         : '';
 
+    const metaPills = renderMetaPills(item);
+
     return `
         <div class="cv-entry">
             <div class="cv-entry-header">
@@ -141,7 +169,7 @@ function renderCertificationEntry(item) {
                     <h3>${item.title}</h3>
                     <p class="cv-organization">${item.institution}</p>
                 </div>
-                <div class="cv-period">${pill}</div>
+                <div class="cv-period">${pill}${metaPills}</div>
             </div>
             ${description}
             ${projects}
@@ -163,6 +191,52 @@ function loadSkills(items) {
             </div>
         `).join('')}
     </div>`;
+}
+
+async function loadPublicationsSummary() {
+    const container = document.getElementById('publications-content');
+    if (!container) return;
+
+    try {
+        const res = await fetch('data/publications.json');
+        const publications = await res.json();
+
+        const recent = publications.slice(0, 5);
+
+        container.innerHTML = `
+            <p class="cv-description">Selected recent publications from my research profile. For the complete list, visit the full publications section.</p>
+            <div class="cv-publications-list">
+                ${recent.map(pub => {
+                    const venue = pub.journal ? `${pub.journal}${pub.editorial ? ` (${pub.editorial})` : ''}` : '';
+                    const title = pub.doi
+                        ? `<a href="${pub.doi}" target="_blank" rel="noopener">${pub.title}</a>`
+                        : pub.title;
+
+                    return `
+                        <div class="cv-entry">
+                            <h3>${title}</h3>
+                            <p class="cv-organization">${venue}</p>
+                            <div class="cv-meta-pills">
+                                ${pub.date ? `<span class="pill" style="background:#e3f2fd;color:#1565c0;border-color:#bbdefb;"><i class="far fa-calendar"></i> ${pub.date}</span>` : ''}
+                                ${pub.type ? `<span class="pill" style="background:#f3e5f5;color:#6a1b9a;border-color:#e1bee7;"><i class="fas fa-file-alt"></i> ${pub.type.charAt(0).toUpperCase() + pub.type.slice(1)}</span>` : ''}
+                            </div>
+                        </div>
+                    `;
+                }).join('')}
+            </div>
+            <p style="margin-top: 12px;">
+                <a href="publications.html#all-publications-section" style="font-weight: 600; color: var(--primary); text-decoration: none;">
+                    <i class="fas fa-external-link-alt"></i> View all publications
+                </a>
+            </p>
+        `;
+    } catch (err) {
+        container.innerHTML = `
+            <p class="cv-description">Publications are available in the dedicated section.</p>
+            <p><a href="publications.html#all-publications-section" style="font-weight: 600; color: var(--primary); text-decoration: none;"><i class="fas fa-external-link-alt"></i> Open publications</a></p>
+        `;
+        console.error('Error loading publications summary:', err);
+    }
 }
 
 function loadVolunteering(items) {

@@ -1501,6 +1501,17 @@ footer {
 .cv-period {
     white-space: nowrap;
     flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 8px;
+}
+
+.cv-meta-pills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    justify-content: flex-end;
 }
 
 .cv-project {
@@ -1535,6 +1546,11 @@ footer {
 
 .cv-responsibilities li {
     margin-bottom: 6px;
+}
+
+.cv-publications-list {
+    display: grid;
+    gap: 12px;
 }
 
 /* Skills Grid */
@@ -1596,6 +1612,11 @@ footer {
     
     .cv-period {
         white-space: normal;
+        align-items: flex-start;
+    }
+
+    .cv-meta-pills {
+        justify-content: flex-start;
     }
     
     .cv-skills-grid {

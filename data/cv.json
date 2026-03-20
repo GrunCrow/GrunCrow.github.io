@@ -8,15 +8,51 @@
   "experience": [
     {
       "id": "ai-scientist",
-      "position": "AI Scientist",
-      "organization": "DeTect",
+      "position": "AI Computer Scientist",
+      "organization": "DeTect Inc.",
       "startDate": "November 2025",
       "endDate": "Present",
       "isPresent": true,
       "featured": true,
+      "workType": "online",
       "project": null,
       "description": null,
       "responsibilities": []
+    },
+    {
+      "id": "cv4ecology-instructor",
+      "position": "CV4Ecology 2026 Instructor",
+      "organization": "Smithsonian Conservation Biology Institute",
+      "startDate": "January 10, 2026",
+      "endDate": "January 31, 2026",
+      "isPresent": false,
+      "featured": false,
+      "workType": "onsite",
+      "location": "Front Royal, VA, USA",
+      "project": null,
+      "description": "Delivered specialized training in ecological data analysis with artificial intelligence at the international CV4Ecology workshop held at the Smithsonian Conservation Biology Institute in Front Royal, VA. Taught the lecture \"What's Next? Rules of Thumb for Improving Results\" focusing on practical approaches to improving AI model performance.",
+      "responsibilities": [
+        "Delivered lecture \"What's Next? Rules of Thumb for Improving Results\" on improving AI model results and best practices in ecological data analysis",
+        "Mentored international participants on computer vision and deep learning applications for biodiversity monitoring",
+        "Facilitated hands-on discussions on processing diverse ecological data types (acoustic, imagery, multisensor)"
+      ]
+    },
+    {
+      "id": "utad-lecturer",
+      "position": "University Lecturer",
+      "organization": "U-TAD (University Center for Technology and Digital Art)",
+      "startDate": "September 2025",
+      "endDate": "January 2026",
+      "isPresent": false,
+      "featured": false,
+      "workType": "online",
+      "project": null,
+      "responsibilities": [
+        "Designed and delivered the full course syllabus of Machine Learning I, covering theory and practical machine learning foundations",
+        "Created structured teaching materials aligned with official academic guidelines, including multimedia and interactive resources",
+        "Built and managed continuous and final assessment systems, including quizzes, exams, and graded practical assignments",
+        "Taught live sessions, provided academic tutoring, and supported students through regular consultation and feedback"
+      ]
     },
     {
       "id": "licensed-researcher",
@@ -26,6 +62,8 @@
       "endDate": "Aug 2025",
       "isPresent": false,
       "featured": false,
+      "workType": "onsite",
+      "location": "Puerto Real, Cádiz, Spain",
       "project": {
         "title": "SEANIMALMOVE: Monitoring the movement and population dynamics of marine and coastal vertebrates",
         "link": "projects.html#seanimalmove-project"
@@ -43,6 +81,8 @@
       "endDate": "Apr 2024",
       "isPresent": false,
       "featured": false,
+      "workType": "hybrid",
+      "location": "Sevilla, Spain",
       "project": {
         "title": "BIRDeep: Ecosystem health monitoring through automated bird song detection using Deep Learning",
         "link": "projects.html#birdeep-project"
@@ -60,6 +100,8 @@
       "endDate": "Aug 2023",
       "isPresent": false,
       "featured": false,
+      "workType": "hybrid",
+      "location": "Huelva, Spain",
       "project": {
         "title": "AI-Census: Deep learning-based camera trap image analysis",
         "link": "projects.html#ai-census-project"
@@ -77,6 +119,8 @@
       "endDate": "Nov 2022",
       "isPresent": false,
       "featured": false,
+      "workType": "onsite",
+      "location": "Huelva, Spain",
       "project": {
         "title": "AI-Census: Biodiversity census using deep learning techniques",
         "link": "projects.html#ai-census-project"
@@ -96,6 +140,8 @@
       "endDate": "Present",
       "isPresent": true,
       "featured": true,
+      "workType": "hybrid",
+      "location": "Puerto Real,Cádiz, Spain",
       "details": null
     },
     {
@@ -106,6 +152,8 @@
       "endDate": "Sep 2024",
       "isPresent": false,
       "featured": false,
+      "workType": "onsite",
+      "location": "Córdoba, Spain",
       "details": null
     },
     {
@@ -116,6 +164,8 @@
       "endDate": "Nov 2023",
       "isPresent": false,
       "featured": false,
+      "workType": "onsite",
+      "location": "Huelva, Spain",
       "details": [
         "Presented \"Fuzzy software for estimating turbine viability in marine current applications\" at V ScienCity Conference",
         "Thesis: Classification of camera trap images using Convolutional Neural Networks"
@@ -130,6 +180,8 @@
       "startDate": "Aug 2023",
       "endDate": "Sep 2023",
       "isPresent": false,
+      "workType": "onsite",
+      "location": "Pasadena, California, USA",
       "description": "Intensive 3-week summer workshop on advanced computer vision techniques for ecological research. Gained expertise in analyzing large-scale image, audio, and video datasets through hands-on projects and mentorship."
     },
     {
@@ -139,6 +191,8 @@
       "startDate": "Sep 2021",
       "endDate": "Jul 2022",
       "isPresent": false,
+      "workType": "onsite",
+      "location": "Wrocław, Poland",
       "description": null,
       "projects": [
         {
