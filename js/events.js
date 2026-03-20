@@ -14,7 +14,11 @@ async function loadEvents() {
         
         // Build sidebar navigation
         if (sidebarNav) {
-            sidebarNav.innerHTML = events.map(event => `<a href="#event-${event.id}">${event.title.substring(0, 50)}${event.title.length > 50 ? '...' : ''}</a>`).join('');
+            sidebarNav.innerHTML = events.map(event => {
+                const eventId = safeId(event.id);
+                const title = escapeHtml((event.title || '').substring(0, 50));
+                return `<a href="#event-${eventId}">${title}${(event.title || '').length > 50 ? '...' : ''}</a>`;
+            }).join('');
             
             // Highlight active section on scroll
             setupEventsScrollSpy();
@@ -26,8 +30,9 @@ async function loadEvents() {
 }
 
 function renderEvent(event) {
+    const eventId = safeId(event.id);
     let speakers = event.speakers || '';
-    speakers = speakers.replace(/(Alba Márquez-Rodríguez|A\. Márquez-Rodríguez|A\. Márquez Rodríguez|Alba Márquez Rodríguez)/gi, '<strong>$1</strong>');
+    speakers = escapeHtml(speakers).replace(/(Alba Márquez-Rodríguez|A\. Márquez-Rodríguez|A\. Márquez Rodríguez|Alba Márquez Rodríguez)/gi, '<strong>$1</strong>');
     
     const typeBadge = `<span class="pill pill--success"><i class="fas fa-${event.type === 'workshop' ? 'users' : 'chalkboard-teacher'}"></i> ${event.type.charAt(0).toUpperCase() + event.type.slice(1)}</span>`;
     
@@ -37,39 +42,46 @@ function renderEvent(event) {
     
     const imagesHtml = event.images ? `
         <div class="project-images project-images-rectangles">
-            ${event.images.map(img => `<img src="${img}" alt="${event.title}">`).join('')}
+            ${event.images.map(img => {
+                const imageUrl = safeUrl(img);
+                return imageUrl ? `<img src="${imageUrl}" alt="${escapeHtml(event.title)}">` : '';
+            }).join('')}
         </div>
     ` : '';
 
     const linksHtml = event.links ? `
         <p>Related links:</p>
         <ul>
-            ${event.links.map(link => `<li><a href="${link.url}" target="_blank">${link.text}</a></li>`).join('')}
+            ${event.links.map(link => {
+                const linkUrl = safeUrl(link.url);
+                if (!linkUrl) return '';
+                return `<li><a href="${linkUrl}" target="_blank" rel="noopener noreferrer">${escapeHtml(link.text)}</a></li>`;
+            }).join('')}
         </ul>
     ` : '';
 
     const videoButtonHtml = event.videoLink ? `
         <div class="event-video-button">
-            <a href="${event.videoLink}" target="_blank" class="btn-primary">
+            <a href="${safeUrl(event.videoLink)}" target="_blank" rel="noopener noreferrer" class="btn-primary">
                 <i class="fab fa-youtube"></i> Watch Video
             </a>
         </div>
     ` : '';
 
     return `
-        <section id="event-${event.id}" class="card event-card">
+        <section id="event-${eventId}" class="card event-card">
             <div class="event-header">
                 <div class="event-left">
-                    <div class="event-date">${event.date}</div>
-                    <div class="event-location">${event.location || 'Online'}</div>
+                    <div class="event-date">${escapeHtml(event.date)}</div>
+                    <div class="event-location">${escapeHtml(event.location || 'Online')}</div>
                 </div>
                 <div class="event-main">
                     <div class="event-info">
                         <h3 class="event-title">
-                            ${event.link ? `<a href="${event.link}" target="_blank">${event.title}</a>` : event.title}
+                            ${event.link ? `<a href="${safeUrl(event.link)}" target="_blank" rel="noopener noreferrer">${escapeHtml(event.title)}</a>` : escapeHtml(event.title)}
                         </h3>
                         <div class="event-meta">
-                            <span class="event-organizer">${event.organizer}</span>
+                            <span class="event-organizer">${escapeHtml(event.organizer)}</span>
                             <span class="event-speakers">${speakers}</span>
                         </div>
                     </div>
@@ -80,13 +92,41 @@ function renderEvent(event) {
                 </div>
             </div>
             <div class="event-content">
-                <p>${event.description}</p>
+                <p>${escapeHtml(event.description)}</p>
                 ${linksHtml}
             </div>
             ${imagesHtml}
             ${videoButtonHtml}
         </section>
     `;
+}
+
+function escapeHtml(value) {
+    return String(value ?? '')
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#39;');
+}
+
+function safeId(value) {
+    return String(value ?? '')
+        .toLowerCase()
+        .replace(/[^a-z0-9_-]/g, '-')
+        .replace(/-+/g, '-')
+        .replace(/^-|-$/g, '') || 'item';
+}
+
+function safeUrl(value) {
+    if (!value) return '';
+    try {
+        const url = new URL(String(value), window.location.origin);
+        if (!['http:', 'https:'].includes(url.protocol)) return '';
+        return escapeHtml(url.toString());
+    } catch {
+        return '';
+    }
 }
 
 function setupEventsScrollSpy() {

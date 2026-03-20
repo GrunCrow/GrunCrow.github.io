@@ -25,10 +25,10 @@ function loadProfile(profile) {
     const sidebar = document.querySelector('.cv-profile');
     if (sidebar) {
         sidebar.innerHTML = `
-            <img src="${profile.image}" alt="${profile.name}" class="cv-profile-image">
-            <h2>${profile.name}</h2>
-            <p class="cv-title">${profile.title}</p>
-            <p class="cv-subtitle">${profile.subtitle}</p>
+            <img src="${safeUrl(profile.image)}" alt="${escapeHtml(profile.name)}" class="cv-profile-image">
+            <h2>${escapeHtml(profile.name)}</h2>
+            <p class="cv-title">${escapeHtml(profile.title)}</p>
+            <p class="cv-subtitle">${escapeHtml(profile.subtitle)}</p>
         `;
     }
 }
@@ -70,11 +70,11 @@ function renderExperienceEntry(item) {
     const pill = `<span class="${pillClass}"><i class="fas fa-calendar-alt"></i> ${item.startDate} - ${item.endDate}</span>`;
     
     const project = item.project 
-        ? `<p class="cv-project"><strong>Project:</strong> <a href="${item.project.link}">${item.project.title}</a></p>`
+        ? `<p class="cv-project"><strong>Project:</strong> <a href="${safeUrl(item.project.link)}">${escapeHtml(item.project.title)}</a></p>`
         : '';
     
     const responsibilities = item.responsibilities.length > 0
-        ? `<ul class="cv-responsibilities">${item.responsibilities.map(r => `<li>${r}</li>`).join('')}</ul>`
+        ? `<ul class="cv-responsibilities">${item.responsibilities.map(r => `<li>${escapeHtml(r)}</li>`).join('')}</ul>`
         : '';
 
     const metaPills = renderMetaPills(item);
@@ -83,8 +83,8 @@ function renderExperienceEntry(item) {
         <div class="cv-entry ${item.featured ? 'featured-card' : ''}">
             <div class="cv-entry-header">
                 <div>
-                    <h3>${item.position}</h3>
-                    <p class="cv-organization">${item.organization}</p>
+                    <h3>${escapeHtml(item.position)}</h3>
+                    <p class="cv-organization">${escapeHtml(item.organization)}</p>
                 </div>
                 <div class="cv-period">${pill}${metaPills}</div>
             </div>
@@ -106,7 +106,7 @@ function renderEducationEntry(item) {
     const pill = `<span class="${pillClass}"><i class="fas fa-graduation-cap"></i> ${item.startDate} - ${item.endDate}</span>`;
     
     const details = item.details && item.details.length > 0
-        ? `<ul class="cv-responsibilities">${item.details.map(d => `<li>${d}</li>`).join('')}</ul>`
+        ? `<ul class="cv-responsibilities">${item.details.map(d => `<li>${escapeHtml(d)}</li>`).join('')}</ul>`
         : '';
 
     const metaPills = renderMetaPills(item);
@@ -115,8 +115,8 @@ function renderEducationEntry(item) {
         <div class="cv-entry ${item.featured ? 'featured-card' : ''}">
             <div class="cv-entry-header">
                 <div>
-                    <h3>${item.degree}</h3>
-                    <p class="cv-organization">${item.institution}</p>
+                    <h3>${escapeHtml(item.degree)}</h3>
+                    <p class="cv-organization">${escapeHtml(item.institution)}</p>
                 </div>
                 <div class="cv-period">${pill}${metaPills}</div>
             </div>
@@ -137,13 +137,13 @@ function renderCertificationEntry(item) {
     const pill = `<span class="${pillClass}"><i class="fas fa-certificate"></i> ${item.startDate} - ${item.endDate}</span>`;
     
     const description = item.description
-        ? `<p class="cv-description">${item.description}</p>`
+        ? `<p class="cv-description">${escapeHtml(item.description)}</p>`
         : '';
     
     const projects = item.projects && item.projects.length > 0
         ? `<ul class="cv-responsibilities">${item.projects.map(p => {
             const isLink = typeof p === 'object' && p.link;
-            return `<li>${isLink ? `<a href="${p.link}">${p.title}</a>` : p}</li>`;
+            return `<li>${isLink ? `<a href="${safeUrl(p.link)}">${escapeHtml(p.title)}</a>` : escapeHtml(p)}</li>`;
         }).join('')}</ul>`
         : '';
 
@@ -153,8 +153,8 @@ function renderCertificationEntry(item) {
         <div class="cv-entry">
             <div class="cv-entry-header">
                 <div>
-                    <h3>${item.title}</h3>
-                    <p class="cv-organization">${item.institution}</p>
+                    <h3>${escapeHtml(item.title)}</h3>
+                    <p class="cv-organization">${escapeHtml(item.institution)}</p>
                 </div>
                 <div class="cv-period">${pill}${metaPills}</div>
             </div>
@@ -171,9 +171,9 @@ function loadSkills(items) {
     container.innerHTML = `<div class="cv-skills-grid">
         ${items.map(skill => `
             <div class="cv-skill-card">
-                <h4><i class="fas ${skill.icon}"></i> ${skill.category}</h4>
+                <h4><i class="fas ${escapeHtml(skill.icon)}"></i> ${escapeHtml(skill.category)}</h4>
                 <ul>
-                    ${skill.items.map(item => `<li>${item}</li>`).join('')}
+                    ${skill.items.map(item => `<li>${escapeHtml(item)}</li>`).join('')}
                 </ul>
             </div>
         `).join('')}
@@ -196,16 +196,16 @@ async function loadPublicationsSummary() {
                 ${recent.map(pub => {
                     const venue = pub.journal ? `${pub.journal}${pub.editorial ? ` (${pub.editorial})` : ''}` : '';
                     const title = pub.doi
-                        ? `<a href="${pub.doi}" target="_blank" rel="noopener">${pub.title}</a>`
-                        : pub.title;
+                        ? `<a href="${safeUrl(pub.doi)}" target="_blank" rel="noopener noreferrer">${escapeHtml(pub.title)}</a>`
+                        : escapeHtml(pub.title);
 
                     return `
                         <div class="cv-entry">
                             <h3>${title}</h3>
-                            <p class="cv-organization">${venue}</p>
+                            <p class="cv-organization">${escapeHtml(venue)}</p>
                             <div class="cv-meta-pills">
-                                ${pub.date ? `<span class="pill pill--info"><i class="far fa-calendar"></i> ${pub.date}</span>` : ''}
-                                ${pub.type ? `<span class="pill pill--accent"><i class="fas fa-file-alt"></i> ${pub.type.charAt(0).toUpperCase() + pub.type.slice(1)}</span>` : ''}
+                                ${pub.date ? `<span class="pill pill--info"><i class="far fa-calendar"></i> ${escapeHtml(pub.date)}</span>` : ''}
+                                ${pub.type ? `<span class="pill pill--accent"><i class="fas fa-file-alt"></i> ${escapeHtml(pub.type.charAt(0).toUpperCase() + pub.type.slice(1))}</span>` : ''}
                             </div>
                         </div>
                     `;
@@ -245,14 +245,34 @@ function renderVolunteeringEntry(item) {
         <div class="cv-entry">
             <div class="cv-entry-header">
                 <div>
-                    <h3>${item.position}</h3>
-                    ${item.organization ? `<p class="cv-organization">${item.organization}</p>` : ''}
+                    <h3>${escapeHtml(item.position)}</h3>
+                    ${item.organization ? `<p class="cv-organization">${escapeHtml(item.organization)}</p>` : ''}
                 </div>
                 <div class="cv-period">${pill}</div>
             </div>
             ${description}
         </div>
     `;
+}
+
+function escapeHtml(value) {
+    return String(value ?? '')
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#39;');
+}
+
+function safeUrl(value) {
+    if (!value) return '';
+    try {
+        const url = new URL(String(value), window.location.origin);
+        if (!['http:', 'https:'].includes(url.protocol)) return '';
+        return escapeHtml(url.toString());
+    } catch {
+        return '';
+    }
 }
 
 function setupScrollSpy() {

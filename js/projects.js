@@ -14,9 +14,9 @@ async function loadProjects() {
         if (nav) {
             nav.innerHTML = `
                 <a class="section-link" href="#research-projects"><i class="fas fa-university"></i> Research Projects</a>
-                ${research.map(p => `<a class="project-link" href="#${p.id}-project">${truncate(p.title)}</a>`).join('')}
+                ${research.map(p => `<a class="project-link" href="#${safeId(p.id)}-project">${escapeHtml(truncate(p.title))}</a>`).join('')}
                 <a class="section-link section-link-spaced" href="#personal-projects"><i class="fas fa-code"></i> Personal Projects</a>
-                ${personal.map(p => `<a class="project-link" href="#${p.id}-project">${truncate(p.title)}</a>`).join('')}
+                ${personal.map(p => `<a class="project-link" href="#${safeId(p.id)}-project">${escapeHtml(truncate(p.title))}</a>`).join('')}
             `;
         }
 
@@ -38,6 +38,8 @@ async function loadProjects() {
             </section>
         `;
 
+        setupProjectInteractions(container);
+
         setupScrollSpy();
     } catch (err) {
         if (container) container.innerHTML = '<p>Could not load projects.</p>';
@@ -46,6 +48,7 @@ async function loadProjects() {
 }
 
 function renderProject(proj) {
+    const projectId = safeId(proj.id);
     const statusBadge = proj.status === 'ongoing'
         ? '<span class="pill pill--success"><i class="fas fa-spinner"></i> Ongoing</span>'
         : '<span class="pill pill--info"><i class="fas fa-check"></i> Completed</span>';
@@ -54,73 +57,79 @@ function renderProject(proj) {
         ? '<span class="pill pill--info"><i class="fas fa-university"></i> Research</span>'
         : '<span class="pill pill--warning"><i class="fas fa-code"></i> Personal</span>';
 
-    const logo = proj.logo ? `<img src="${proj.logo}" alt="${proj.title} Logo" class="project-title-logo">` : '';
+    const logoUrl = safeUrl(proj.logo);
+    const logo = logoUrl ? `<img src="${logoUrl}" alt="${escapeHtml(proj.title)} Logo" class="project-title-logo">` : '';
 
     const images = proj.images && proj.images.length
         ? `<div class="project-images project-images-rectangles">
-                ${proj.images.map(img => `<img src="${img}" alt="${proj.title}" loading="lazy">`).join('')}
+                ${proj.images.map(img => {
+                    const imageUrl = safeUrl(img);
+                    return imageUrl ? `<img src="${imageUrl}" alt="${escapeHtml(proj.title)}" loading="lazy">` : '';
+                }).join('')}
            </div>` : '';
 
     // Description with "read more" functionality
     const isLongDescription = proj.description && proj.description.length > 300;
     const shortDescription = isLongDescription ? proj.description.substring(0, 300) + '...' : proj.description;
-    const descriptionId = `desc-${proj.id}`;
+    const descriptionId = `desc-${projectId}`;
     
     const description = isLongDescription
         ? `<div>
-                <p id="${descriptionId}-short" class="project-description">${shortDescription}
-                    <a href="#" onclick="document.getElementById('${descriptionId}-short').style.display='none'; document.getElementById('${descriptionId}-full').style.display='block'; return false;" class="project-toggle-link"> Read more</a>
+                <p id="${descriptionId}-short" class="project-description">${escapeHtml(shortDescription)}
+                    <a href="#" class="project-toggle-link" data-hide-target="${descriptionId}-short" data-show-target="${descriptionId}-full"> Read more</a>
                 </p>
-                <p id="${descriptionId}-full" class="project-description project-hidden">${proj.description}
-                    <a href="#" onclick="document.getElementById('${descriptionId}-full').style.display='none'; document.getElementById('${descriptionId}-short').style.display='block'; return false;" class="project-toggle-link"> Read less</a>
+                <p id="${descriptionId}-full" class="project-description project-hidden">${escapeHtml(proj.description)}
+                    <a href="#" class="project-toggle-link" data-hide-target="${descriptionId}-full" data-show-target="${descriptionId}-short"> Read less</a>
                 </p>
            </div>`
-        : `<p class="project-description">${proj.description || ''}</p>`;
+        : `<p class="project-description">${escapeHtml(proj.description || '')}</p>`;
 
     // Objectives with "read more"
     const objectives = proj.objectives && proj.objectives.length
         ? `<div class="project-collapsible-section">
-                <h4 class="project-collapsible-title" onclick="document.getElementById('obj-${proj.id}').style.display = document.getElementById('obj-${proj.id}').style.display === 'none' ? 'block' : 'none';">
+                <h4 class="project-collapsible-title" data-toggle-target="obj-${projectId}">
                     <i class="fas fa-chevron-down"></i>Objectives
                 </h4>
-                <ol id="obj-${proj.id}" class="project-collapsible-list project-hidden">${proj.objectives.map(o => `<li class="project-collapsible-item">${o}</li>`).join('')}</ol>
+                <ol id="obj-${projectId}" class="project-collapsible-list project-hidden">${proj.objectives.map(o => `<li class="project-collapsible-item">${escapeHtml(o)}</li>`).join('')}</ol>
            </div>` : '';
 
     // Tasks with "read more"
     const tasks = proj.tasks && proj.tasks.length
         ? `<div class="project-collapsible-section">
-                <h4 class="project-collapsible-title" onclick="document.getElementById('task-${proj.id}').style.display = document.getElementById('task-${proj.id}').style.display === 'none' ? 'block' : 'none';">
+                <h4 class="project-collapsible-title" data-toggle-target="task-${projectId}">
                     <i class="fas fa-chevron-down"></i>Contributions
                 </h4>
-                <ul id="task-${proj.id}" class="project-collapsible-list project-hidden">${proj.tasks.map(t => `<li class="project-collapsible-item">${t}</li>`).join('')}</ul>
+                <ul id="task-${projectId}" class="project-collapsible-list project-hidden">${proj.tasks.map(t => `<li class="project-collapsible-item">${escapeHtml(t)}</li>`).join('')}</ul>
            </div>` : '';
 
     const tags = proj.tags && proj.tags.length
         ? `<div class="project-tags">
-                ${proj.tags.map(tag => `<span class="pill">${tag}</span>`).join('')}
+                ${proj.tags.map(tag => `<span class="pill">${escapeHtml(tag)}</span>`).join('')}
            </div>` : '';
 
     const links = proj.links && proj.links.length
         ? `<div class="project-links">
                 ${proj.links.map(link => {
+                    const linkUrl = safeUrl(link.url);
                     const icon = link.type === 'github' ? 'fab fa-github'
                                : link.type === 'pdf' ? 'far fa-file-pdf'
                                : 'fas fa-external-link-alt';
-                    return `<a href="${link.url}" target="_blank" rel="noopener" class="project-link-cta"><i class="${icon}"></i> ${link.label || 'Link'}</a>`;
+                    if (!linkUrl) return '';
+                    return `<a href="${linkUrl}" target="_blank" rel="noopener noreferrer" class="project-link-cta"><i class="${icon}"></i> ${escapeHtml(link.label || 'Link')}</a>`;
                 }).join('')}
            </div>` : '';
 
     return `
-        <div id="${proj.id}-project" class="project-box ${proj.featured ? 'featured-card' : ''}">
+        <div id="${projectId}-project" class="project-box ${proj.featured ? 'featured-card' : ''}">
             <div class="project-head">
                 <div class="project-head-main">
                     <div class="project-title-row">
                         ${logo}
-                        <h3 class="project-title">${proj.title}</h3>
+                        <h3 class="project-title">${escapeHtml(proj.title)}</h3>
                     </div>
-                    <h4 class="project-org">${proj.organization || ''}</h4>
-                    ${proj.authors ? `<h5 class="project-authors">Authors: ${proj.authors}</h5>` : ''}
-                    <h6 class="project-period">${proj.period || ''}</h6>
+                    <h4 class="project-org">${escapeHtml(proj.organization || '')}</h4>
+                    ${proj.authors ? `<h5 class="project-authors">Authors: ${escapeHtml(proj.authors)}</h5>` : ''}
+                    <h6 class="project-period">${escapeHtml(proj.period || '')}</h6>
                 </div>
                 <div class="project-head-badges">
                     ${statusBadge}
@@ -137,6 +146,69 @@ function renderProject(proj) {
             ${links}
         </div>
     `;
+}
+
+function setupProjectInteractions(container) {
+    container.addEventListener('click', (event) => {
+        const toggleLink = event.target.closest('[data-hide-target][data-show-target]');
+        if (toggleLink) {
+            event.preventDefault();
+            const hideTarget = document.getElementById(toggleLink.dataset.hideTarget);
+            const showTarget = document.getElementById(toggleLink.dataset.showTarget);
+            if (hideTarget) {
+                hideTarget.style.display = 'none';
+                hideTarget.classList.add('project-hidden');
+            }
+            if (showTarget) {
+                showTarget.style.display = '';
+                showTarget.classList.remove('project-hidden');
+            }
+            return;
+        }
+
+        const headingToggle = event.target.closest('[data-toggle-target]');
+        if (!headingToggle) return;
+
+        const target = document.getElementById(headingToggle.dataset.toggleTarget);
+        if (!target) return;
+
+        const currentlyHidden = target.classList.contains('project-hidden') || getComputedStyle(target).display === 'none';
+        if (currentlyHidden) {
+            target.style.display = '';
+            target.classList.remove('project-hidden');
+        } else {
+            target.style.display = 'none';
+            target.classList.add('project-hidden');
+        }
+    });
+}
+
+function escapeHtml(value) {
+    return String(value ?? '')
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#39;');
+}
+
+function safeId(value) {
+    return String(value ?? '')
+        .toLowerCase()
+        .replace(/[^a-z0-9_-]/g, '-')
+        .replace(/-+/g, '-')
+        .replace(/^-|-$/g, '') || 'item';
+}
+
+function safeUrl(value) {
+    if (!value) return '';
+    try {
+        const url = new URL(String(value), window.location.origin);
+        if (!['http:', 'https:'].includes(url.protocol)) return '';
+        return escapeHtml(url.toString());
+    } catch {
+        return '';
+    }
 }
 
 function truncate(text, max = 52) {

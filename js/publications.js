@@ -38,14 +38,14 @@ async function loadPublications() {
                     <div class="sidebar-section">
                         <a class="section-link" href="#featured-section"><i class="fas fa-star"></i> Featured</a>
                         <ul class="sidebar-sublist">
-                            ${featured.map(pub => `<li><a href="#publication-${pub.id}"><i class="fas fa-star icon-award"></i>${pub.title.substring(0, 55)}${pub.title.length > 55 ? '...' : ''}</a></li>`).join('')}
+                            ${featured.map(pub => `<li><a href="#publication-${safeId(pub.id)}"><i class="fas fa-star icon-award"></i>${escapeHtml(pub.title.substring(0, 55))}${pub.title.length > 55 ? '...' : ''}</a></li>`).join('')}
                         </ul>
                     </div>
                 ` : ''}
                 <div class="sidebar-section">
                     <a class="section-link" href="#all-publications-section"><i class="fas fa-book"></i> All Publications</a>
                     <ul class="sidebar-sublist">
-                        ${items.map(pub => `<li><a href="#publication-${pub.id}">${pub.title.substring(0, 55)}${pub.title.length > 55 ? '...' : ''}</a></li>`).join('')}
+                        ${items.map(pub => `<li><a href="#publication-${safeId(pub.id)}">${escapeHtml(pub.title.substring(0, 55))}${pub.title.length > 55 ? '...' : ''}</a></li>`).join('')}
                     </ul>
                 </div>
             `;
@@ -61,11 +61,11 @@ async function loadPublications() {
 }
 
 function renderPublication(pub, isFeatured) {
+    const pubId = safeId(pub.id);
     let authors = pub.authors || '';
-    authors = authors.replace(/(Alba Márquez-Rodríguez|A\. Márquez-Rodríguez|A\. Márquez Rodríguez|Alba Márquez Rodríguez)/gi, '<strong>$1</strong>');
+    authors = escapeHtml(authors).replace(/(Alba Márquez-Rodríguez|A\. Márquez-Rodríguez|A\. Márquez Rodríguez|Alba Márquez Rodríguez)/gi, '<strong>$1</strong>');
     
-    const imageHtml = pub.image ? 
-        `<img src="${pub.image}" alt="${pub.title}" class="pub-image">` : '';
+    const imageHtml = pub.image ? `<img src="${safeUrl(pub.image)}" alt="${escapeHtml(pub.title)}" class="pub-image">` : '';
     
     // Determine publication type and status badges
     const type = pub.type || 'journal';
@@ -99,17 +99,17 @@ function renderPublication(pub, isFeatured) {
     ` : '';
     
     return `
-    <section id="publication-${pub.id}" class="card ${isFeatured ? 'featured-card' : ''}">
+    <section id="publication-${pubId}" class="card ${isFeatured ? 'featured-card' : ''}">
         ${imageHtml}
         <div class="pub-header">
             <h3 class="pub-title">
-                ${pub.doi ? `<a href="${pub.doi}" target="_blank" rel="noopener">${pub.title}</a>` : pub.title}
+                ${pub.doi ? `<a href="${safeUrl(pub.doi)}" target="_blank" rel="noopener noreferrer">${escapeHtml(pub.title)}</a>` : escapeHtml(pub.title)}
             </h3>
-            ${pub.date ? `<div class="pub-date"><i class="far fa-calendar"></i> ${pub.date}</div>` : ''}
+            ${pub.date ? `<div class="pub-date"><i class="far fa-calendar"></i> ${escapeHtml(pub.date)}</div>` : ''}
         </div>
         <div class="pub-meta">
             <div class="pub-venue">
-                <span class="pill pill--info">${pub.journal}${pub.editorial ? ` (${pub.editorial})` : ''}</span>
+                <span class="pill pill--info">${escapeHtml(pub.journal)}${pub.editorial ? ` (${escapeHtml(pub.editorial)})` : ''}</span>
             </div>
             <div class="pub-badges-container">
                 <div class="pub-type-badges">${typeBadges.join(' ')}</div>
@@ -119,11 +119,39 @@ function renderPublication(pub, isFeatured) {
         ${authors ? `<div class="pub-authors"><strong>Authors:</strong> ${authors}</div>` : ''}
         ${abstractHtml}
         <div class="pub-links">
-            ${pub.doi ? `<a href="${pub.doi}" target="_blank" rel="noopener" class="pub-link"><i class="fas fa-external-link-alt"></i> View Paper</a>` : ''}
+            ${pub.doi ? `<a href="${safeUrl(pub.doi)}" target="_blank" rel="noopener noreferrer" class="pub-link"><i class="fas fa-external-link-alt"></i> View Paper</a>` : ''}
         </div>
     </section>
     `;
 }
+
+    function escapeHtml(value) {
+        return String(value ?? '')
+            .replace(/&/g, '&amp;')
+            .replace(/</g, '&lt;')
+            .replace(/>/g, '&gt;')
+            .replace(/"/g, '&quot;')
+            .replace(/'/g, '&#39;');
+    }
+
+    function safeId(value) {
+        return String(value ?? '')
+            .toLowerCase()
+            .replace(/[^a-z0-9_-]/g, '-')
+            .replace(/-+/g, '-')
+            .replace(/^-|-$/g, '') || 'item';
+    }
+
+    function safeUrl(value) {
+        if (!value) return '';
+        try {
+            const url = new URL(String(value), window.location.origin);
+            if (!['http:', 'https:'].includes(url.protocol)) return '';
+            return escapeHtml(url.toString());
+        } catch {
+            return '';
+        }
+    }
 
 function setupScrollSpy() {
     const links = document.querySelectorAll('.publications-sidebar a');

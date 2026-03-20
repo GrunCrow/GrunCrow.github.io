@@ -80,7 +80,7 @@ async function loadGitHubInfo() {
                         <li><strong>Interests:</strong> Open Source, Ecology Tech, Deep Learning</li>
                     </ul>
                 </div>
-                <a href="https://github.com/GrunCrow" target="_blank" rel="noopener" class="github-profile-btn">
+                <a href="https://github.com/GrunCrow" target="_blank" rel="noopener noreferrer" class="github-profile-btn">
                     <i class="fab fa-github"></i> Visit GitHub Profile
                 </a>
             </div>

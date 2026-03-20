@@ -18,10 +18,11 @@ async function loadCongresses() {
                 ${featured.length > 0 ? '<a class="section-link" href="#featured-congresses"><i class="fas fa-star"></i> Featured</a>' : ''}
                 <a class="section-link" href="#all-congresses"><i class="fas fa-calendar-alt"></i> All Congresses</a>
                 ${all.map(c => {
+                    const congressId = safeId(c.id);
                     const typeIcon = c.type === 'oral' 
                         ? '<i class="fas fa-microphone section-title-icon"></i>' 
                         : '<i class="fas fa-image section-title-icon"></i>';
-                    return `<a class="congress-link" href="#congress-${c.id}">${typeIcon} ${truncate(c.title, 45)}</a>`;
+                    return `<a class="congress-link" href="#congress-${congressId}">${typeIcon} ${escapeHtml(truncate(c.title, 45))}</a>`;
                 }).join('')}
             `;
         }
@@ -61,6 +62,7 @@ async function loadCongresses() {
         `;
 
         container.innerHTML = contentHTML;
+        setupCongressInteractions(container);
         setupScrollSpy();
     } catch (err) {
         if (container) container.innerHTML = '<p>Could not load congresses.</p>';
@@ -69,12 +71,13 @@ async function loadCongresses() {
 }
 
 function renderCongress(congress) {
+    const congressId = safeId(congress.id);
     const typeBadge = congress.type === 'oral'
         ? '<span class="pill pill--info"><i class="fas fa-microphone"></i> Oral Presentation</span>'
         : '<span class="pill pill--warning"><i class="fas fa-image"></i> Poster</span>';
 
     const awardBadge = congress.award
-        ? `<span class="pill pill--award"><i class="fas fa-trophy"></i> ${congress.award}</span>`
+        ? `<span class="pill pill--award"><i class="fas fa-trophy"></i> ${escapeHtml(congress.award)}</span>`
         : '';
 
     // Find PDF link for poster
@@ -88,24 +91,27 @@ function renderCongress(congress) {
     const links = filteredLinks.length > 0
         ? `<div class="congress-links">
                 ${filteredLinks.map(link => {
+                                        const linkUrl = safeUrl(link.url);
                     const icon = link.type === 'pdf' ? 'far fa-file-pdf'
                                : link.type === 'web' ? 'fas fa-link'
                                : link.type === 'video' ? 'fas fa-video'
                                : 'fas fa-external-link-alt';
-                    return `<a href="${link.url}" target="_blank" rel="noopener" class="congress-link-cta"><i class="${icon}"></i> ${link.label || 'Link'}</a>`;
+                                        if (!linkUrl) return '';
+                                        return `<a href="${linkUrl}" target="_blank" rel="noopener noreferrer" class="congress-link-cta"><i class="${icon}"></i> ${escapeHtml(link.label || 'Link')}</a>`;
                 }).join('')}
            </div>` : '';
 
     // Handle description with "read more" feature (>300 chars)
-        const descriptionHTML = congress.description.length > 300
+        const description = String(congress.description || '');
+        const descriptionHTML = description.length > 300
                 ? `<p class="congress-description">
-             <span id="desc-short-${congress.id}">${congress.description.substring(0, 300)}...</span>
-                         <span id="desc-full-${congress.id}" class="project-hidden">${congress.description}</span>
-                         <button onclick="document.getElementById('desc-short-${congress.id}').style.display = document.getElementById('desc-short-${congress.id}').style.display === 'none' ? 'inline' : 'none'; document.getElementById('desc-full-${congress.id}').style.display = document.getElementById('desc-full-${congress.id}').style.display === 'none' ? 'inline' : 'none';" class="congress-toggle-btn">
-               <span id="btn-text-${congress.id}">Read more</span>
-             </button>
-           </p>`
-                : `<p class="congress-description">${congress.description}</p>`;
+                         <span id="desc-short-${congressId}">${escapeHtml(description.substring(0, 300))}...</span>
+                         <span id="desc-full-${congressId}" class="project-hidden">${escapeHtml(description)} <a href="#" class="project-toggle-link" data-hide-target="desc-full-${congressId}" data-show-target="desc-short-${congressId}">Read less</a></span>
+                         <button class="congress-toggle-btn" data-hide-target="desc-short-${congressId}" data-show-target="desc-full-${congressId}">
+                             <span>Read more</span>
+                         </button>
+                     </p>`
+                : `<p class="congress-description">${escapeHtml(description)}</p>`;
 
     // Different layout for poster vs oral
     if (congress.type === 'poster' && congress.images && congress.images.length > 0) {
@@ -115,21 +121,24 @@ function renderCongress(congress) {
         
         const otherImagesHTML = otherImages.length > 0
             ? `<div class="project-images project-images-rectangles">
-                    ${otherImages.map(img => `<img src="${img}" alt="${congress.title}" loading="lazy">`).join('')}
+                    ${otherImages.map(img => {
+                        const imageUrl = safeUrl(img);
+                        return imageUrl ? `<img src="${imageUrl}" alt="${escapeHtml(congress.title)}" loading="lazy">` : '';
+                    }).join('')}
                </div>`
             : '';
 
         return `
-            <div id="congress-${congress.id}" class="project-box ${congress.featured ? 'featured-card' : ''}">
+            <div id="congress-${congressId}" class="project-box ${congress.featured ? 'featured-card' : ''}">
                 <div class="section-header section-header-top">
                     <div>
-                        <h3>${congress.title}</h3>
+                        <h3>${escapeHtml(congress.title)}</h3>
                     </div>
                     <div class="section-info">
-                        <h4>${congress.conference}</h4>
-                        ${congress.organization ? `<h5>${congress.organization}</h5>` : ''}
-                        <h6>${congress.location}</h6>
-                        <h6>${congress.date}</h6>
+                        <h4>${escapeHtml(congress.conference)}</h4>
+                        ${congress.organization ? `<h5>${escapeHtml(congress.organization)}</h5>` : ''}
+                        <h6>${escapeHtml(congress.location)}</h6>
+                        <h6>${escapeHtml(congress.date)}</h6>
                     </div>
                 </div>
                 <div class="congress-badge-row">
@@ -146,14 +155,14 @@ function renderCongress(congress) {
                     </div>
                     <div class="congress-poster-col">
                         ${posterPdfLink 
-                            ? `<a href="${posterPdfLink.url}" target="_blank" rel="noopener" class="congress-poster-link">
-                                    <img src="${posterImage}" alt="${congress.title} Poster" loading="lazy" 
+                            ? `<a href="${safeUrl(posterPdfLink.url)}" target="_blank" rel="noopener noreferrer" class="congress-poster-link">
+                                    <img src="${safeUrl(posterImage)}" alt="${escapeHtml(congress.title)} Poster" loading="lazy" 
                                          class="congress-poster-img">
                                     <div class="congress-poster-caption">
                                         <i class="far fa-file-pdf"></i> Click to view full poster
                                     </div>
                                </a>`
-                            : `<img src="${posterImage}" alt="${congress.title} Poster" loading="lazy" 
+                            : `<img src="${safeUrl(posterImage)}" alt="${escapeHtml(congress.title)} Poster" loading="lazy" 
                                     class="congress-poster-img">`
                         }
                     </div>
@@ -165,20 +174,23 @@ function renderCongress(congress) {
         // Oral presentation layout: normal flow
         const images = congress.images && congress.images.length
             ? `<div class="project-images project-images-rectangles">
-                    ${congress.images.map(img => `<img src="${img}" alt="${congress.title}" loading="lazy">`).join('')}
+                    ${congress.images.map(img => {
+                        const imageUrl = safeUrl(img);
+                        return imageUrl ? `<img src="${imageUrl}" alt="${escapeHtml(congress.title)}" loading="lazy">` : '';
+                    }).join('')}
                </div>` : '';
 
         return `
-            <div id="congress-${congress.id}" class="project-box ${congress.featured ? 'featured-card' : ''}">
+            <div id="congress-${congressId}" class="project-box ${congress.featured ? 'featured-card' : ''}">
                 <div class="section-header section-header-top">
                     <div>
-                        <h3>${congress.title}</h3>
+                        <h3>${escapeHtml(congress.title)}</h3>
                     </div>
                     <div class="section-info">
-                        <h4>${congress.conference}</h4>
-                        ${congress.organization ? `<h5>${congress.organization}</h5>` : ''}
-                        <h6>${congress.location}</h6>
-                        <h6>${congress.date}</h6>
+                        <h4>${escapeHtml(congress.conference)}</h4>
+                        ${congress.organization ? `<h5>${escapeHtml(congress.organization)}</h5>` : ''}
+                        <h6>${escapeHtml(congress.location)}</h6>
+                        <h6>${escapeHtml(congress.date)}</h6>
                     </div>
                 </div>
                 <div class="congress-badge-row">
@@ -192,6 +204,53 @@ function renderCongress(congress) {
                 ${links}
             </div>
         `;
+    }
+}
+
+function setupCongressInteractions(container) {
+    container.addEventListener('click', (event) => {
+        const toggleButton = event.target.closest('[data-hide-target][data-show-target]');
+        if (!toggleButton) return;
+
+        event.preventDefault();
+        const hideTarget = document.getElementById(toggleButton.dataset.hideTarget);
+        const showTarget = document.getElementById(toggleButton.dataset.showTarget);
+        if (hideTarget) {
+            hideTarget.style.display = 'none';
+            hideTarget.classList.add('project-hidden');
+        }
+        if (showTarget) {
+            showTarget.style.display = '';
+            showTarget.classList.remove('project-hidden');
+        }
+    });
+}
+
+function escapeHtml(value) {
+    return String(value ?? '')
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#39;');
+}
+
+function safeId(value) {
+    return String(value ?? '')
+        .toLowerCase()
+        .replace(/[^a-z0-9_-]/g, '-')
+        .replace(/-+/g, '-')
+        .replace(/^-|-$/g, '') || 'item';
+}
+
+function safeUrl(value) {
+    if (!value) return '';
+    try {
+        const url = new URL(String(value), window.location.origin);
+        if (!['http:', 'https:'].includes(url.protocol)) return '';
+        return escapeHtml(url.toString());
+    } catch {
+        return '';
     }
 }
 
