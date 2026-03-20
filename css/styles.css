@@ -11,11 +11,30 @@
 :root {
     --bg: #f4f6fb;
     --card: #ffffff;
-    --text: #1f2430;
+    --text: #3e495d;
     --muted: #566077;
     --primary: #00004c;
     --accent: #ff7a59;
     --border: #e4e7ef;
+
+    --pill-info-bg: #e3f2fd;
+    --pill-info-text: #1565c0;
+    --pill-info-border: #bbdefb;
+    --pill-success-bg: #e8f5e9;
+    --pill-success-text: #2e7d32;
+    --pill-success-border: #c8e6c9;
+    --pill-warning-bg: #fff3e0;
+    --pill-warning-text: #e65100;
+    --pill-warning-border: #ffe0b2;
+    --pill-accent-bg: #f3e5f5;
+    --pill-accent-text: #6a1b9a;
+    --pill-accent-border: #e1bee7;
+    --pill-rose-bg: #fce4ec;
+    --pill-rose-text: #ad1457;
+    --pill-rose-border: #f8bbd9;
+    --pill-award-bg: #fff8e1;
+    --pill-award-text: #f57f17;
+    --pill-award-border: #ffd54f;
 }
 
 body {
@@ -27,6 +46,24 @@ body {
     flex-direction: column;
     position: relative;
     background-color: var(--bg);
+    color: var(--text);
+}
+
+/* Keep content headings in the original dark blue tone */
+main h1,
+main h2,
+main h3,
+main h4 {
+    color: var(--primary);
+}
+
+/* Keep body copy consistent across main content sections */
+.page p,
+.projects-main-content p,
+.publications-content p,
+.events-content p,
+.cv-content p,
+.social-content p {
     color: var(--text);
 }
 body::before {
@@ -327,33 +364,10 @@ section.card {
     transition: transform 0.3s ease;
 }
 
-/* Style for project boxes */
-.project-box {
-    border: 2px solid #ccc;
-    padding: 20px;
-    margin-bottom: 20px;
-    border-radius: 5px;
-}
-/* Style for images in project box */
-.project-images-circles {
-    display: flex;
-    justify-content: center;
-    margin-bottom: 20px;
-}
-
 img {
     width: 100%;   /* or any desired width */
     height: auto;  /* maintain aspect ratio */
     object-fit: contain; /* resize the image to cover the container, the image might be clipped */
-}
-
-/* Project card */
-.project-box {
-    border: 2px solid #ccc;
-    padding: 20px;
-    margin-bottom: 20px;
-    border-radius: 8px;
-    overflow: hidden; /* prevent children from spilling out */
 }
 
 /* Logo beside project title */
@@ -502,9 +516,7 @@ img {
     gap: 6px;
     color: var(--muted);
     font-size: 0.95rem;
-    /* Ensure venue and badges are aligned on a single row */
-    display: flex;
-    justify-content: space-between;
+    justify-content: space-between; /* Ensure venue and badges are aligned on a single row */
 }
 .pub-meta span {
     display: block;
@@ -526,6 +538,91 @@ img {
 
 .pub-venue { display: flex; align-items: center; gap: 10px; }
 .pub-badges { display: flex; gap: 8px; align-items: center; }
+
+.pub-stats-box {
+    background: var(--bg);
+    border-radius: 8px;
+    padding: 12px;
+    margin-bottom: 16px;
+    text-align: center;
+}
+
+.pub-stats-value {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--primary);
+}
+
+.pub-stats-label {
+    font-size: 0.85rem;
+    color: var(--muted);
+}
+
+.icon-award {
+    color: #ffd700;
+    margin-right: 4px;
+}
+
+.pub-image {
+    width: 100%;
+    max-width: 400px;
+    border-radius: 8px;
+    margin-bottom: 16px;
+}
+
+.pub-badges-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+}
+
+.pub-type-badges,
+.pub-status-badges {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.pub-authors {
+    margin: 12px 0;
+    font-size: 0.9rem;
+    color: var(--muted);
+    line-height: 1.5;
+}
+
+.pub-abstract {
+    margin-top: 12px;
+}
+
+.pub-abstract summary {
+    cursor: pointer;
+    color: var(--primary);
+    font-weight: 600;
+}
+
+.pub-links {
+    display: flex;
+    gap: 12px;
+    margin-top: 16px;
+    flex-wrap: wrap;
+}
+
+.pub-link,
+.cv-link-cta {
+    color: var(--primary);
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.pub-link:hover,
+.cv-link-cta:hover {
+    text-decoration: underline;
+}
+
+.cv-publications-cta-wrap {
+    margin-top: 12px;
+}
 
 /* Title row: keep title left and date right on same line */
 .pub-header {
@@ -1269,10 +1366,24 @@ footer {
     50% { box-shadow: 0 0 15px rgba(255, 215, 0, 0.5); }
 }
 
-/* Responsive poster layout */
+/* Responsive poster/project layouts */
 @media (max-width: 968px) {
-    .project-box > div[style*="grid-template-columns"] {
-        grid-template-columns: 1fr !important;
+    .congress-poster-layout {
+        grid-template-columns: 1fr;
+    }
+
+    .congress-poster-col {
+        position: static;
+        top: auto;
+    }
+
+    .project-head {
+        flex-direction: column;
+        gap: 12px;
+    }
+
+    .project-head-badges {
+        align-items: flex-start;
     }
 }
 
@@ -2086,4 +2197,325 @@ footer {
     background: #ff6a48;
     transform: translateY(-2px);
     box-shadow: 0 4px 12px rgba(255, 122, 89, 0.3);
+}
+
+.section-title-icon {
+    color: var(--primary);
+}
+
+.text-muted {
+    color: var(--muted);
+}
+
+.meta-note {
+    color: var(--muted);
+    font-size: 0.95rem;
+    line-height: 1.55;
+}
+
+.pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 4px 10px;
+    border-radius: 999px;
+    border: 1px solid transparent;
+    font-size: 0.82rem;
+    line-height: 1.2;
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+.pill i {
+    font-size: 0.8rem;
+}
+
+.pill--info {
+    background: var(--pill-info-bg);
+    color: var(--pill-info-text);
+    border-color: var(--pill-info-border);
+}
+
+.pill--success {
+    background: var(--pill-success-bg);
+    color: var(--pill-success-text);
+    border-color: var(--pill-success-border);
+}
+
+.pill--warning {
+    background: var(--pill-warning-bg);
+    color: var(--pill-warning-text);
+    border-color: var(--pill-warning-border);
+}
+
+.pill--accent {
+    background: var(--pill-accent-bg);
+    color: var(--pill-accent-text);
+    border-color: var(--pill-accent-border);
+}
+
+.pill--rose {
+    background: var(--pill-rose-bg);
+    color: var(--pill-rose-text);
+    border-color: var(--pill-rose-border);
+}
+
+.pill--award {
+    background: var(--pill-award-bg);
+    color: var(--pill-award-text);
+    border-color: var(--pill-award-border);
+}
+
+#last-updated {
+    font-size: 0.85em;
+    color: #797979;
+}
+
+.research-focus-intro {
+    margin-bottom: 1.5rem;
+}
+
+.upcoming-events-note {
+    margin-bottom: 1rem;
+}
+
+.upcoming-event-spaced {
+    margin-top: 1.2rem;
+}
+
+#upcoming-events .upcoming-event h3 a {
+    color: var(--primary);
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+#upcoming-events .upcoming-event h3 a:hover {
+    color: var(--accent);
+    text-decoration: underline;
+}
+
+.section-link-spaced {
+    margin-top: 8px;
+}
+
+.section-intro-note {
+    margin-bottom: 20px;
+}
+
+.section-header-top {
+    align-items: flex-start;
+}
+
+.project-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 20px;
+}
+
+.project-head-main {
+    flex: 1;
+}
+
+.project-title-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 12px;
+}
+
+.project-title {
+    margin: 0;
+}
+
+.project-title-logo {
+    width: 40px;
+    height: 28px;
+    object-fit: contain;
+    margin: 0;
+    flex-shrink: 0;
+}
+
+.project-org {
+    margin: 4px 0;
+    color: var(--primary);
+}
+
+.project-authors {
+    margin: 2px 0;
+    color: var(--muted);
+    font-weight: 500;
+}
+
+.project-period {
+    margin: 6px 0 0;
+    color: var(--muted);
+    font-size: 0.9rem;
+}
+
+.project-head-badges {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    align-items: flex-end;
+}
+
+.project-description,
+.congress-description {
+    margin: 12px 0;
+    line-height: 1.6;
+    color: var(--text);
+}
+
+.project-toggle-link,
+.congress-link-cta,
+.project-link-cta {
+    color: var(--primary);
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.project-toggle-link:hover,
+.congress-link-cta:hover,
+.project-link-cta:hover {
+    text-decoration: underline;
+}
+
+.project-hidden {
+    display: none;
+}
+
+.project-collapsible-section {
+    margin-top: 20px;
+}
+
+.project-collapsible-title {
+    margin-top: 0;
+    color: var(--primary);
+    cursor: pointer;
+}
+
+.project-collapsible-title i {
+    margin-right: 6px;
+    font-size: 0.8rem;
+}
+
+.project-collapsible-list {
+    margin: 8px 0;
+    padding-left: 20px;
+    color: var(--muted);
+}
+
+.project-collapsible-item {
+    margin-bottom: 6px;
+    line-height: 1.5;
+}
+
+.project-tags,
+.project-links,
+.congress-links {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.project-tags {
+    gap: 8px;
+    margin-top: 16px;
+}
+
+.project-links {
+    gap: 12px;
+    margin-top: 18px;
+}
+
+.congress-links {
+    gap: 12px;
+    margin-top: 14px;
+}
+
+.congress-badge-row {
+    margin: 12px 0;
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.congress-award-wrap {
+    margin-left: auto;
+}
+
+.congress-poster-layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    align-items: start;
+    margin-top: 16px;
+}
+
+.congress-poster-col {
+    position: sticky;
+    top: 120px;
+}
+
+.congress-poster-link {
+    display: block;
+    cursor: pointer;
+}
+
+.congress-poster-img {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.congress-poster-link:hover .congress-poster-img,
+.congress-poster-img:hover {
+    transform: scale(1.02);
+    box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+}
+
+.congress-poster-caption {
+    text-align: center;
+    margin-top: 8px;
+    color: var(--primary);
+    font-weight: 600;
+}
+
+.congress-toggle-btn {
+    background: none;
+    border: none;
+    color: var(--primary);
+    font-weight: 600;
+    cursor: pointer;
+    padding: 0;
+    margin-left: 4px;
+    text-decoration: underline;
+    font-size: 0.95rem;
+    display: inline;
+}
+
+.github-info-center {
+    text-align: center;
+}
+
+.github-info-header-vertical {
+    flex-direction: column;
+    align-items: center;
+}
+
+.github-stats-centered {
+    justify-content: center;
+    gap: 20px;
+}
+
+.github-fallback-note {
+    margin: 12px 0;
+}
+
+.github-fallback-list {
+    color: var(--muted);
+    line-height: 1.8;
 }

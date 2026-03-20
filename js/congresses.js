@@ -19,8 +19,8 @@ async function loadCongresses() {
                 <a class="section-link" href="#all-congresses"><i class="fas fa-calendar-alt"></i> All Congresses</a>
                 ${all.map(c => {
                     const typeIcon = c.type === 'oral' 
-                        ? '<i class="fas fa-microphone" style="color:#1565c0;"></i>' 
-                        : '<i class="fas fa-image" style="color:#1565c0;"></i>';
+                        ? '<i class="fas fa-microphone section-title-icon"></i>' 
+                        : '<i class="fas fa-image section-title-icon"></i>';
                     return `<a class="congress-link" href="#congress-${c.id}">${typeIcon} ${truncate(c.title, 45)}</a>`;
                 }).join('')}
             `;
@@ -47,7 +47,7 @@ async function loadCongresses() {
         if (featured.length > 0) {
             contentHTML += `
                 <section id="featured-congresses">
-                    <h2><i class="fas fa-star" style="color: var(--primary);"></i> Featured Presentations</h2>
+                    <h2><i class="fas fa-star section-title-icon"></i> Featured Presentations</h2>
                     ${featured.map(renderCongress).join('')}
                 </section>
             `;
@@ -55,7 +55,7 @@ async function loadCongresses() {
 
         contentHTML += `
             <section id="all-congresses">
-                <h2><i class="fas fa-calendar-alt" style="color: var(--primary);"></i> All Presentations</h2>
+                <h2><i class="fas fa-calendar-alt section-title-icon"></i> All Presentations</h2>
                 ${all.map(renderCongress).join('')}
             </section>
         `;
@@ -70,11 +70,11 @@ async function loadCongresses() {
 
 function renderCongress(congress) {
     const typeBadge = congress.type === 'oral'
-        ? '<span class="pill" style="background:#e3f2fd;color:#1565c0;border-color:#bbdefb;"><i class="fas fa-microphone"></i> Oral Presentation</span>'
-        : '<span class="pill" style="background:#fff3e0;color:#e65100;border-color:#ffe0b2;"><i class="fas fa-image"></i> Poster</span>';
+        ? '<span class="pill pill--info"><i class="fas fa-microphone"></i> Oral Presentation</span>'
+        : '<span class="pill pill--warning"><i class="fas fa-image"></i> Poster</span>';
 
     const awardBadge = congress.award
-        ? `<span class="pill" style="background:#fff8e1;color:#f57f17;border:2px solid #ffd700;font-weight:600;"><i class="fas fa-trophy"></i> ${congress.award}</span>`
+        ? `<span class="pill pill--award"><i class="fas fa-trophy"></i> ${congress.award}</span>`
         : '';
 
     // Find PDF link for poster
@@ -86,26 +86,26 @@ function renderCongress(congress) {
         : (congress.links || []);
     
     const links = filteredLinks.length > 0
-        ? `<div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:14px;">
+        ? `<div class="congress-links">
                 ${filteredLinks.map(link => {
                     const icon = link.type === 'pdf' ? 'far fa-file-pdf'
                                : link.type === 'web' ? 'fas fa-link'
                                : link.type === 'video' ? 'fas fa-video'
                                : 'fas fa-external-link-alt';
-                    return `<a href="${link.url}" target="_blank" rel="noopener" style="color:var(--primary);text-decoration:none;font-weight:600;"><i class="${icon}"></i> ${link.label || 'Link'}</a>`;
+                    return `<a href="${link.url}" target="_blank" rel="noopener" class="congress-link-cta"><i class="${icon}"></i> ${link.label || 'Link'}</a>`;
                 }).join('')}
            </div>` : '';
 
     // Handle description with "read more" feature (>300 chars)
-    const descriptionHTML = congress.description.length > 300
-        ? `<p style="margin: 12px 0; line-height: 1.6; color: var(--text);">
+        const descriptionHTML = congress.description.length > 300
+                ? `<p class="congress-description">
              <span id="desc-short-${congress.id}">${congress.description.substring(0, 300)}...</span>
-             <span id="desc-full-${congress.id}" style="display: none;">${congress.description}</span>
-             <button onclick="document.getElementById('desc-short-${congress.id}').style.display = document.getElementById('desc-short-${congress.id}').style.display === 'none' ? 'inline' : 'none'; document.getElementById('desc-full-${congress.id}').style.display = document.getElementById('desc-full-${congress.id}').style.display === 'none' ? 'inline' : 'none';" style="background: none; border: none; color: var(--primary); font-weight: 600; cursor: pointer; padding: 0; margin-left: 4px; text-decoration: underline; font-size: 0.95rem; display: inline;">
+                         <span id="desc-full-${congress.id}" class="project-hidden">${congress.description}</span>
+                         <button onclick="document.getElementById('desc-short-${congress.id}').style.display = document.getElementById('desc-short-${congress.id}').style.display === 'none' ? 'inline' : 'none'; document.getElementById('desc-full-${congress.id}').style.display = document.getElementById('desc-full-${congress.id}').style.display === 'none' ? 'inline' : 'none';" class="congress-toggle-btn">
                <span id="btn-text-${congress.id}">Read more</span>
              </button>
            </p>`
-        : `<p style="margin: 12px 0; line-height: 1.6; color: var(--text);">${congress.description}</p>`;
+                : `<p class="congress-description">${congress.description}</p>`;
 
     // Different layout for poster vs oral
     if (congress.type === 'poster' && congress.images && congress.images.length > 0) {
@@ -121,7 +121,7 @@ function renderCongress(congress) {
 
         return `
             <div id="congress-${congress.id}" class="project-box ${congress.featured ? 'featured-card' : ''}">
-                <div class="section-header" style="align-items: flex-start;">
+                <div class="section-header section-header-top">
                     <div>
                         <h3>${congress.title}</h3>
                     </div>
@@ -132,31 +132,29 @@ function renderCongress(congress) {
                         <h6>${congress.date}</h6>
                     </div>
                 </div>
-                <div style="margin: 12px 0; display: flex; gap: 8px; flex-wrap: wrap; justify-content: space-between;">
+                <div class="congress-badge-row">
                     ${typeBadge}
-                    <div style="margin-left: auto;">
+                    <div class="congress-award-wrap">
                         ${awardBadge}
                     </div>
                 </div>
                 
-                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px; align-items: start; margin-top: 16px;">
+                <div class="congress-poster-layout">
                     <div>
                         ${descriptionHTML}
                         ${links}
                     </div>
-                    <div style="position: sticky; top: 120px;">
+                    <div class="congress-poster-col">
                         ${posterPdfLink 
-                            ? `<a href="${posterPdfLink.url}" target="_blank" rel="noopener" style="display: block; cursor: pointer; transition: transform 0.2s ease;">
+                            ? `<a href="${posterPdfLink.url}" target="_blank" rel="noopener" class="congress-poster-link">
                                     <img src="${posterImage}" alt="${congress.title} Poster" loading="lazy" 
-                                         style="width: 100%; height: auto; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.15); transition: transform 0.2s ease, box-shadow 0.2s ease;"
-                                         onmouseover="this.style.transform='scale(1.02)'; this.style.boxShadow='0 8px 24px rgba(0,0,0,0.2)';"
-                                         onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='0 4px 12px rgba(0,0,0,0.15)';">
-                                    <div style="text-align: center; margin-top: 8px; color: var(--primary); font-weight: 600;">
+                                         class="congress-poster-img">
+                                    <div class="congress-poster-caption">
                                         <i class="far fa-file-pdf"></i> Click to view full poster
                                     </div>
                                </a>`
                             : `<img src="${posterImage}" alt="${congress.title} Poster" loading="lazy" 
-                                    style="width: 100%; height: auto; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.15);">`
+                                    class="congress-poster-img">`
                         }
                     </div>
                 </div>
@@ -172,7 +170,7 @@ function renderCongress(congress) {
 
         return `
             <div id="congress-${congress.id}" class="project-box ${congress.featured ? 'featured-card' : ''}">
-                <div class="section-header" style="align-items: flex-start;">
+                <div class="section-header section-header-top">
                     <div>
                         <h3>${congress.title}</h3>
                     </div>
@@ -183,9 +181,9 @@ function renderCongress(congress) {
                         <h6>${congress.date}</h6>
                     </div>
                 </div>
-                <div style="margin: 12px 0; display: flex; gap: 8px; flex-wrap: wrap; justify-content: space-between;">
+                <div class="congress-badge-row">
                     ${typeBadge}
-                    <div style="margin-left: auto;">
+                    <div class="congress-award-wrap">
                         ${awardBadge}
                     </div>
                 </div>

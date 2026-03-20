@@ -37,13 +37,13 @@ async function loadGitHubInfo() {
         const container = document.getElementById('github-repos');
         
         container.innerHTML = `
-            <div class="github-info-card" style="text-align: center;">
-            <div class="github-info-header" style="display: flex; flex-direction: column; align-items: center;">
+            <div class="github-info-card github-info-center">
+            <div class="github-info-header github-info-header-vertical">
                 <img src="${user.avatar_url}" alt="${user.name}" class="github-avatar">
-                <div class="github-info-details" style="text-align: center;">
+                <div class="github-info-details github-info-center">
                     <h4>${user.name || user.login}</h4>
                     <p class="github-bio">${user.bio || 'Developer & Open Source Enthusiast'}</p>
-                    <div class="github-stats-inline" style="display: flex; justify-content: center; gap: 20px;">
+                    <div class="github-stats-inline github-stats-centered">
                         <div class="stat-item">
                         <span class="stat-num">${user.public_repos}</span>
                         <span class="stat-label">Repositories</span>
@@ -59,7 +59,7 @@ async function loadGitHubInfo() {
                     </div>
                 </div>
             </div>
-            <div class="github-info-body" style="text-align: center;">
+            <div class="github-info-body github-info-center">
                 <p><strong>Member Since:</strong> ${new Date(user.created_at).toLocaleDateString()}</p>
             </div>
             </div>
@@ -70,11 +70,11 @@ async function loadGitHubInfo() {
         container.innerHTML = `
             <div class="github-info-card">
                 <h4>GitHub Profile</h4>
-                <p style="color: var(--muted); margin: 12px 0;">
+                <p class="meta-note github-fallback-note">
                     Explore my open source projects, contributions, and collaborative work.
                 </p>
                 <div class="github-info-body">
-                    <ul style="color: var(--muted); line-height: 1.8;">
+                    <ul class="github-fallback-list">
                         <li><strong>Languages:</strong> Python, C++, Java, SQL</li>
                         <li><strong>Focus Areas:</strong> AI, Computer vision, Data science</li>
                         <li><strong>Interests:</strong> Open Source, Ecology Tech, Deep Learning</li>

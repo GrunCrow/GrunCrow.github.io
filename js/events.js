@@ -8,7 +8,7 @@ async function loadEvents() {
         const events = await res.json();
         
         container.innerHTML = `
-            <h2 id="events-section"><i class="fas fa-microphone" style="color: var(--primary);"></i> Talks & Events</h2>
+            <h2 id="events-section"><i class="fas fa-microphone section-title-icon"></i> Talks & Events</h2>
             ${events.map(event => renderEvent(event)).join('')}
         `;
         
@@ -29,10 +29,11 @@ function renderEvent(event) {
     let speakers = event.speakers || '';
     speakers = speakers.replace(/(Alba Márquez-Rodríguez|A\. Márquez-Rodríguez|A\. Márquez Rodríguez|Alba Márquez Rodríguez)/gi, '<strong>$1</strong>');
     
-    const typeBadge = `<span class="pill" style="background:#e8f5e9;color:#2e7d32;border-color:#c8e6c9;"><i class="fas fa-${event.type === 'workshop' ? 'users' : 'chalkboard-teacher'}" style="margin-right: 4px;"></i> ${event.type.charAt(0).toUpperCase() + event.type.slice(1)}</span>`;
+    const typeBadge = `<span class="pill pill--success"><i class="fas fa-${event.type === 'workshop' ? 'users' : 'chalkboard-teacher'}"></i> ${event.type.charAt(0).toUpperCase() + event.type.slice(1)}</span>`;
     
-    const locationTypeBadge = event.locationType ? 
-        `<span class="pill" style="background:${event.locationType === 'online' ? '#e3f2fd' : '#f3e5f5'};color:${event.locationType === 'online' ? '#1565c0' : '#7b1fa2'};border-color:${event.locationType === 'online' ? '#bbdefb' : '#ce93d8'};"><i class="fas fa-${event.locationType === 'online' ? 'globe' : 'map-marker-alt'}" style="margin-right: 4px;"></i> ${event.locationType.charAt(0).toUpperCase() + event.locationType.slice(1)}</span>` : '';
+    const locationTypeBadge = event.locationType
+        ? `<span class="pill ${event.locationType === 'online' ? 'pill--info' : 'pill--accent'}"><i class="fas fa-${event.locationType === 'online' ? 'globe' : 'map-marker-alt'}"></i> ${event.locationType.charAt(0).toUpperCase() + event.locationType.slice(1)}</span>`
+        : '';
     
     const imagesHtml = event.images ? `
         <div class="project-images project-images-rectangles">

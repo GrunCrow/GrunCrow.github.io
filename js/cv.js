@@ -33,21 +33,8 @@ function loadProfile(profile) {
     }
 }
 
-function getPillStyle(isPresent) {
-    if (isPresent) {
-        // Green for "Present" positions
-        return {
-            background: '#fff3e0',
-            color: '#e65100',
-            borderColor: '#ffe0b2'
-        };
-    }
-    // Blue for past positions
-    return {
-        background: '#e3f2fd',
-        color: '#1565c0',
-        borderColor: '#bbdefb'
-    };
+function getPillClass(isPresent) {
+    return isPresent ? 'pill pill--warning' : 'pill pill--info';
 }
 
 function formatWorkType(workType) {
@@ -60,11 +47,11 @@ function renderMetaPills(item) {
     const parts = [];
 
     if (item.workType) {
-        parts.push(`<span class="pill" style="background:#f3e5f5;color:#6a1b9a;border-color:#e1bee7;"><i class="fas fa-laptop-house"></i> ${formatWorkType(item.workType)}</span>`);
+        parts.push(`<span class="pill pill--accent"><i class="fas fa-laptop-house"></i> ${formatWorkType(item.workType)}</span>`);
     }
 
     if (item.location) {
-        parts.push(`<span class="pill" style="background:#e8f5e9;color:#2e7d32;border-color:#c8e6c9;"><i class="fas fa-map-marker-alt"></i> ${item.location}</span>`);
+        parts.push(`<span class="pill pill--success"><i class="fas fa-map-marker-alt"></i> ${item.location}</span>`);
     }
 
     if (parts.length === 0) return '';
@@ -79,8 +66,8 @@ function loadExperience(items) {
 }
 
 function renderExperienceEntry(item) {
-    const style = getPillStyle(item.isPresent);
-    const pill = `<span class="pill" style="background:${style.background};color:${style.color};border-color:${style.borderColor};"><i class="fas fa-calendar-alt"></i> ${item.startDate} - ${item.endDate}</span>`;
+    const pillClass = getPillClass(item.isPresent);
+    const pill = `<span class="${pillClass}"><i class="fas fa-calendar-alt"></i> ${item.startDate} - ${item.endDate}</span>`;
     
     const project = item.project 
         ? `<p class="cv-project"><strong>Project:</strong> <a href="${item.project.link}">${item.project.title}</a></p>`
@@ -115,8 +102,8 @@ function loadEducation(items) {
 }
 
 function renderEducationEntry(item) {
-    const style = getPillStyle(item.isPresent);
-    const pill = `<span class="pill" style="background:${style.background};color:${style.color};border-color:${style.borderColor};"><i class="fas fa-graduation-cap"></i> ${item.startDate} - ${item.endDate}</span>`;
+    const pillClass = getPillClass(item.isPresent);
+    const pill = `<span class="${pillClass}"><i class="fas fa-graduation-cap"></i> ${item.startDate} - ${item.endDate}</span>`;
     
     const details = item.details && item.details.length > 0
         ? `<ul class="cv-responsibilities">${item.details.map(d => `<li>${d}</li>`).join('')}</ul>`
@@ -146,8 +133,8 @@ function loadCertifications(items) {
 }
 
 function renderCertificationEntry(item) {
-    const style = getPillStyle(item.isPresent);
-    const pill = `<span class="pill" style="background:${style.background};color:${style.color};border-color:${style.borderColor};"><i class="fas fa-certificate"></i> ${item.startDate} - ${item.endDate}</span>`;
+    const pillClass = getPillClass(item.isPresent);
+    const pill = `<span class="${pillClass}"><i class="fas fa-certificate"></i> ${item.startDate} - ${item.endDate}</span>`;
     
     const description = item.description
         ? `<p class="cv-description">${item.description}</p>`
@@ -217,15 +204,15 @@ async function loadPublicationsSummary() {
                             <h3>${title}</h3>
                             <p class="cv-organization">${venue}</p>
                             <div class="cv-meta-pills">
-                                ${pub.date ? `<span class="pill" style="background:#e3f2fd;color:#1565c0;border-color:#bbdefb;"><i class="far fa-calendar"></i> ${pub.date}</span>` : ''}
-                                ${pub.type ? `<span class="pill" style="background:#f3e5f5;color:#6a1b9a;border-color:#e1bee7;"><i class="fas fa-file-alt"></i> ${pub.type.charAt(0).toUpperCase() + pub.type.slice(1)}</span>` : ''}
+                                ${pub.date ? `<span class="pill pill--info"><i class="far fa-calendar"></i> ${pub.date}</span>` : ''}
+                                ${pub.type ? `<span class="pill pill--accent"><i class="fas fa-file-alt"></i> ${pub.type.charAt(0).toUpperCase() + pub.type.slice(1)}</span>` : ''}
                             </div>
                         </div>
                     `;
                 }).join('')}
             </div>
-            <p style="margin-top: 12px;">
-                <a href="publications.html#all-publications-section" style="font-weight: 600; color: var(--primary); text-decoration: none;">
+            <p class="meta-note cv-publications-cta-wrap">
+                <a href="publications.html#all-publications-section" class="cv-link-cta">
                     <i class="fas fa-external-link-alt"></i> View all publications
                 </a>
             </p>
@@ -233,7 +220,7 @@ async function loadPublicationsSummary() {
     } catch (err) {
         container.innerHTML = `
             <p class="cv-description">Publications are available in the dedicated section.</p>
-            <p><a href="publications.html#all-publications-section" style="font-weight: 600; color: var(--primary); text-decoration: none;"><i class="fas fa-external-link-alt"></i> Open publications</a></p>
+            <p><a href="publications.html#all-publications-section" class="cv-link-cta"><i class="fas fa-external-link-alt"></i> Open publications</a></p>
         `;
         console.error('Error loading publications summary:', err);
     }
@@ -247,8 +234,8 @@ function loadVolunteering(items) {
 }
 
 function renderVolunteeringEntry(item) {
-    const style = getPillStyle(item.isPresent);
-    const pill = `<span class="pill" style="background:${style.background};color:${style.color};border-color:${style.borderColor};"><i class="fas fa-calendar-alt"></i> ${item.startDate} - ${item.endDate}</span>`;
+    const pillClass = getPillClass(item.isPresent);
+    const pill = `<span class="${pillClass}"><i class="fas fa-calendar-alt"></i> ${item.startDate} - ${item.endDate}</span>`;
     
     const description = item.description
         ? `<p class="cv-description">${item.description}</p>`
