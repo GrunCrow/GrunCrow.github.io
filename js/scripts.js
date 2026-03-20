@@ -1,16 +1,11 @@
-document.addEventListener('DOMContentLoaded', () => {
-    const emailEl = document.getElementById('email');
-    const emailLink = document.getElementById('email-link');
-    if (emailEl && typeof email !== 'undefined') {
-        emailEl.textContent = email;
-        if (emailLink) emailLink.href = `mailto:${email}`;
-    }
-});
-
 // Set email and social media links
-document.getElementById("linkedin").href = linkedin;
-document.getElementById("twitter").href = twitter;
-document.getElementById("github").href = github;
+const linkedinEl = document.getElementById('linkedin');
+const twitterEl = document.getElementById('twitter');
+const githubEl = document.getElementById('github');
+
+if (linkedinEl && typeof linkedin !== 'undefined') linkedinEl.href = linkedin;
+if (twitterEl && typeof twitter !== 'undefined') twitterEl.href = twitter;
+if (githubEl && typeof github !== 'undefined') githubEl.href = github;
 
 // Add scroll effect to header
 window.addEventListener('scroll', () => {

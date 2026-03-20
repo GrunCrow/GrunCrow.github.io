@@ -5,6 +5,8 @@ async function injectFooter() {
         const res = await fetch('footer.html');
         const html = await res.text();
         placeholder.innerHTML = html;
+
+        initObfuscatedEmail();
         
         // Fetch and display last updated date
         fetchLastUpdated();
@@ -15,6 +17,22 @@ async function injectFooter() {
 
 const LAST_UPDATED_CACHE_KEY = 'gruncrow:last-updated';
 const LAST_UPDATED_CACHE_TTL_MS = 1000 * 60 * 60 * 6;
+
+function initObfuscatedEmail() {
+    const emailLink = document.getElementById('email-link');
+    const emailText = document.getElementById('email-text');
+    if (!emailLink || !emailText) return;
+
+    // Build the email address at runtime to reduce trivial scraping from static HTML.
+    const localPartCodes = [97, 108, 98, 97, 46, 109, 97, 114, 113, 117, 101, 122];
+    const domainCodes = [117, 99, 97, 46, 101, 115];
+    const localPart = String.fromCharCode(...localPartCodes);
+    const domain = String.fromCharCode(...domainCodes);
+    const email = `${localPart}@${domain}`;
+
+    emailLink.href = `mailto:${email}`;
+    emailText.textContent = email;
+}
 
 function readCachedValue(cacheKey, ttlMs) {
     try {
