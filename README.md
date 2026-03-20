@@ -1,6 +1,6 @@
 # GrunCrow
 
-Welcome to my personal GitHub Pages repository. This repository powers my personal website hosted at [https://your_username.github.io](https://your_username.github.io).
+Welcome to my personal GitHub Pages repository. This repository powers my personal website hosted at [https://gruncrow.github.io](https://gruncrow.github.io).
 
 ## Description
 
