@@ -2283,13 +2283,14 @@ footer {
     margin-top: 1.2rem;
 }
 
-#upcoming-events .upcoming-event h3 a {
+.title-link {
     color: var(--primary);
     text-decoration: none;
     transition: color 0.2s ease;
 }
 
-#upcoming-events .upcoming-event h3 a:hover {
+.title-link:hover,
+.title-link:focus-visible {
     color: var(--accent);
     text-decoration: underline;
 }

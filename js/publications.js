@@ -103,7 +103,7 @@ function renderPublication(pub, isFeatured) {
         ${imageHtml}
         <div class="pub-header">
             <h3 class="pub-title">
-                ${pub.doi ? `<a href="${safeUrl(pub.doi)}" target="_blank" rel="noopener noreferrer">${escapeHtml(pub.title)}</a>` : escapeHtml(pub.title)}
+                ${pub.doi ? `<a href="${safeUrl(pub.doi)}" target="_blank" rel="noopener noreferrer" class="title-link">${escapeHtml(pub.title)}</a>` : escapeHtml(pub.title)}
             </h3>
             ${pub.date ? `<div class="pub-date"><i class="far fa-calendar"></i> ${escapeHtml(pub.date)}</div>` : ''}
         </div>

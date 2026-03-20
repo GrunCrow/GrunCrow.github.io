@@ -16,8 +16,12 @@
       "featured": true,
       "workType": "online",
       "project": null,
-      "description": null,
-      "responsibilities": []
+      "description": "Contributor to the development and delivery of DeTect's AI-enabled product lines. This role focuses on designing, deploying, and maintaining machine learning features within production-grade software systems for biological target classification.",
+      "responsibilities": [
+        "Design and deployment end-to-end of machine learning models using modern AI frameworks",
+        "Development of software solutions to classify targets from different sensors",
+        "Contribution to product support, validation, and continuous improvement of AI features"
+      ]
     },
     {
       "id": "cv4ecology-instructor",
