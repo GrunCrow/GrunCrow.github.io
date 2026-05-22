@@ -19,8 +19,17 @@
     function safeUrl(value) {
         if (!value) return '';
         try {
-            const url = new URL(String(value), window.location.origin);
-            if (!['http:', 'https:'].includes(url.protocol)) return '';
+            const raw = String(value).trim();
+            // If the input has an explicit protocol, only allow web protocols.
+            if (/^[a-zA-Z][a-zA-Z\d+.-]*:/.test(raw)) {
+                const absolute = new URL(raw);
+                if (!['http:', 'https:'].includes(absolute.protocol)) return '';
+                return escapeHtml(absolute.toString());
+            }
+
+            // Relative URLs are allowed for local assets (images/data files).
+            const url = new URL(raw, window.location.href);
+            if (!['http:', 'https:', 'file:'].includes(url.protocol)) return '';
             return escapeHtml(url.toString());
         } catch {
             return '';

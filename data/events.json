@@ -1,5 +1,16 @@
 [
     {
+        "id": "ai-edge-scientific-research-2026",
+        "title": "AI and Edge Computing for Scientific Research",
+        "type": "workshop",
+        "organizer": "Universidad Politécnica de Barcelona (UPC)",
+        "speakers": "Alba Márquez-Rodríguez",
+        "date": "May 4th - 6th, 2026",
+        "location": "Barcelona, Spain",
+        "locationType": "in-person",
+        "description": "Scientific discovery is entering a new era shaped by the rapid expansion of autonomous sensing systems and artificial intelligence operating directly at the edge. Platforms such as the Sage Grande Testbed and emerging European edge-computing testbeds are creating unprecedented opportunities to collect, analyze, and act on multimodal environmental and urban data in real time. Yet many foundational questions remain about how to design, integrate, and scale AI@Edge infrastructure to support transformative science across domains, from ecology and climate to agriculture, hazards, and urban systems. This workshop convened forward-looking researchers from the United States and Europe to explore shared challenges and opportunities in developing interoperable AI-enabled distributed instrumentation. Participants represented communities spanning environmental sensing, cyberinfrastructure, and artificial intelligence. The workshop examined how edge AI can accelerate scientific discovery and support the collaborative goals of initiatives such as DISCOVER-US, NAIRR, and EU digital research programs."
+    },
+    {
         "id": "cv4ecology-2026",
         "title": "CV4Ecology 2026: Computer Vision for Ecology Workshop",
         "type": "workshop",
