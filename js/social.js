@@ -19,6 +19,8 @@ function setupSocialNavigation() {
     });
 }
 
+const { escapeHtml, safeUrl } = window.SiteUtils;
+
 // Fetch GitHub user information
 const GITHUB_PROFILE_CACHE_KEY = 'gruncrow:github-profile';
 const GITHUB_PROFILE_CACHE_TTL_MS = 1000 * 60 * 60 * 6;
@@ -51,31 +53,39 @@ function renderGitHubUser(user) {
     const container = document.getElementById('github-repos');
     if (!container) return;
 
+    const avatarUrl = safeUrl(user.avatar_url);
+    const safeName = escapeHtml(user.name || user.login || 'GitHub User');
+    const safeBio = escapeHtml(user.bio || 'Developer & Open Source Enthusiast');
+    const safePublicRepos = Number.isFinite(Number(user.public_repos)) ? Number(user.public_repos) : 0;
+    const safeFollowers = Number.isFinite(Number(user.followers)) ? Number(user.followers) : 0;
+    const safeFollowing = Number.isFinite(Number(user.following)) ? Number(user.following) : 0;
+    const memberSince = user.created_at ? new Date(user.created_at).toLocaleDateString() : 'N/A';
+
     container.innerHTML = `
         <div class="github-info-card github-info-center">
         <div class="github-info-header github-info-header-vertical">
-            <img src="${user.avatar_url}" alt="${user.name}" class="github-avatar">
+            <img src="${avatarUrl}" alt="${safeName}" class="github-avatar">
             <div class="github-info-details github-info-center">
-                <h4>${user.name || user.login}</h4>
-                <p class="github-bio">${user.bio || 'Developer & Open Source Enthusiast'}</p>
+                <h4>${safeName}</h4>
+                <p class="github-bio">${safeBio}</p>
                 <div class="github-stats-inline github-stats-centered">
                     <div class="stat-item">
-                    <span class="stat-num">${user.public_repos}</span>
+                    <span class="stat-num">${safePublicRepos}</span>
                     <span class="stat-label">Repositories</span>
                     </div>
                     <div class="stat-item">
-                    <span class="stat-num">${user.followers}</span>
+                    <span class="stat-num">${safeFollowers}</span>
                     <span class="stat-label">Followers</span>
                     </div>
                     <div class="stat-item">
-                    <span class="stat-num">${user.following}</span>
+                    <span class="stat-num">${safeFollowing}</span>
                     <span class="stat-label">Following</span>
                     </div>
                 </div>
             </div>
         </div>
         <div class="github-info-body github-info-center">
-            <p><strong>Member Since:</strong> ${new Date(user.created_at).toLocaleDateString()}</p>
+            <p><strong>Member Since:</strong> ${escapeHtml(memberSince)}</p>
         </div>
         </div>
     `;

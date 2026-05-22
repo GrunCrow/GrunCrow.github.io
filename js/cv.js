@@ -58,7 +58,7 @@ function renderMetaPills(item) {
     }
 
     if (item.location) {
-        parts.push(`<span class="pill pill--success"><i class="fas fa-map-marker-alt"></i> ${item.location}</span>`);
+        parts.push(`<span class="pill pill--success"><i class="fas fa-map-marker-alt"></i> ${escapeHtml(item.location)}</span>`);
     }
 
     if (parts.length === 0) return '';
@@ -245,7 +245,7 @@ function renderVolunteeringEntry(item) {
     const pill = `<span class="${pillClass}"><i class="fas fa-calendar-alt"></i> ${item.startDate} - ${item.endDate}</span>`;
     
     const description = item.description
-        ? `<p class="cv-description">${item.description}</p>`
+        ? `<p class="cv-description">${escapeHtml(item.description)}</p>`
         : '';
 
     return `

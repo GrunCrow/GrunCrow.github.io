@@ -1,5 +1,29 @@
 const { escapeHtml, safeId, safeUrl, initScrollSpy } = window.SiteUtils;
 
+function getPublicationTitle(pub) {
+    return String(pub?.title || 'Untitled publication');
+}
+
+function logMalformedPublicationAssets(items) {
+    const malformed = [];
+
+    items.forEach((pub) => {
+        const publicationId = safeId(pub?.id || getPublicationTitle(pub));
+
+        if (pub?.doi && !safeUrl(pub.doi)) {
+            malformed.push({ id: publicationId, type: 'doi', value: pub.doi });
+        }
+
+        if (pub?.image && !safeUrl(pub.image)) {
+            malformed.push({ id: publicationId, type: 'image', value: pub.image });
+        }
+    });
+
+    if (malformed.length > 0) {
+        console.warn('[publications] Malformed DOI/image entries hidden from UI:', malformed);
+    }
+}
+
 async function loadPublications() {
     const container = document.getElementById('publications-list');
     const featuredContainer = document.getElementById('featured-publications');
@@ -9,6 +33,7 @@ async function loadPublications() {
     try {
         const res = await fetch('data/publications.json');
         const items = await res.json();
+        logMalformedPublicationAssets(items);
         
         const featured = items.filter(pub => pub.featured);
         
@@ -40,14 +65,20 @@ async function loadPublications() {
                     <div class="sidebar-section">
                         <a class="section-link" href="#featured-section"><i class="fas fa-star"></i> Featured</a>
                         <ul class="sidebar-sublist">
-                            ${featured.map(pub => `<li><a href="#publication-${safeId(pub.id)}"><i class="fas fa-star icon-award"></i>${escapeHtml(pub.title.substring(0, 55))}${pub.title.length > 55 ? '...' : ''}</a></li>`).join('')}
+                            ${featured.map(pub => {
+                                const title = getPublicationTitle(pub);
+                                return `<li><a href="#publication-${safeId(pub.id)}"><i class="fas fa-star icon-award"></i>${escapeHtml(title.substring(0, 55))}${title.length > 55 ? '...' : ''}</a></li>`;
+                            }).join('')}
                         </ul>
                     </div>
                 ` : ''}
                 <div class="sidebar-section">
                     <a class="section-link" href="#all-publications-section"><i class="fas fa-book"></i> All Publications</a>
                     <ul class="sidebar-sublist">
-                        ${items.map(pub => `<li><a href="#publication-${safeId(pub.id)}">${escapeHtml(pub.title.substring(0, 55))}${pub.title.length > 55 ? '...' : ''}</a></li>`).join('')}
+                        ${items.map(pub => {
+                            const title = getPublicationTitle(pub);
+                            return `<li><a href="#publication-${safeId(pub.id)}">${escapeHtml(title.substring(0, 55))}${title.length > 55 ? '...' : ''}</a></li>`;
+                        }).join('')}
                     </ul>
                 </div>
             `;
@@ -67,10 +98,13 @@ async function loadPublications() {
 
 function renderPublication(pub, isFeatured) {
     const pubId = safeId(pub.id);
+    const title = getPublicationTitle(pub);
+    const doiUrl = safeUrl(pub.doi);
+    const imageUrl = safeUrl(pub.image);
     let authors = pub.authors || '';
     authors = escapeHtml(authors).replace(/(Alba Márquez-Rodríguez|A\. Márquez-Rodríguez|A\. Márquez Rodríguez|Alba Márquez Rodríguez)/gi, '<strong>$1</strong>');
     
-    const imageHtml = pub.image ? `<img src="${safeUrl(pub.image)}" alt="${escapeHtml(pub.title)}" class="pub-image">` : '';
+    const imageHtml = imageUrl ? `<img src="${imageUrl}" alt="${escapeHtml(title)}" class="pub-image">` : '';
     
     // Determine publication type and status badges
     const type = pub.type || 'journal';
@@ -99,7 +133,7 @@ function renderPublication(pub, isFeatured) {
     const abstractHtml = pub.abstract ? `
         <details class="pub-abstract">
             <summary>Abstract</summary>
-            <p>${pub.abstract}</p>
+            <p>${escapeHtml(pub.abstract)}</p>
         </details>
     ` : '';
     
@@ -108,7 +142,7 @@ function renderPublication(pub, isFeatured) {
         ${imageHtml}
         <div class="pub-header">
             <h3 class="pub-title">
-                ${pub.doi ? `<a href="${safeUrl(pub.doi)}" target="_blank" rel="noopener noreferrer" class="title-link">${escapeHtml(pub.title)}</a>` : escapeHtml(pub.title)}
+                ${doiUrl ? `<a href="${doiUrl}" target="_blank" rel="noopener noreferrer" class="title-link">${escapeHtml(title)}</a>` : escapeHtml(title)}
             </h3>
             ${pub.date ? `<div class="pub-date"><i class="far fa-calendar"></i> ${escapeHtml(pub.date)}</div>` : ''}
         </div>
@@ -124,7 +158,7 @@ function renderPublication(pub, isFeatured) {
         ${authors ? `<div class="pub-authors"><strong>Authors:</strong> ${authors}</div>` : ''}
         ${abstractHtml}
         <div class="pub-links">
-            ${pub.doi ? `<a href="${safeUrl(pub.doi)}" target="_blank" rel="noopener noreferrer" class="pub-link"><i class="fas fa-external-link-alt"></i> View Paper</a>` : ''}
+            ${doiUrl ? `<a href="${doiUrl}" target="_blank" rel="noopener noreferrer" class="pub-link"><i class="fas fa-external-link-alt"></i> View Paper</a>` : ''}
         </div>
     </section>
     `;

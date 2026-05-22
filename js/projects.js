@@ -26,7 +26,7 @@ async function loadProjects() {
         container.innerHTML = `
             <section id="intro" class="card">
                 <h2>Projects</h2>
-                <p class="meta-note">Explore my work at the intersection of AI, Computer Vision, and biodiversity conservation.</p>
+                <p class="meta-note">Research collaborations, field-facing tools, and applied machine learning work for biodiversity monitoring and ecological data analysis.</p>
             </section>
             <section id="research-projects">
                 <h2><i class="fas fa-university section-title-icon"></i> Research Projects</h2>
