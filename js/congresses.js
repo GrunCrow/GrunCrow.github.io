@@ -1,5 +1,42 @@
 const { escapeHtml, safeId, safeUrl, truncate, initScrollSpy } = window.SiteUtils;
 
+function asArray(value) {
+    return Array.isArray(value) ? value : [];
+}
+
+function safeLinkOrNull(value) {
+    const url = safeUrl(value);
+    return url || null;
+}
+
+function getCongressTitle(congress) {
+    return String(congress?.title || 'Untitled presentation');
+}
+
+function logMalformedCongressAssets(items) {
+    const malformed = [];
+
+    items.forEach((congress) => {
+        const congressId = safeId(congress?.id || getCongressTitle(congress));
+
+        asArray(congress?.links).forEach((link, idx) => {
+            if (link?.url && !safeLinkOrNull(link.url)) {
+                malformed.push({ id: congressId, field: `links[${idx}].url`, value: link.url });
+            }
+        });
+
+        asArray(congress?.images).forEach((image, idx) => {
+            if (image && !safeLinkOrNull(image)) {
+                malformed.push({ id: congressId, field: `images[${idx}]`, value: image });
+            }
+        });
+    });
+
+    if (malformed.length > 0) {
+        console.warn('[congresses] Malformed links/images hidden from UI:', malformed);
+    }
+}
+
 async function loadCongresses() {
     const container = document.getElementById('congresses-container');
     const nav = document.getElementById('congresses-nav');
@@ -7,10 +44,10 @@ async function loadCongresses() {
 
     try {
         const res = await fetch('data/congresses.json');
-        const items = await res.json();
+        const items = asArray(await res.json());
+        logMalformedCongressAssets(items);
 
         const featured = items.filter(c => c.featured);
-        const awarded = items.filter(c => c.award);
         const all = items;
 
         // Build navigation
@@ -21,10 +58,11 @@ async function loadCongresses() {
                 <a class="section-link" href="#all-congresses"><i class="fas fa-calendar-alt"></i> All Congresses</a>
                 ${all.map(c => {
                     const congressId = safeId(c.id);
+                    const title = getCongressTitle(c);
                     const typeIcon = c.type === 'oral' 
                         ? '<i class="fas fa-microphone section-title-icon"></i>' 
                         : '<i class="fas fa-image section-title-icon"></i>';
-                    return `<a class="congress-link" href="#congress-${congressId}">${typeIcon} ${escapeHtml(truncate(c.title, 45))}</a>`;
+                    return `<a class="congress-link" href="#congress-${congressId}">${typeIcon} ${escapeHtml(truncate(title, 45))}</a>`;
                 }).join('')}
             `;
         }
@@ -77,7 +115,8 @@ async function loadCongresses() {
 }
 
 function renderCongress(congress) {
-    const congressId = safeId(congress.id);
+    const title = getCongressTitle(congress);
+    const congressId = safeId(congress.id || title);
     const typeBadge = congress.type === 'oral'
         ? '<span class="pill pill--info"><i class="fas fa-microphone"></i> Oral Presentation</span>'
         : '<span class="pill pill--warning"><i class="fas fa-image"></i> Poster</span>';
@@ -86,24 +125,38 @@ function renderCongress(congress) {
         ? `<span class="pill pill--award"><i class="fas fa-trophy"></i> ${escapeHtml(congress.award)}</span>`
         : '';
 
+    const validImages = asArray(congress.images)
+        .map((img) => safeLinkOrNull(img))
+        .filter(Boolean);
+
+    const allLinks = asArray(congress.links)
+        .map((link) => {
+            const linkUrl = safeLinkOrNull(link?.url);
+            if (!linkUrl) return null;
+            return {
+                type: link?.type,
+                label: link?.label || 'Link',
+                url: linkUrl
+            };
+        })
+        .filter(Boolean);
+
     // Find PDF link for poster
-    const posterPdfLink = congress.links && congress.links.find(link => link.type === 'pdf');
+    const posterPdfLink = allLinks.find(link => link.type === 'pdf');
     
     // Filter out PDF links for posters (since the poster image becomes the link)
     const filteredLinks = congress.type === 'poster' 
-        ? (congress.links || []).filter(link => link.type !== 'pdf')
-        : (congress.links || []);
+        ? allLinks.filter(link => link.type !== 'pdf')
+        : allLinks;
     
     const links = filteredLinks.length > 0
         ? `<div class="congress-links">
                 ${filteredLinks.map(link => {
-                                        const linkUrl = safeUrl(link.url);
                     const icon = link.type === 'pdf' ? 'far fa-file-pdf'
                                : link.type === 'web' ? 'fas fa-link'
                                : link.type === 'video' ? 'fas fa-video'
                                : 'fas fa-external-link-alt';
-                                        if (!linkUrl) return '';
-                                        return `<a href="${linkUrl}" target="_blank" rel="noopener noreferrer" class="congress-link-cta"><i class="${icon}"></i> ${escapeHtml(link.label || 'Link')}</a>`;
+                    return `<a href="${link.url}" target="_blank" rel="noopener noreferrer" class="congress-link-cta"><i class="${icon}"></i> ${escapeHtml(link.label)}</a>`;
                 }).join('')}
            </div>` : '';
 
@@ -120,17 +173,14 @@ function renderCongress(congress) {
                 : `<p class="congress-description">${escapeHtml(description)}</p>`;
 
     // Different layout for poster vs oral
-    if (congress.type === 'poster' && congress.images && congress.images.length > 0) {
+    if (congress.type === 'poster' && validImages.length > 0) {
         // Poster layout: text left, poster right
-        const posterImage = congress.images[0]; // Use first image as main poster
-        const otherImages = congress.images.slice(1);
+        const posterImage = validImages[0]; // Use first image as main poster
+        const otherImages = validImages.slice(1);
         
         const otherImagesHTML = otherImages.length > 0
             ? `<div class="project-images project-images-rectangles">
-                    ${otherImages.map(img => {
-                        const imageUrl = safeUrl(img);
-                        return imageUrl ? `<img src="${imageUrl}" alt="${escapeHtml(congress.title)}" loading="lazy">` : '';
-                    }).join('')}
+                    ${otherImages.map((imageUrl) => `<img src="${imageUrl}" alt="${escapeHtml(title)}" loading="lazy">`).join('')}
                </div>`
             : '';
 
@@ -138,13 +188,13 @@ function renderCongress(congress) {
             <div id="congress-${congressId}" class="project-box ${congress.featured ? 'featured-card' : ''}">
                 <div class="section-header section-header-top">
                     <div>
-                        <h3>${escapeHtml(congress.title)}</h3>
+                        <h3>${escapeHtml(title)}</h3>
                     </div>
                     <div class="section-info">
-                        <h4>${escapeHtml(congress.conference)}</h4>
+                        <h4>${escapeHtml(congress.conference || '')}</h4>
                         ${congress.organization ? `<h5>${escapeHtml(congress.organization)}</h5>` : ''}
-                        <h6>${escapeHtml(congress.location)}</h6>
-                        <h6>${escapeHtml(congress.date)}</h6>
+                        <h6>${escapeHtml(congress.location || '')}</h6>
+                        <h6>${escapeHtml(congress.date || '')}</h6>
                     </div>
                 </div>
                 <div class="congress-badge-row">
@@ -161,14 +211,14 @@ function renderCongress(congress) {
                     </div>
                     <div class="congress-poster-col">
                         ${posterPdfLink 
-                            ? `<a href="${safeUrl(posterPdfLink.url)}" target="_blank" rel="noopener noreferrer" class="congress-poster-link">
-                                    <img src="${safeUrl(posterImage)}" alt="${escapeHtml(congress.title)} Poster" loading="lazy" 
+                            ? `<a href="${posterPdfLink.url}" target="_blank" rel="noopener noreferrer" class="congress-poster-link">
+                                    <img src="${posterImage}" alt="${escapeHtml(title)} Poster" loading="lazy" 
                                          class="congress-poster-img">
                                     <div class="congress-poster-caption">
                                         <i class="far fa-file-pdf"></i> Click to view full poster
                                     </div>
                                </a>`
-                            : `<img src="${safeUrl(posterImage)}" alt="${escapeHtml(congress.title)} Poster" loading="lazy" 
+                            : `<img src="${posterImage}" alt="${escapeHtml(title)} Poster" loading="lazy" 
                                     class="congress-poster-img">`
                         }
                     </div>
@@ -178,25 +228,22 @@ function renderCongress(congress) {
         `;
     } else {
         // Oral presentation layout: normal flow
-        const images = congress.images && congress.images.length
+        const images = validImages.length > 0
             ? `<div class="project-images project-images-rectangles">
-                    ${congress.images.map(img => {
-                        const imageUrl = safeUrl(img);
-                        return imageUrl ? `<img src="${imageUrl}" alt="${escapeHtml(congress.title)}" loading="lazy">` : '';
-                    }).join('')}
+                    ${validImages.map((imageUrl) => `<img src="${imageUrl}" alt="${escapeHtml(title)}" loading="lazy">`).join('')}
                </div>` : '';
 
         return `
             <div id="congress-${congressId}" class="project-box ${congress.featured ? 'featured-card' : ''}">
                 <div class="section-header section-header-top">
                     <div>
-                        <h3>${escapeHtml(congress.title)}</h3>
+                        <h3>${escapeHtml(title)}</h3>
                     </div>
                     <div class="section-info">
-                        <h4>${escapeHtml(congress.conference)}</h4>
+                        <h4>${escapeHtml(congress.conference || '')}</h4>
                         ${congress.organization ? `<h5>${escapeHtml(congress.organization)}</h5>` : ''}
-                        <h6>${escapeHtml(congress.location)}</h6>
-                        <h6>${escapeHtml(congress.date)}</h6>
+                        <h6>${escapeHtml(congress.location || '')}</h6>
+                        <h6>${escapeHtml(congress.date || '')}</h6>
                     </div>
                 </div>
                 <div class="congress-badge-row">

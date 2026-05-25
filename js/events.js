@@ -1,5 +1,58 @@
 const { escapeHtml, safeId, safeUrl, initScrollSpy } = window.SiteUtils;
 
+function asArray(value) {
+    return Array.isArray(value) ? value : [];
+}
+
+function safeLinkOrNull(value) {
+    const url = safeUrl(value);
+    return url || null;
+}
+
+function getEventTitle(event) {
+    return String(event?.title || 'Untitled event');
+}
+
+function normalizeEventType(type) {
+    const raw = String(type || '').trim().toLowerCase();
+    if (!raw) return { icon: 'calendar-alt', label: 'Event' };
+    if (raw === 'workshop') return { icon: 'users', label: 'Workshop' };
+    if (raw === 'seminar') return { icon: 'chalkboard-teacher', label: 'Seminar' };
+    return { icon: 'chalkboard-teacher', label: raw.charAt(0).toUpperCase() + raw.slice(1) };
+}
+
+function logMalformedEventAssets(events) {
+    const malformed = [];
+
+    events.forEach((event) => {
+        const eventId = safeId(event?.id || getEventTitle(event));
+
+        if (event?.link && !safeLinkOrNull(event.link)) {
+            malformed.push({ id: eventId, field: 'link', value: event.link });
+        }
+
+        if (event?.videoLink && !safeLinkOrNull(event.videoLink)) {
+            malformed.push({ id: eventId, field: 'videoLink', value: event.videoLink });
+        }
+
+        asArray(event?.links).forEach((link, idx) => {
+            if (link?.url && !safeLinkOrNull(link.url)) {
+                malformed.push({ id: eventId, field: `links[${idx}].url`, value: link.url });
+            }
+        });
+
+        asArray(event?.images).forEach((image, idx) => {
+            if (image && !safeLinkOrNull(image)) {
+                malformed.push({ id: eventId, field: `images[${idx}]`, value: image });
+            }
+        });
+    });
+
+    if (malformed.length > 0) {
+        console.warn('[events] Malformed links/images hidden from UI:', malformed);
+    }
+}
+
 async function loadEvents() {
     const container = document.getElementById('events-container');
     const sidebarNav = document.getElementById('events-nav');
@@ -7,7 +60,8 @@ async function loadEvents() {
     
     try {
         const res = await fetch('data/events.json');
-        const events = await res.json();
+        const events = asArray(await res.json());
+        logMalformedEventAssets(events);
         
         container.innerHTML = `
             <h2 id="events-section"><i class="fas fa-microphone section-title-icon"></i> Talks & Events</h2>
@@ -18,8 +72,9 @@ async function loadEvents() {
         if (sidebarNav) {
             sidebarNav.innerHTML = events.map(event => {
                 const eventId = safeId(event.id);
-                const title = escapeHtml((event.title || '').substring(0, 50));
-                return `<a href="#event-${eventId}">${title}${(event.title || '').length > 50 ? '...' : ''}</a>`;
+                const title = getEventTitle(event);
+                const shortTitle = escapeHtml(title.substring(0, 50));
+                return `<a href="#event-${eventId}">${shortTitle}${title.length > 50 ? '...' : ''}</a>`;
             }).join('');
             
             initScrollSpy({
@@ -35,39 +90,50 @@ async function loadEvents() {
 }
 
 function renderEvent(event) {
-    const eventId = safeId(event.id);
+    const title = getEventTitle(event);
+    const eventId = safeId(event.id || title);
+    const eventType = normalizeEventType(event.type);
+    const locationType = String(event?.locationType || '').toLowerCase();
+    const locationTypeLabel = locationType ? locationType.charAt(0).toUpperCase() + locationType.slice(1) : '';
     let speakers = event.speakers || '';
     speakers = escapeHtml(speakers).replace(/(Alba Márquez-Rodríguez|A\. Márquez-Rodríguez|A\. Márquez Rodríguez|Alba Márquez Rodríguez)/gi, '<strong>$1</strong>');
+    const eventLink = safeLinkOrNull(event.link);
+    const videoLink = safeLinkOrNull(event.videoLink);
     
-    const typeBadge = `<span class="pill pill--success"><i class="fas fa-${event.type === 'workshop' ? 'users' : 'chalkboard-teacher'}"></i> ${event.type.charAt(0).toUpperCase() + event.type.slice(1)}</span>`;
+    const typeBadge = `<span class="pill pill--success"><i class="fas fa-${eventType.icon}"></i> ${eventType.label}</span>`;
     
-    const locationTypeBadge = event.locationType
-        ? `<span class="pill ${event.locationType === 'online' ? 'pill--info' : 'pill--accent'}"><i class="fas fa-${event.locationType === 'online' ? 'globe' : 'map-marker-alt'}"></i> ${event.locationType.charAt(0).toUpperCase() + event.locationType.slice(1)}</span>`
+    const locationTypeBadge = locationType
+        ? `<span class="pill ${locationType === 'online' ? 'pill--info' : 'pill--accent'}"><i class="fas fa-${locationType === 'online' ? 'globe' : 'map-marker-alt'}"></i> ${locationTypeLabel}</span>`
         : '';
+
+    const validImages = asArray(event.images)
+        .map((img) => safeLinkOrNull(img))
+        .filter(Boolean);
     
-    const imagesHtml = event.images ? `
+    const imagesHtml = validImages.length > 0 ? `
         <div class="project-images project-images-rectangles">
-            ${event.images.map(img => {
-                const imageUrl = safeUrl(img);
-                return imageUrl ? `<img src="${imageUrl}" alt="${escapeHtml(event.title)}">` : '';
-            }).join('')}
+            ${validImages.map((imageUrl) => `<img src="${imageUrl}" alt="${escapeHtml(title)}">`).join('')}
         </div>
     ` : '';
 
-    const linksHtml = event.links ? `
+    const validLinks = asArray(event.links)
+        .map((link) => {
+            const linkUrl = safeLinkOrNull(link?.url);
+            if (!linkUrl) return null;
+            return { text: escapeHtml(link?.text || 'Link'), url: linkUrl };
+        })
+        .filter(Boolean);
+
+    const linksHtml = validLinks.length > 0 ? `
         <p>Related links:</p>
         <ul>
-            ${event.links.map(link => {
-                const linkUrl = safeUrl(link.url);
-                if (!linkUrl) return '';
-                return `<li><a href="${linkUrl}" target="_blank" rel="noopener noreferrer">${escapeHtml(link.text)}</a></li>`;
-            }).join('')}
+            ${validLinks.map((link) => `<li><a href="${link.url}" target="_blank" rel="noopener noreferrer">${link.text}</a></li>`).join('')}
         </ul>
     ` : '';
 
-    const videoButtonHtml = event.videoLink ? `
+    const videoButtonHtml = videoLink ? `
         <div class="event-video-button">
-            <a href="${safeUrl(event.videoLink)}" target="_blank" rel="noopener noreferrer" class="btn-primary">
+            <a href="${videoLink}" target="_blank" rel="noopener noreferrer" class="btn-primary">
                 <i class="fab fa-youtube"></i> Watch Video
             </a>
         </div>
@@ -83,10 +149,10 @@ function renderEvent(event) {
                 <div class="event-main">
                     <div class="event-info">
                         <h3 class="event-title">
-                            ${event.link ? `<a href="${safeUrl(event.link)}" target="_blank" rel="noopener noreferrer">${escapeHtml(event.title)}</a>` : escapeHtml(event.title)}
+                            ${eventLink ? `<a href="${eventLink}" target="_blank" rel="noopener noreferrer">${escapeHtml(title)}</a>` : escapeHtml(title)}
                         </h3>
                         <div class="event-meta">
-                            <span class="event-organizer">${escapeHtml(event.organizer)}</span>
+                            <span class="event-organizer">${escapeHtml(event.organizer || '')}</span>
                             <span class="event-speakers">${speakers}</span>
                         </div>
                     </div>
@@ -97,7 +163,7 @@ function renderEvent(event) {
                 </div>
             </div>
             <div class="event-content">
-                <p>${escapeHtml(event.description)}</p>
+                <p>${escapeHtml(event.description || '')}</p>
                 ${linksHtml}
             </div>
             ${imagesHtml}

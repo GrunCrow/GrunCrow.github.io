@@ -1226,6 +1226,12 @@ img {
     padding-top: 8px;
 }
 
+.events-content #events-container > h2,
+#congresses-container > section > h2 {
+    padding-bottom: 10px;
+    border-bottom: 1px solid rgba(0, 0, 76, 0.1);
+}
+
 .projects-main-content > section > h2,
 .projects-main-content .card > h2 {
     padding-bottom: 10px;
@@ -1906,6 +1912,10 @@ footer {
     min-width: 0;
 }
 
+.social-intro-card {
+    margin-bottom: 32px;
+}
+
 .social-section {
     margin-bottom: 40px;
 }
@@ -2423,6 +2433,12 @@ footer {
     display: flex;
     flex-direction: column;
     gap: 8px;
+.platform-embed-note {
+    color: var(--muted);
+    text-align: center;
+    padding: 24px;
+    margin: 0;
+}
     align-items: flex-end;
 }
 

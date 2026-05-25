@@ -1,5 +1,14 @@
 const { escapeHtml, safeUrl, initScrollSpy } = window.SiteUtils;
 
+function asArray(value) {
+    return Array.isArray(value) ? value : [];
+}
+
+function safeLinkOrNull(value) {
+    const url = safeUrl(value);
+    return url || null;
+}
+
 async function loadCV() {
     try {
         const res = await fetch('data/cv.json');
@@ -31,11 +40,13 @@ async function loadCV() {
 function loadProfile(profile) {
     const sidebar = document.querySelector('.cv-profile');
     if (sidebar) {
+        const name = profile?.name || 'Profile';
+        const imageUrl = safeLinkOrNull(profile?.image);
         sidebar.innerHTML = `
-            <img src="${safeUrl(profile.image)}" alt="${escapeHtml(profile.name)}" class="cv-profile-image">
-            <h2>${escapeHtml(profile.name)}</h2>
-            <p class="cv-title">${escapeHtml(profile.title)}</p>
-            <p class="cv-subtitle">${escapeHtml(profile.subtitle)}</p>
+            ${imageUrl ? `<img src="${imageUrl}" alt="${escapeHtml(name)}" class="cv-profile-image">` : ''}
+            <h2>${escapeHtml(name)}</h2>
+            <p class="cv-title">${escapeHtml(profile?.title || '')}</p>
+            <p class="cv-subtitle">${escapeHtml(profile?.subtitle || '')}</p>
         `;
     }
 }
@@ -69,19 +80,22 @@ function loadExperience(items) {
     const container = document.getElementById('experience-content');
     if (!container) return;
 
-    container.innerHTML = items.map(item => renderExperienceEntry(item)).join('');
+    container.innerHTML = asArray(items).map(item => renderExperienceEntry(item)).join('');
 }
 
 function renderExperienceEntry(item) {
     const pillClass = getPillClass(item.isPresent);
     const pill = `<span class="${pillClass}"><i class="fas fa-calendar-alt"></i> ${item.startDate} - ${item.endDate}</span>`;
+    const projectTitle = item?.project?.title || '';
+    const projectLink = safeLinkOrNull(item?.project?.link);
     
-    const project = item.project 
-        ? `<p class="cv-project"><strong>Project:</strong> <a href="${safeUrl(item.project.link)}">${escapeHtml(item.project.title)}</a></p>`
+    const project = item.project
+        ? `<p class="cv-project"><strong>Project:</strong> ${projectLink ? `<a href="${projectLink}">${escapeHtml(projectTitle)}</a>` : escapeHtml(projectTitle)}</p>`
         : '';
-    
-    const responsibilities = item.responsibilities.length > 0
-        ? `<ul class="cv-responsibilities">${item.responsibilities.map(r => `<li>${escapeHtml(r)}</li>`).join('')}</ul>`
+
+    const responsibilitiesList = asArray(item.responsibilities);
+    const responsibilities = responsibilitiesList.length > 0
+        ? `<ul class="cv-responsibilities">${responsibilitiesList.map(r => `<li>${escapeHtml(r)}</li>`).join('')}</ul>`
         : '';
 
     const metaPills = renderMetaPills(item);
@@ -105,15 +119,16 @@ function loadEducation(items) {
     const container = document.getElementById('education-content');
     if (!container) return;
 
-    container.innerHTML = items.map(item => renderEducationEntry(item)).join('');
+    container.innerHTML = asArray(items).map(item => renderEducationEntry(item)).join('');
 }
 
 function renderEducationEntry(item) {
     const pillClass = getPillClass(item.isPresent);
     const pill = `<span class="${pillClass}"><i class="fas fa-graduation-cap"></i> ${item.startDate} - ${item.endDate}</span>`;
     
-    const details = item.details && item.details.length > 0
-        ? `<ul class="cv-responsibilities">${item.details.map(d => `<li>${escapeHtml(d)}</li>`).join('')}</ul>`
+    const detailsList = asArray(item.details);
+    const details = detailsList.length > 0
+        ? `<ul class="cv-responsibilities">${detailsList.map(d => `<li>${escapeHtml(d)}</li>`).join('')}</ul>`
         : '';
 
     const metaPills = renderMetaPills(item);
@@ -136,7 +151,7 @@ function loadCertifications(items) {
     const container = document.getElementById('certifications-content');
     if (!container) return;
 
-    container.innerHTML = items.map(item => renderCertificationEntry(item)).join('');
+    container.innerHTML = asArray(items).map(item => renderCertificationEntry(item)).join('');
 }
 
 function renderCertificationEntry(item) {
@@ -147,10 +162,12 @@ function renderCertificationEntry(item) {
         ? `<p class="cv-description">${escapeHtml(item.description)}</p>`
         : '';
     
-    const projects = item.projects && item.projects.length > 0
-        ? `<ul class="cv-responsibilities">${item.projects.map(p => {
+    const projectItems = asArray(item.projects);
+    const projects = projectItems.length > 0
+        ? `<ul class="cv-responsibilities">${projectItems.map(p => {
             const isLink = typeof p === 'object' && p.link;
-            return `<li>${isLink ? `<a href="${safeUrl(p.link)}">${escapeHtml(p.title)}</a>` : escapeHtml(p)}</li>`;
+            const linkUrl = isLink ? safeLinkOrNull(p.link) : null;
+            return `<li>${linkUrl ? `<a href="${linkUrl}">${escapeHtml(p.title)}</a>` : escapeHtml(typeof p === 'object' ? (p.title || '') : p)}</li>`;
         }).join('')}</ul>`
         : '';
 
@@ -175,12 +192,14 @@ function loadSkills(items) {
     const container = document.getElementById('skills-content');
     if (!container) return;
 
+    const skillsList = asArray(items);
+
     container.innerHTML = `<div class="cv-skills-grid">
-        ${items.map(skill => `
+        ${skillsList.map(skill => `
             <div class="cv-skill-card">
                 <h4><i class="fas ${escapeHtml(skill.icon)}"></i> ${escapeHtml(skill.category)}</h4>
                 <ul>
-                    ${skill.items.map(item => `<li>${escapeHtml(item)}</li>`).join('')}
+                    ${asArray(skill.items).map(item => `<li>${escapeHtml(item)}</li>`).join('')}
                 </ul>
             </div>
         `).join('')}
@@ -195,16 +214,18 @@ async function loadPublicationsSummary() {
         const res = await fetch('data/publications.json');
         const publications = await res.json();
 
-        const recent = publications.slice(0, 5);
+        const recent = asArray(publications).slice(0, 5);
 
         container.innerHTML = `
             <p class="cv-description">Selected recent publications from my research profile. For the complete list, visit the full publications section.</p>
             <div class="cv-publications-list">
                 ${recent.map(pub => {
                     const venue = pub.journal ? `${pub.journal}${pub.editorial ? ` (${pub.editorial})` : ''}` : '';
-                    const title = pub.doi
-                        ? `<a href="${safeUrl(pub.doi)}" target="_blank" rel="noopener noreferrer">${escapeHtml(pub.title)}</a>`
-                        : escapeHtml(pub.title);
+                    const titleText = pub?.title || 'Untitled publication';
+                    const doiUrl = safeLinkOrNull(pub?.doi);
+                    const title = doiUrl
+                        ? `<a href="${doiUrl}" target="_blank" rel="noopener noreferrer">${escapeHtml(titleText)}</a>`
+                        : escapeHtml(titleText);
 
                     return `
                         <div class="cv-entry">
@@ -237,7 +258,7 @@ function loadVolunteering(items) {
     const container = document.getElementById('volunteering-content');
     if (!container) return;
 
-    container.innerHTML = items.map(item => renderVolunteeringEntry(item)).join('');
+    container.innerHTML = asArray(items).map(item => renderVolunteeringEntry(item)).join('');
 }
 
 function renderVolunteeringEntry(item) {

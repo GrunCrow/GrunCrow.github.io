@@ -59,12 +59,14 @@ function renderGitHubUser(user) {
     const safePublicRepos = Number.isFinite(Number(user.public_repos)) ? Number(user.public_repos) : 0;
     const safeFollowers = Number.isFinite(Number(user.followers)) ? Number(user.followers) : 0;
     const safeFollowing = Number.isFinite(Number(user.following)) ? Number(user.following) : 0;
-    const memberSince = user.created_at ? new Date(user.created_at).toLocaleDateString() : 'N/A';
+    const parsedDate = user.created_at ? new Date(user.created_at) : null;
+    const memberSince = parsedDate && !Number.isNaN(parsedDate.getTime()) ? parsedDate.toLocaleDateString() : 'N/A';
+    const avatarHtml = avatarUrl ? `<img src="${avatarUrl}" alt="${safeName}" class="github-avatar">` : '';
 
     container.innerHTML = `
         <div class="github-info-card github-info-center">
         <div class="github-info-header github-info-header-vertical">
-            <img src="${avatarUrl}" alt="${safeName}" class="github-avatar">
+            ${avatarHtml}
             <div class="github-info-details github-info-center">
                 <h4>${safeName}</h4>
                 <p class="github-bio">${safeBio}</p>
@@ -117,14 +119,20 @@ function renderGitHubFallback() {
 
 async function loadGitHubInfo() {
     const cachedUser = readCachedJson(GITHUB_PROFILE_CACHE_KEY, GITHUB_PROFILE_CACHE_TTL_MS);
-    if (cachedUser) {
+    if (cachedUser && typeof cachedUser === 'object') {
         renderGitHubUser(cachedUser);
         return;
     }
 
     try {
         const res = await fetch('https://api.github.com/users/GrunCrow');
+        if (!res.ok) {
+            throw new Error(`GitHub API request failed (${res.status})`);
+        }
         const user = await res.json();
+        if (!user || typeof user !== 'object' || !user.login) {
+            throw new Error('GitHub API returned an invalid profile payload');
+        }
         writeCachedJson(GITHUB_PROFILE_CACHE_KEY, user);
         renderGitHubUser(user);
     } catch (err) {
