@@ -454,6 +454,21 @@ img {
     flex-shrink: 0;
 }
 
+.project-title-logo {
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.project-title-logo-wide {
+    width: 50px;
+    height: 30px;
+}
+
+.project-title-logo-square {
+    width: 30px;
+    height: 30px;
+}
+
 /* Rectangle image grid */
 .project-images-rectangles {
     display: grid;
@@ -1154,12 +1169,52 @@ img {
     line-height: 1.6;
 }
 
+.focus-item-icon {
+    font-size: 2.5rem;
+    color: var(--primary);
+    margin-bottom: 12px;
+}
+
+.current-work-cta {
+    text-align: center;
+    margin-top: 1.8rem;
+}
+
+.current-position h3 {
+    margin: 0 0 8px;
+    color: var(--primary);
+}
+
+.current-role {
+    padding: 2px 0;
+}
+
+.current-role + .current-role {
+    margin-top: 18px;
+    padding-top: 18px;
+    border-top: 1px solid rgba(0, 0, 76, 0.1);
+}
+
+.current-position p {
+    margin: 0 0 10px;
+    text-align: justify;
+    text-justify: inter-word;
+}
+
+.current-position p:last-child {
+    margin-bottom: 0;
+}
+
 /* Work Timeline */
 .work-timeline {
     display: flex;
     flex-direction: column;
     gap: 28px;
     margin-top: 24px;
+}
+
+.upcoming-events-timeline {
+    margin-top: 10px;
 }
 
 .work-item {
