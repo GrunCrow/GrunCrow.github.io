@@ -18,13 +18,21 @@
     --accent: #ff7a59;
     --border: #e4e7ef;
     --link-color: var(--primary);
+    --link-hover-color: var(--accent);
+    --link-underline-color: rgba(0, 0, 76, 0.28);
     --header-bg: #333333;
     --header-text: #ffffff;
-    --footer-bg: #555555;
-    --footer-text: #f5f5f5;
-    --footer-muted: #d0d3dc;
-    --footer-bottom-text: #b8bdc7;
-    --footer-border: #222222;
+    --footer-bg: #1a1f2e;
+    --footer-text: #f5f7fb;
+    --footer-muted: #c7cfdd;
+    --footer-bottom-text: #b6c0d1;
+    --footer-border: #2e3a52;
+
+    --layout-content-max: 1200px;
+    --layout-sidebar-max: 1320px;
+    --layout-events-max: 1360px;
+    --sidebar-sticky-top: 100px;
+    --sidebar-shell-offset: 120px;
 
     --pill-info-bg: #e3f2fd;
     --pill-info-text: #1565c0;
@@ -47,7 +55,7 @@
 }
 
 body {
-    font-family: Arial, sans-serif;
+    font-family: Inter, "Segoe UI", "Helvetica Neue", Arial, sans-serif;
     margin: 0;
     padding: 0;
     min-height: 100vh;
@@ -108,6 +116,22 @@ h4 {
     top: 12px;
     outline: 3px solid var(--accent);
     outline-offset: 2px;
+}
+
+main :is(p, li, h3, h4, h5, h6) a:not(.button) {
+    color: var(--link-color);
+    font-weight: 600;
+    text-decoration-line: underline;
+    text-decoration-color: var(--link-underline-color);
+    text-decoration-thickness: 1.5px;
+    text-underline-offset: 0.16em;
+    transition: color 0.2s ease, text-decoration-color 0.2s ease;
+}
+
+main :is(p, li, h3, h4, h5, h6) a:not(.button):hover,
+main :is(p, li, h3, h4, h5, h6) a:not(.button):focus-visible {
+    color: var(--link-hover-color);
+    text-decoration-color: var(--link-hover-color);
 }
 
 a:focus-visible,
@@ -195,9 +219,7 @@ body::before {
     opacity: 0.1; /* Adjust opacity as needed */
     z-index: -1; /* Place the pseudo-element behind other content */
 }
-body :not(header) :not(footer) p, section{
-    animation: fadeIn 1s ease-in;
-}
+
 
 header {
     background-color: var(--header-bg);
@@ -375,7 +397,7 @@ nav ul li a:focus-visible {
 }*/
 
 .page {
-    max-width: 1100px;
+    max-width: var(--layout-content-max);
     width: 100%;
     margin: 0 auto;
     padding: 24px 16px 96px;
@@ -383,13 +405,13 @@ nav ul li a:focus-visible {
 
 /* Wider page for events to accommodate 3 images */
 body:has(.events-container) .page {
-    max-width: 1400px;
+    max-width: var(--layout-events-max);
 }
 
 /* Responsive page width */
 @media (max-width: 1200px) {
     body:has(.events-container) .page {
-        max-width: 1100px;
+        max-width: var(--layout-content-max);
     }
 }
 
@@ -397,11 +419,6 @@ body:has(.events-container) .page {
     body:has(.events-container) .page {
         max-width: 100%;
     }
-}
-
-/* Wider page for events to accommodate 3 images */
-.events-content .page {
-    max-width: 1400px;
 }
 
 .card {
@@ -545,7 +562,7 @@ img {
 
 /* Special layout for events with 3 images */
 .events-content .project-images-rectangles {
-    grid-template-columns: repeat(auto-fit, minmax(240px, 320px));
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
     justify-content: center;
     gap: 16px;
 }
@@ -622,14 +639,17 @@ img {
 }
 
 .section-info a{
-    color: #00004c; /* Change color to a lighter shade */
-    /* color: var(--link-color);*/
-    text-decoration: none;
-    transition: color 0.3s ease; /* Add this line */
+    color: var(--link-color);
+    text-decoration-line: underline;
+    text-decoration-color: var(--link-underline-color);
+    text-decoration-thickness: 1.5px;
+    text-underline-offset: 0.16em;
+    transition: color 0.2s ease, text-decoration-color 0.2s ease;
 }
 
 .section-info a:hover {
-    color: var(--accent); /* Change to any color you like */
+    color: var(--link-hover-color);
+    text-decoration-color: var(--link-hover-color);
 }
 
 /* Style for media links */
@@ -640,12 +660,16 @@ img {
 
 .link a {
     color: var(--link-color);
-    text-decoration: none;
-    transition: color 0.3s ease; /* Add this line */
+    text-decoration-line: underline;
+    text-decoration-color: var(--link-underline-color);
+    text-decoration-thickness: 1.5px;
+    text-underline-offset: 0.16em;
+    transition: color 0.2s ease, text-decoration-color 0.2s ease;
 }
 
 .link a:hover {
-    color: var(--accent); /* Change to any color you like */
+    color: var(--link-hover-color);
+    text-decoration-color: var(--link-hover-color);
 }
 
 /* Footer spacing fix on mobile */
@@ -760,18 +784,21 @@ img {
     gap: 12px;
     margin-top: 16px;
     flex-wrap: wrap;
+    justify-content: center;
 }
 
-.pub-link,
 .cv-link-cta {
     color: var(--primary);
-    text-decoration: none;
+    text-decoration-line: underline;
+    text-decoration-color: var(--link-underline-color);
+    text-decoration-thickness: 1.5px;
+    text-underline-offset: 0.16em;
     font-weight: 600;
 }
 
-.pub-link:hover,
 .cv-link-cta:hover {
-    text-decoration: underline;
+    color: var(--link-hover-color);
+    text-decoration-color: var(--link-hover-color);
 }
 
 .cv-publications-cta-wrap {
@@ -828,7 +855,7 @@ img {
 .publications-container {
     display: flex;
     gap: 32px;
-    max-width: 1400px;
+    max-width: var(--layout-sidebar-max);
     width: 100%;
     margin: 0 auto;
     padding: 24px 16px 96px;
@@ -837,11 +864,11 @@ img {
 /* Shared sidebar component */
 .site-sidebar {
     position: sticky;
-    top: 100px;
+    top: var(--sidebar-sticky-top);
     width: 280px;
     height: fit-content;
-    max-height: calc(100vh - 120px);
-    overflow-y: auto;
+    max-height: calc(100vh - var(--sidebar-shell-offset));
+    overflow: hidden;
     background: var(--card);
     border-radius: 12px;
     padding: 20px;
@@ -865,24 +892,39 @@ img {
     display: flex;
     flex-direction: column;
     gap: 8px;
+    flex: 1 1 auto;
     min-height: 0;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    scrollbar-gutter: stable;
+    padding-right: 4px;
 }
 
 /* Shared scrollbar styling for sidebars */
-.site-sidebar::-webkit-scrollbar {
+.site-sidebar,
+.site-sidebar-nav {
+    scrollbar-width: thin;
+    scrollbar-color: var(--border) transparent;
+}
+
+.site-sidebar::-webkit-scrollbar,
+.site-sidebar-nav::-webkit-scrollbar {
     width: 6px;
 }
 
-.site-sidebar::-webkit-scrollbar-track {
+.site-sidebar::-webkit-scrollbar-track,
+.site-sidebar-nav::-webkit-scrollbar-track {
     background: transparent;
 }
 
-.site-sidebar::-webkit-scrollbar-thumb {
+.site-sidebar::-webkit-scrollbar-thumb,
+.site-sidebar-nav::-webkit-scrollbar-thumb {
     background: var(--border);
     border-radius: 3px;
 }
 
-.site-sidebar::-webkit-scrollbar-thumb:hover {
+.site-sidebar::-webkit-scrollbar-thumb:hover,
+.site-sidebar-nav::-webkit-scrollbar-thumb:hover {
     background: var(--muted);
 }
 
@@ -1001,11 +1043,15 @@ img {
 
 .event-title a {
     color: var(--primary);
-    text-decoration: none;
+    text-decoration-line: underline;
+    text-decoration-color: var(--link-underline-color);
+    text-decoration-thickness: 1.5px;
+    text-underline-offset: 0.16em;
 }
 
 .event-title a:hover {
-    text-decoration: underline;
+    color: var(--link-hover-color);
+    text-decoration-color: var(--link-hover-color);
 }
 
 .event-meta {
@@ -1039,27 +1085,6 @@ img {
     margin-top: 20px;
     padding-top: 20px;
     border-top: 1px solid var(--border);
-}
-
-.event-video-button .btn-primary {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    background: var(--primary);
-    color: white;
-    padding: 12px 24px;
-    border-radius: 8px;
-    text-decoration: none;
-    font-weight: 600;
-    transition: all 0.2s ease;
-    border: none;
-    cursor: pointer;
-}
-
-.event-video-button .btn-primary:hover {
-    background: var(--primary-hover, #0056b3);
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
 }
 
 /* Mobile responsiveness for events */
@@ -1101,7 +1126,7 @@ img {
 
 /* Home Page Styles */
 .home-container {
-    max-width: 1100px;
+    max-width: var(--layout-content-max);
     width: 100%;
     margin: 0 auto;
     padding: 36px 16px 110px;
@@ -1120,7 +1145,7 @@ img {
     align-items: center;
     gap: 40px;
     padding: 44px 48px;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background: linear-gradient(135deg, #00004c 0%, #1a1f73 100%);
     color: white;
     border: none;
     box-shadow: 0 16px 34px rgba(20, 36, 73, 0.18);
@@ -1151,7 +1176,7 @@ img {
     font-size: 1.2rem;
     margin-bottom: 28px;
     max-width: 44rem;
-    opacity: 0.92;
+    color: #e6ebf7;
     text-align: justify;
     text-justify: inter-word;
 }
@@ -1426,18 +1451,11 @@ img {
         scroll-behavior: auto !important;
     }
 
-    body :not(header) :not(footer) p,
-    section {
-        animation: none !important;
-    }
-
     .focus-item:hover,
     .project-images-rectangles img:hover,
     .project-images-circles img:hover,
     .github-profile-btn:hover,
-    .button.primary-button:hover,
-    .button.secondary-button:hover,
-    .button.accent-button:hover {
+    .button:hover {
         transform: none !important;
         box-shadow: none !important;
     }
@@ -1447,7 +1465,7 @@ img {
 .projects-page-container {
     display: flex;
     gap: 32px;
-    max-width: 1400px;
+    max-width: var(--layout-sidebar-max);
     width: 100%;
     margin: 0 auto;
     padding: 24px 16px 96px;
@@ -1691,7 +1709,7 @@ footer {
 .cv-container {
     display: flex;
     gap: 32px;
-    max-width: 1400px;
+    max-width: var(--layout-sidebar-max);
     width: 100%;
     margin: 0 auto;
     padding: 24px 16px 96px;
@@ -1857,13 +1875,17 @@ footer {
 
 .cv-project a {
     color: var(--primary);
-    text-decoration: none;
+    text-decoration-line: underline;
+    text-decoration-color: var(--link-underline-color);
+    text-decoration-thickness: 1.5px;
+    text-underline-offset: 0.16em;
     font-weight: 600;
-    transition: color 0.2s ease;
+    transition: color 0.2s ease, text-decoration-color 0.2s ease;
 }
 
 .cv-project a:hover {
-    color: var(--accent);
+    color: var(--link-hover-color);
+    text-decoration-color: var(--link-hover-color);
 }
 
 .cv-description {
@@ -1982,7 +2004,7 @@ footer {
 .social-container {
     display: flex;
     gap: 32px;
-    max-width: 1400px;
+    max-width: var(--layout-sidebar-max);
     width: 100%;
     margin: 0 auto;
     padding: 24px 16px 96px;
@@ -2090,25 +2112,6 @@ footer {
     margin: 0;
     color: var(--muted);
     font-size: 0.95rem;
-}
-
-.social-button {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    padding: 10px 16px;
-    background: var(--primary);
-    color: white;
-    text-decoration: none;
-    border-radius: 6px;
-    font-weight: 600;
-    white-space: nowrap;
-    transition: all 0.2s ease;
-}
-
-.social-button:hover {
-    background: var(--accent);
-    transform: translateY(-2px);
 }
 
 .social-stats {
@@ -2228,7 +2231,7 @@ footer {
         flex-direction: column;
     }
     
-    .social-button {
+    .social-header .button {
         width: 100%;
         justify-content: center;
     }
@@ -2317,13 +2320,17 @@ footer {
 
 .github-info-body a {
     color: var(--primary);
-    text-decoration: none;
+    text-decoration-line: underline;
+    text-decoration-color: var(--link-underline-color);
+    text-decoration-thickness: 1.5px;
+    text-underline-offset: 0.16em;
     font-weight: 600;
-    transition: color 0.2s ease;
+    transition: color 0.2s ease, text-decoration-color 0.2s ease;
 }
 
 .github-info-body a:hover {
-    color: var(--accent);
+    color: var(--link-hover-color);
+    text-decoration-color: var(--link-hover-color);
 }
 
 .github-profile-btn {
@@ -2359,6 +2366,11 @@ footer {
     transition: all 0.2s ease;
     border: none;
     cursor: pointer;
+}
+
+.button.small-button {
+    padding: 10px 16px;
+    font-size: 0.9rem;
 }
 
 .button.primary-button {
@@ -2485,14 +2497,17 @@ footer {
 
 .title-link {
     color: var(--primary);
-    text-decoration: none;
-    transition: color 0.2s ease;
+    text-decoration-line: underline;
+    text-decoration-color: var(--link-underline-color);
+    text-decoration-thickness: 1.5px;
+    text-underline-offset: 0.16em;
+    transition: color 0.2s ease, text-decoration-color 0.2s ease;
 }
 
 .title-link:hover,
 .title-link:focus-visible {
-    color: var(--accent);
-    text-decoration: underline;
+    color: var(--link-hover-color);
+    text-decoration-color: var(--link-hover-color);
 }
 
 .section-link-spaced {
@@ -2580,17 +2595,14 @@ footer {
     color: var(--text);
 }
 
-.project-toggle-link,
-.congress-link-cta,
-.project-link-cta {
+.project-toggle-link {
     color: var(--primary);
     text-decoration: none;
     font-weight: 600;
 }
 
 .project-toggle-link:hover,
-.congress-link-cta:hover,
-.project-link-cta:hover {
+.project-toggle-link:hover {
     text-decoration: underline;
 }
 
@@ -2605,12 +2617,33 @@ footer {
 .project-collapsible-title {
     margin-top: 0;
     color: var(--primary);
-    cursor: pointer;
 }
 
-.project-collapsible-title i {
+.project-collapsible-trigger {
+    display: inline-flex;
+    align-items: center;
+    background: transparent;
+    border: 0;
+    color: var(--primary);
+    cursor: pointer;
+    font: inherit;
+    font-weight: 600;
+    padding: 0;
+}
+
+.project-collapsible-trigger:focus-visible {
+    outline: 3px solid var(--accent);
+    outline-offset: 3px;
+}
+
+.project-collapsible-trigger i {
     margin-right: 6px;
     font-size: 0.8rem;
+    transition: transform 0.2s ease;
+}
+
+.project-collapsible-trigger[aria-expanded="true"] i {
+    transform: rotate(180deg);
 }
 
 .project-collapsible-list {
@@ -2639,11 +2672,19 @@ footer {
 .project-links {
     gap: 12px;
     margin-top: 18px;
+    justify-content: center;
+}
+
+.project-links .button,
+.congress-links .button {
+    padding: 9px 14px;
+    font-size: 0.9rem;
 }
 
 .congress-links {
     gap: 12px;
     margin-top: 14px;
+    justify-content: center;
 }
 
 .congress-badge-row {
@@ -2735,7 +2776,10 @@ footer {
 
 @media (max-width: 960px) {
     .projects-page-container,
-    .publications-container {
+    .publications-container,
+    .cv-container,
+    .social-container,
+    .events-container {
         flex-direction: column;
         gap: 16px;
     }
@@ -2743,7 +2787,10 @@ footer {
     .site-sidebar,
     .projects-sidebar,
     .publications-sidebar,
-    .congresses-sidebar {
+    .congresses-sidebar,
+    .cv-sidebar,
+    .social-sidebar,
+    .events-sidebar {
         position: static;
         top: auto;
         width: 100%;
@@ -2752,7 +2799,10 @@ footer {
     }
 
     .projects-main-content,
-    .publications-content {
+    .publications-content,
+    .cv-content,
+    .social-content,
+    .events-content {
         width: 100%;
     }
 
@@ -2792,11 +2842,11 @@ footer {
     }
 
     .page {
-        max-width: 1240px;
+        max-width: calc(var(--layout-content-max) + 40px);
     }
 
     .home-container {
-        max-width: 1320px;
+        max-width: calc(var(--layout-content-max) + 80px);
         padding-top: 44px;
         padding-bottom: 124px;
     }
@@ -2805,7 +2855,7 @@ footer {
     .publications-container,
     .cv-container,
     .social-container {
-        max-width: 1680px;
+        max-width: calc(var(--layout-sidebar-max) + 120px);
         gap: 40px;
         padding-top: 30px;
         padding-bottom: 124px;
@@ -2845,14 +2895,14 @@ footer {
 
     .home-container,
     .page {
-        max-width: 1400px;
+        max-width: calc(var(--layout-content-max) + 120px);
     }
 
     .projects-page-container,
     .publications-container,
     .cv-container,
     .social-container {
-        max-width: 1840px;
+        max-width: calc(var(--layout-sidebar-max) + 160px);
     }
 
     .site-sidebar {

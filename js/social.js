@@ -19,7 +19,7 @@ function setupSocialNavigation() {
     });
 }
 
-const { escapeHtml, safeUrl } = window.SiteUtils;
+const { escapeHtml, safeUrl, fetchJson } = window.SiteUtils;
 
 // Fetch GitHub user information
 const GITHUB_PROFILE_CACHE_KEY = 'gruncrow:github-profile';
@@ -47,6 +47,14 @@ function writeCachedJson(cacheKey, value) {
     } catch {
         // Ignore cache write errors (private mode/quota)
     }
+}
+
+function runWhenIdle(task) {
+    if (typeof window.requestIdleCallback === 'function') {
+        window.requestIdleCallback(() => task(), { timeout: 1800 });
+        return;
+    }
+    window.setTimeout(task, 300);
 }
 
 function renderGitHubUser(user) {
@@ -110,7 +118,7 @@ function renderGitHubFallback() {
                     <li><strong>Interests:</strong> Open Source, Ecology Tech, Deep Learning</li>
                 </ul>
             </div>
-            <a href="https://github.com/GrunCrow" target="_blank" rel="noopener noreferrer" class="github-profile-btn">
+            <a href="https://github.com/GrunCrow" target="_blank" rel="noopener noreferrer" class="button secondary-button small-button">
                 <i class="fab fa-github"></i> Visit GitHub Profile
             </a>
         </div>
@@ -125,11 +133,7 @@ async function loadGitHubInfo() {
     }
 
     try {
-        const res = await fetch('https://api.github.com/users/GrunCrow');
-        if (!res.ok) {
-            throw new Error(`GitHub API request failed (${res.status})`);
-        }
-        const user = await res.json();
+        const user = await fetchJson('https://api.github.com/users/GrunCrow', 'GitHub profile');
         if (!user || typeof user !== 'object' || !user.login) {
             throw new Error('GitHub API returned an invalid profile payload');
         }
@@ -141,7 +145,17 @@ async function loadGitHubInfo() {
     }
 }
 
-document.addEventListener('DOMContentLoaded', () => {
+const runOnReady = window.SiteUtils && typeof window.SiteUtils.onReady === 'function'
+    ? window.SiteUtils.onReady
+    : (task) => {
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', task, { once: true });
+            return;
+        }
+        task();
+    };
+
+runOnReady(() => {
     setupSocialNavigation();
-    loadGitHubInfo();
+    runWhenIdle(loadGitHubInfo);
 });

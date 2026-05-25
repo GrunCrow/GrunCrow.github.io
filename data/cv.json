@@ -26,6 +26,7 @@
     {
       "id": "cv4ecology-instructor",
       "position": "CV4Ecology 2026 Instructor",
+      "link": "https://cv4ecology.csail.mit.edu",
       "organization": "Smithsonian Conservation Biology Institute",
       "startDate": "January 10, 2026",
       "endDate": "January 31, 2026",
@@ -180,6 +181,7 @@
     {
       "id": "cv4ecology",
       "title": "cv4ecology: Computer Vision Methods for Ecology",
+      "link": "https://cv4ecology.csail.mit.edu",
       "institution": "Caltech, California, USA",
       "startDate": "Aug 2023",
       "endDate": "Sep 2023",

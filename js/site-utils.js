@@ -1,4 +1,62 @@
 (function () {
+    const scrollSubscribers = new Set();
+    let scrollListenerAttached = false;
+    let scrollTicking = false;
+
+    function notifyScrollSubscribers() {
+        scrollTicking = false;
+        scrollSubscribers.forEach((subscriber) => {
+            try {
+                subscriber();
+            } catch (error) {
+                console.error('Scroll subscriber failed', error);
+            }
+        });
+    }
+
+    function ensureSharedScrollListener() {
+        if (scrollListenerAttached) return;
+        scrollListenerAttached = true;
+
+        window.addEventListener('scroll', () => {
+            if (scrollTicking) return;
+            scrollTicking = true;
+            window.requestAnimationFrame(notifyScrollSubscribers);
+        }, { passive: true });
+    }
+
+    function onReady(task) {
+        if (typeof task !== 'function') return;
+
+        if (window.SiteBootstrap && typeof window.SiteBootstrap.register === 'function') {
+            window.SiteBootstrap.register(task);
+            return;
+        }
+
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', task, { once: true });
+            return;
+        }
+
+        task();
+    }
+
+    function onScrollFrame(callback, options) {
+        if (typeof callback !== 'function') return function cleanup() {};
+
+        const { runOnInit = true } = options || {};
+        ensureSharedScrollListener();
+        scrollSubscribers.add(callback);
+
+        if (runOnInit) {
+            callback();
+        }
+
+        return function cleanup() {
+            scrollSubscribers.delete(callback);
+        };
+    }
+
     function escapeHtml(value) {
         return String(value ?? '')
             .replace(/&/g, '&amp;')
@@ -36,9 +94,37 @@
         }
     }
 
+    function normalizeImageAsset(asset, fallbackAlt = 'Image') {
+        const defaultAlt = String(fallbackAlt ?? 'Image');
+
+        if (typeof asset === 'string') {
+            const url = safeUrl(asset);
+            return url ? { url, alt: defaultAlt } : null;
+        }
+
+        if (!asset || typeof asset !== 'object') {
+            return null;
+        }
+
+        const source = asset.src || asset.url || asset.path || '';
+        const url = safeUrl(source);
+        if (!url) return null;
+
+        const alt = String(asset.alt || defaultAlt);
+        return { url, alt };
+    }
+
     function truncate(text, max = 52) {
         const raw = String(text ?? '');
         return raw.length > max ? raw.slice(0, max) + '…' : raw;
+    }
+
+    async function fetchJson(url, context = 'JSON resource') {
+        const response = await fetch(url);
+        if (!response.ok) {
+            throw new Error(`Failed to load ${context}: ${response.status} ${response.statusText}`);
+        }
+        return response.json();
     }
 
     function initScrollSpy(options) {
@@ -79,24 +165,14 @@
             return current;
         }
 
-        let ticking = false;
         const onScroll = function () {
-            if (ticking) return;
-            ticking = true;
-            window.requestAnimationFrame(() => {
-                updateActive(getCurrentSectionId());
-                ticking = false;
-            });
+            updateActive(getCurrentSectionId());
         };
 
-        window.addEventListener('scroll', onScroll, { passive: true });
-
-        if (runOnInit) {
-            updateActive(getCurrentSectionId());
-        }
+        const cleanupScroll = onScrollFrame(onScroll, { runOnInit: runOnInit });
 
         return function cleanup() {
-            window.removeEventListener('scroll', onScroll);
+            cleanupScroll();
         };
     }
 
@@ -104,7 +180,11 @@
         escapeHtml,
         safeId,
         safeUrl,
+        normalizeImageAsset,
         truncate,
+        fetchJson,
+        onReady,
+        onScrollFrame,
         initScrollSpy
     };
 })();

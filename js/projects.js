@@ -1,4 +1,4 @@
-const { escapeHtml, safeId, safeUrl, truncate, initScrollSpy } = window.SiteUtils;
+const { escapeHtml, safeId, safeUrl, normalizeImageAsset, truncate, fetchJson, initScrollSpy, onReady } = window.SiteUtils;
 
 async function loadProjects() {
     const container = document.getElementById('projects-container');
@@ -6,8 +6,7 @@ async function loadProjects() {
     if (!container) return;
 
     try {
-        const res = await fetch('data/projects.json');
-        const items = await res.json();
+        const items = await fetchJson('data/projects.json', 'projects data');
 
         const research = items.filter(p => p.type === 'research');
         const personal = items.filter(p => p.type === 'personal');
@@ -69,8 +68,8 @@ function renderProject(proj) {
     const images = proj.images && proj.images.length
         ? `<div class="project-images project-images-rectangles">
                 ${proj.images.map(img => {
-                    const imageUrl = safeUrl(img);
-                    return imageUrl ? `<img src="${imageUrl}" alt="${escapeHtml(proj.title)}" loading="lazy">` : '';
+                    const imageAsset = normalizeImageAsset(img, proj.title);
+                    return imageAsset ? `<img src="${imageAsset.url}" alt="${escapeHtml(imageAsset.alt)}" loading="lazy" decoding="async">` : '';
                 }).join('')}
            </div>` : '';
 
@@ -93,19 +92,23 @@ function renderProject(proj) {
     // Objectives with "read more"
     const objectives = proj.objectives && proj.objectives.length
         ? `<div class="project-collapsible-section">
-                <h4 class="project-collapsible-title" data-toggle-target="obj-${projectId}">
-                    <i class="fas fa-chevron-down"></i>Objectives
+                <h4 class="project-collapsible-title">
+                    <button type="button" class="project-collapsible-trigger" data-toggle-target="obj-${projectId}" aria-expanded="false" aria-controls="obj-${projectId}">
+                        <i class="fas fa-chevron-down" aria-hidden="true"></i>Objectives
+                    </button>
                 </h4>
-                <ol id="obj-${projectId}" class="project-collapsible-list project-hidden">${proj.objectives.map(o => `<li class="project-collapsible-item">${escapeHtml(o)}</li>`).join('')}</ol>
+                <ol id="obj-${projectId}" class="project-collapsible-list project-hidden" hidden>${proj.objectives.map(o => `<li class="project-collapsible-item">${escapeHtml(o)}</li>`).join('')}</ol>
            </div>` : '';
 
     // Tasks with "read more"
     const tasks = proj.tasks && proj.tasks.length
         ? `<div class="project-collapsible-section">
-                <h4 class="project-collapsible-title" data-toggle-target="task-${projectId}">
-                    <i class="fas fa-chevron-down"></i>Contributions
+                <h4 class="project-collapsible-title">
+                    <button type="button" class="project-collapsible-trigger" data-toggle-target="task-${projectId}" aria-expanded="false" aria-controls="task-${projectId}">
+                        <i class="fas fa-chevron-down" aria-hidden="true"></i>Contributions
+                    </button>
                 </h4>
-                <ul id="task-${projectId}" class="project-collapsible-list project-hidden">${proj.tasks.map(t => `<li class="project-collapsible-item">${escapeHtml(t)}</li>`).join('')}</ul>
+                <ul id="task-${projectId}" class="project-collapsible-list project-hidden" hidden>${proj.tasks.map(t => `<li class="project-collapsible-item">${escapeHtml(t)}</li>`).join('')}</ul>
            </div>` : '';
 
     const tags = proj.tags && proj.tags.length
@@ -121,7 +124,7 @@ function renderProject(proj) {
                                : link.type === 'pdf' ? 'far fa-file-pdf'
                                : 'fas fa-external-link-alt';
                     if (!linkUrl) return '';
-                    return `<a href="${linkUrl}" target="_blank" rel="noopener noreferrer" class="project-link-cta"><i class="${icon}"></i> ${escapeHtml(link.label || 'Link')}</a>`;
+                    return `<a href="${linkUrl}" target="_blank" rel="noopener noreferrer" class="button secondary-button small-button"><i class="${icon}"></i> ${escapeHtml(link.label || 'Link')}</a>`;
                 }).join('')}
            </div>` : '';
 
@@ -172,21 +175,23 @@ function setupProjectInteractions(container) {
             return;
         }
 
-        const headingToggle = event.target.closest('[data-toggle-target]');
+        const headingToggle = event.target.closest('.project-collapsible-trigger[data-toggle-target]');
         if (!headingToggle) return;
 
         const target = document.getElementById(headingToggle.dataset.toggleTarget);
         if (!target) return;
 
-        const currentlyHidden = target.classList.contains('project-hidden') || getComputedStyle(target).display === 'none';
+        const currentlyHidden = target.classList.contains('project-hidden') || target.hasAttribute('hidden') || getComputedStyle(target).display === 'none';
         if (currentlyHidden) {
-            target.style.display = '';
+            target.hidden = false;
             target.classList.remove('project-hidden');
+            headingToggle.setAttribute('aria-expanded', 'true');
         } else {
-            target.style.display = 'none';
+            target.hidden = true;
             target.classList.add('project-hidden');
+            headingToggle.setAttribute('aria-expanded', 'false');
         }
     });
 }
 
-document.addEventListener('DOMContentLoaded', loadProjects);
+onReady(loadProjects);

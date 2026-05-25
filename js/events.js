@@ -1,4 +1,4 @@
-const { escapeHtml, safeId, safeUrl, initScrollSpy } = window.SiteUtils;
+const { escapeHtml, safeId, safeUrl, normalizeImageAsset, fetchJson, initScrollSpy, onReady } = window.SiteUtils;
 
 function asArray(value) {
     return Array.isArray(value) ? value : [];
@@ -11,6 +11,69 @@ function safeLinkOrNull(value) {
 
 function getEventTitle(event) {
     return String(event?.title || 'Untitled event');
+}
+
+function eventDateToIso(dateValue) {
+    if (!dateValue) return null;
+    const parsed = new Date(String(dateValue));
+    if (Number.isNaN(parsed.getTime())) return null;
+    return parsed.toISOString();
+}
+
+function injectEventsStructuredData(events) {
+    const scriptId = 'events-jsonld';
+    const existing = document.getElementById(scriptId);
+    if (existing) {
+        existing.remove();
+    }
+
+    const graph = asArray(events).map((event) => {
+        const title = getEventTitle(event);
+        const eventUrl = safeLinkOrNull(event.link) || `${window.location.origin}${window.location.pathname}#event-${safeId(event.id || title)}`;
+        const payload = {
+            '@type': 'Event',
+            name: title,
+            description: String(event.description || ''),
+            url: eventUrl,
+            eventStatus: 'https://schema.org/EventScheduled'
+        };
+
+        const isoDate = eventDateToIso(event.date);
+        if (isoDate) {
+            payload.startDate = isoDate;
+        }
+
+        const locationType = String(event.locationType || '').toLowerCase();
+        payload.location = locationType === 'online'
+            ? {
+                '@type': 'VirtualLocation',
+                url: eventUrl
+            }
+            : {
+                '@type': 'Place',
+                name: String(event.location || 'In-person event')
+            };
+
+        if (event.organizer) {
+            payload.organizer = {
+                '@type': 'Organization',
+                name: String(event.organizer)
+            };
+        }
+
+        return payload;
+    });
+
+    if (graph.length === 0) return;
+
+    const script = document.createElement('script');
+    script.id = scriptId;
+    script.type = 'application/ld+json';
+    script.text = JSON.stringify({
+        '@context': 'https://schema.org',
+        '@graph': graph
+    });
+    document.head.appendChild(script);
 }
 
 function normalizeEventType(type) {
@@ -59,9 +122,9 @@ async function loadEvents() {
     if (!container) return;
     
     try {
-        const res = await fetch('data/events.json');
-        const events = asArray(await res.json());
+        const events = asArray(await fetchJson('data/events.json', 'events data'));
         logMalformedEventAssets(events);
+        injectEventsStructuredData(events);
         
         container.innerHTML = `
             <h2 id="events-section"><i class="fas fa-microphone section-title-icon"></i> Talks & Events</h2>
@@ -107,12 +170,12 @@ function renderEvent(event) {
         : '';
 
     const validImages = asArray(event.images)
-        .map((img) => safeLinkOrNull(img))
+        .map((img) => normalizeImageAsset(img, title))
         .filter(Boolean);
     
     const imagesHtml = validImages.length > 0 ? `
         <div class="project-images project-images-rectangles">
-            ${validImages.map((imageUrl) => `<img src="${imageUrl}" alt="${escapeHtml(title)}">`).join('')}
+            ${validImages.map((imageAsset) => `<img src="${imageAsset.url}" alt="${escapeHtml(imageAsset.alt)}" loading="lazy" decoding="async">`).join('')}
         </div>
     ` : '';
 
@@ -133,7 +196,7 @@ function renderEvent(event) {
 
     const videoButtonHtml = videoLink ? `
         <div class="event-video-button">
-            <a href="${videoLink}" target="_blank" rel="noopener noreferrer" class="btn-primary">
+            <a href="${videoLink}" target="_blank" rel="noopener noreferrer" class="button secondary-button small-button">
                 <i class="fab fa-youtube"></i> Watch Video
             </a>
         </div>
@@ -172,4 +235,4 @@ function renderEvent(event) {
     `;
 }
 
-document.addEventListener('DOMContentLoaded', loadEvents);
+onReady(loadEvents);

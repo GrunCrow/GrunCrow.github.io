@@ -1,4 +1,4 @@
-const { escapeHtml, safeId, safeUrl, truncate, initScrollSpy } = window.SiteUtils;
+const { escapeHtml, safeId, safeUrl, normalizeImageAsset, truncate, fetchJson, initScrollSpy, onReady } = window.SiteUtils;
 
 function asArray(value) {
     return Array.isArray(value) ? value : [];
@@ -43,8 +43,7 @@ async function loadCongresses() {
     if (!container) return;
 
     try {
-        const res = await fetch('data/congresses.json');
-        const items = asArray(await res.json());
+        const items = asArray(await fetchJson('data/congresses.json', 'congresses data'));
         logMalformedCongressAssets(items);
 
         const featured = items.filter(c => c.featured);
@@ -126,7 +125,7 @@ function renderCongress(congress) {
         : '';
 
     const validImages = asArray(congress.images)
-        .map((img) => safeLinkOrNull(img))
+        .map((img) => normalizeImageAsset(img, title))
         .filter(Boolean);
 
     const allLinks = asArray(congress.links)
@@ -156,7 +155,7 @@ function renderCongress(congress) {
                                : link.type === 'web' ? 'fas fa-link'
                                : link.type === 'video' ? 'fas fa-video'
                                : 'fas fa-external-link-alt';
-                    return `<a href="${link.url}" target="_blank" rel="noopener noreferrer" class="congress-link-cta"><i class="${icon}"></i> ${escapeHtml(link.label)}</a>`;
+                    return `<a href="${link.url}" target="_blank" rel="noopener noreferrer" class="button secondary-button small-button"><i class="${icon}"></i> ${escapeHtml(link.label)}</a>`;
                 }).join('')}
            </div>` : '';
 
@@ -180,7 +179,7 @@ function renderCongress(congress) {
         
         const otherImagesHTML = otherImages.length > 0
             ? `<div class="project-images project-images-rectangles">
-                    ${otherImages.map((imageUrl) => `<img src="${imageUrl}" alt="${escapeHtml(title)}" loading="lazy">`).join('')}
+                    ${otherImages.map((imageAsset) => `<img src="${imageAsset.url}" alt="${escapeHtml(imageAsset.alt)}" loading="lazy" decoding="async">`).join('')}
                </div>`
             : '';
 
@@ -212,13 +211,13 @@ function renderCongress(congress) {
                     <div class="congress-poster-col">
                         ${posterPdfLink 
                             ? `<a href="${posterPdfLink.url}" target="_blank" rel="noopener noreferrer" class="congress-poster-link">
-                                    <img src="${posterImage}" alt="${escapeHtml(title)} Poster" loading="lazy" 
+                                     <img src="${posterImage.url}" alt="${escapeHtml(posterImage.alt || `${title} Poster`)}" loading="lazy" decoding="async"
                                          class="congress-poster-img">
                                     <div class="congress-poster-caption">
                                         <i class="far fa-file-pdf"></i> Click to view full poster
                                     </div>
                                </a>`
-                            : `<img src="${posterImage}" alt="${escapeHtml(title)} Poster" loading="lazy" 
+                                : `<img src="${posterImage.url}" alt="${escapeHtml(posterImage.alt || `${title} Poster`)}" loading="lazy" decoding="async"
                                     class="congress-poster-img">`
                         }
                     </div>
@@ -230,7 +229,7 @@ function renderCongress(congress) {
         // Oral presentation layout: normal flow
         const images = validImages.length > 0
             ? `<div class="project-images project-images-rectangles">
-                    ${validImages.map((imageUrl) => `<img src="${imageUrl}" alt="${escapeHtml(title)}" loading="lazy">`).join('')}
+                    ${validImages.map((imageAsset) => `<img src="${imageAsset.url}" alt="${escapeHtml(imageAsset.alt)}" loading="lazy" decoding="async">`).join('')}
                </div>` : '';
 
         return `
@@ -279,4 +278,4 @@ function setupCongressInteractions(container) {
     });
 }
 
-document.addEventListener('DOMContentLoaded', loadCongresses);
+onReady(loadCongresses);

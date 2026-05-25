@@ -7,6 +7,42 @@ if (linkedinEl && typeof linkedin !== 'undefined') linkedinEl.href = linkedin;
 if (twitterEl && typeof twitter !== 'undefined') twitterEl.href = twitter;
 if (githubEl && typeof github !== 'undefined') githubEl.href = github;
 
+(function initBootstrap() {
+    if (window.SiteBootstrap && typeof window.SiteBootstrap.register === 'function') return;
+
+    const tasks = [];
+    let hasRun = false;
+
+    const run = () => {
+        if (hasRun) return;
+        hasRun = true;
+        tasks.forEach((task) => {
+            try {
+                task();
+            } catch (error) {
+                console.error('Startup task failed', error);
+            }
+        });
+    };
+
+    window.SiteBootstrap = {
+        register(task) {
+            if (typeof task !== 'function') return;
+            tasks.push(task);
+
+            if (document.readyState !== 'loading') {
+                run();
+            }
+        }
+    };
+
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', run, { once: true });
+    } else {
+        run();
+    }
+})();
+
 function initHeaderScrollEffect() {
     const header = document.querySelector('header');
     if (!header) return;
@@ -18,6 +54,15 @@ function initHeaderScrollEffect() {
             header.classList.remove('scrolled');
         }
     };
+
+    const onScrollFrame = window.SiteUtils && typeof window.SiteUtils.onScrollFrame === 'function'
+        ? window.SiteUtils.onScrollFrame
+        : null;
+
+    if (onScrollFrame) {
+        onScrollFrame(updateHeaderState, { runOnInit: true });
+        return;
+    }
 
     updateHeaderState();
     window.addEventListener('scroll', updateHeaderState, { passive: true });
@@ -51,7 +96,7 @@ function initBackToTop() {
     });
 }
 
-document.addEventListener('DOMContentLoaded', () => {
+window.SiteBootstrap.register(() => {
     initHeaderScrollEffect();
     initActiveTopNav();
     initBackToTop();

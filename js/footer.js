@@ -8,11 +8,19 @@ async function injectFooter() {
 
         initObfuscatedEmail();
         
-        // Fetch and display last updated date
-        fetchLastUpdated();
+        // Defer non-critical metadata fetch so content stays interactive sooner.
+        runWhenIdle(fetchLastUpdated);
     } catch (e) {
         console.error('Footer load failed', e);
     }
+}
+
+function runWhenIdle(task) {
+    if (typeof window.requestIdleCallback === 'function') {
+        window.requestIdleCallback(() => task(), { timeout: 1500 });
+        return;
+    }
+    window.setTimeout(task, 250);
 }
 
 const LAST_UPDATED_CACHE_KEY = 'gruncrow:last-updated';
@@ -73,8 +81,12 @@ async function fetchLastUpdated() {
     }
 
     try {
-        const response = await fetch('https://api.github.com/repos/GrunCrow/GrunCrow.github.io/commits?per_page=1');
-        const data = await response.json();
+        const fetchJson = window.SiteUtils && typeof window.SiteUtils.fetchJson === 'function'
+            ? window.SiteUtils.fetchJson
+            : null;
+        const data = fetchJson
+            ? await fetchJson('https://api.github.com/repos/GrunCrow/GrunCrow.github.io/commits?per_page=1', 'repository commits')
+            : await (await fetch('https://api.github.com/repos/GrunCrow/GrunCrow.github.io/commits?per_page=1')).json();
         
         if (data && data.length > 0) {
             const lastCommitDate = new Date(data[0].commit.author.date);
@@ -92,4 +104,10 @@ async function fetchLastUpdated() {
     }
 }
 
-document.addEventListener('DOMContentLoaded', injectFooter);
+if (window.SiteUtils && typeof window.SiteUtils.onReady === 'function') {
+    window.SiteUtils.onReady(injectFooter);
+} else if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', injectFooter, { once: true });
+} else {
+    injectFooter();
+}

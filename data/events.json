@@ -14,6 +14,7 @@
         "id": "cv4ecology-2026",
         "title": "CV4Ecology 2026: Computer Vision for Ecology Workshop",
         "type": "workshop",
+        "link": "https://cv4ecology.csail.mit.edu",
         "organizer": "Smithsonian Conservation Biology Institute",
         "speakers": "Alba Márquez-Rodríguez (Instructor)",
         "date": "January 10th - 31st, 2026",
@@ -21,8 +22,14 @@
         "locationType": "in-person",
         "description": "As an instructor at CV4Ecology 2026, I delivered the lecture \"What's Next? Rules of Thumb for Improving Results\" and provided specialized training in ecological data analysis with artificial intelligence. Over three intensive weeks, participants shared ideas, code, and thoughtful discussions on the challenges of processing diverse types of ecological data. The workshop explored a rich variety of ecological problems and data types, from acoustic monitoring to camera trap imagery and multisensor approaches. Participants collaborated on real-world conservation challenges and built practical skills for implementing AI-driven solutions in biodiversity monitoring.",
         "images": [
-            "images/events/cv4e/_DSC0195.JPG",
-            "images/events/cv4e/_DSC0295.JPG"
+            {
+                "src": "images/events/cv4e/_DSC0195.JPG",
+                "alt": "CV4Ecology workshop participants during in-person training session"
+            },
+            {
+                "src": "images/events/cv4e/_DSC0295.JPG",
+                "alt": "Presentation slide and audience interaction at CV4Ecology 2026"
+            }
         ]
     },
     {

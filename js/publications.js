@@ -1,4 +1,4 @@
-const { escapeHtml, safeId, safeUrl, initScrollSpy } = window.SiteUtils;
+const { escapeHtml, safeId, safeUrl, normalizeImageAsset, fetchJson, initScrollSpy, onReady } = window.SiteUtils;
 
 function getPublicationTitle(pub) {
     return String(pub?.title || 'Untitled publication');
@@ -24,6 +24,72 @@ function logMalformedPublicationAssets(items) {
     }
 }
 
+function splitAuthors(authorsValue) {
+    return String(authorsValue || '')
+        .split(',')
+        .map((author) => author.trim())
+        .filter(Boolean);
+}
+
+function publicationDateToIso(dateValue) {
+    if (!dateValue) return null;
+    const parsed = new Date(String(dateValue));
+    if (Number.isNaN(parsed.getTime())) return null;
+    return parsed.toISOString();
+}
+
+function injectPublicationsStructuredData(items) {
+    const scriptId = 'publications-jsonld';
+    const existing = document.getElementById(scriptId);
+    if (existing) {
+        existing.remove();
+    }
+
+    const listElements = items.map((pub, index) => {
+        const title = getPublicationTitle(pub);
+        const doiUrl = safeUrl(pub.doi);
+        const publication = {
+            '@type': 'ScholarlyArticle',
+            headline: title,
+            description: String(pub.abstract || ''),
+            isPartOf: pub.journal ? {
+                '@type': 'Periodical',
+                name: String(pub.journal)
+            } : undefined,
+            author: splitAuthors(pub.authors).map((name) => ({ '@type': 'Person', name })),
+            url: doiUrl || `${window.location.origin}${window.location.pathname}#publication-${safeId(pub.id || title)}`
+        };
+
+        const publishedDate = publicationDateToIso(pub.date);
+        if (publishedDate) {
+            publication.datePublished = publishedDate;
+        }
+
+        if (doiUrl) {
+            publication.sameAs = doiUrl;
+            publication.identifier = doiUrl;
+        }
+
+        return {
+            '@type': 'ListItem',
+            position: index + 1,
+            item: publication
+        };
+    });
+
+    if (listElements.length === 0) return;
+
+    const script = document.createElement('script');
+    script.id = scriptId;
+    script.type = 'application/ld+json';
+    script.text = JSON.stringify({
+        '@context': 'https://schema.org',
+        '@type': 'ItemList',
+        itemListElement: listElements
+    });
+    document.head.appendChild(script);
+}
+
 async function loadPublications() {
     const container = document.getElementById('publications-list');
     const featuredContainer = document.getElementById('featured-publications');
@@ -31,9 +97,9 @@ async function loadPublications() {
     if (!container) return;
     
     try {
-        const res = await fetch('data/publications.json');
-        const items = await res.json();
+        const items = await fetchJson('data/publications.json', 'publications data');
         logMalformedPublicationAssets(items);
+        injectPublicationsStructuredData(items);
         
         const featured = items.filter(pub => pub.featured);
         
@@ -100,11 +166,11 @@ function renderPublication(pub, isFeatured) {
     const pubId = safeId(pub.id);
     const title = getPublicationTitle(pub);
     const doiUrl = safeUrl(pub.doi);
-    const imageUrl = safeUrl(pub.image);
+    const imageAsset = normalizeImageAsset(pub.image, title);
     let authors = pub.authors || '';
     authors = escapeHtml(authors).replace(/(Alba Márquez-Rodríguez|A\. Márquez-Rodríguez|A\. Márquez Rodríguez|Alba Márquez Rodríguez)/gi, '<strong>$1</strong>');
     
-    const imageHtml = imageUrl ? `<img src="${imageUrl}" alt="${escapeHtml(title)}" class="pub-image">` : '';
+    const imageHtml = imageAsset ? `<img src="${imageAsset.url}" alt="${escapeHtml(imageAsset.alt)}" class="pub-image" loading="lazy" decoding="async">` : '';
     
     // Determine publication type and status badges
     const type = pub.type || 'journal';
@@ -158,10 +224,10 @@ function renderPublication(pub, isFeatured) {
         ${authors ? `<div class="pub-authors"><strong>Authors:</strong> ${authors}</div>` : ''}
         ${abstractHtml}
         <div class="pub-links">
-            ${doiUrl ? `<a href="${doiUrl}" target="_blank" rel="noopener noreferrer" class="pub-link"><i class="fas fa-external-link-alt"></i> View Paper</a>` : ''}
+            ${doiUrl ? `<a href="${doiUrl}" target="_blank" rel="noopener noreferrer" class="button secondary-button small-button"><i class="fas fa-external-link-alt"></i> View Paper</a>` : ''}
         </div>
     </section>
     `;
 }
 
-document.addEventListener('DOMContentLoaded', loadPublications);
+onReady(loadPublications);

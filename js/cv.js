@@ -1,4 +1,4 @@
-const { escapeHtml, safeUrl, initScrollSpy } = window.SiteUtils;
+const { escapeHtml, safeUrl, fetchJson, initScrollSpy, onReady } = window.SiteUtils;
 
 function asArray(value) {
     return Array.isArray(value) ? value : [];
@@ -11,8 +11,7 @@ function safeLinkOrNull(value) {
 
 async function loadCV() {
     try {
-        const res = await fetch('data/cv.json');
-        const cv = await res.json();
+        const cv = await fetchJson('data/cv.json', 'cv data');
 
         // Load profile
         loadProfile(cv.profile);
@@ -86,8 +85,12 @@ function loadExperience(items) {
 function renderExperienceEntry(item) {
     const pillClass = getPillClass(item.isPresent);
     const pill = `<span class="${pillClass}"><i class="fas fa-calendar-alt"></i> ${item.startDate} - ${item.endDate}</span>`;
+    const positionLink = safeLinkOrNull(item?.link);
     const projectTitle = item?.project?.title || '';
     const projectLink = safeLinkOrNull(item?.project?.link);
+    const position = positionLink
+        ? `<a href="${positionLink}" target="_blank" rel="noopener noreferrer">${escapeHtml(item.position)}</a>`
+        : escapeHtml(item.position);
     
     const project = item.project
         ? `<p class="cv-project"><strong>Project:</strong> ${projectLink ? `<a href="${projectLink}">${escapeHtml(projectTitle)}</a>` : escapeHtml(projectTitle)}</p>`
@@ -104,7 +107,7 @@ function renderExperienceEntry(item) {
         <div class="cv-entry ${item.featured ? 'featured-card' : ''}">
             <div class="cv-entry-header">
                 <div>
-                    <h3>${escapeHtml(item.position)}</h3>
+                    <h3>${position}</h3>
                     <p class="cv-organization">${escapeHtml(item.organization)}</p>
                 </div>
                 <div class="cv-period">${pill}${metaPills}</div>
@@ -157,6 +160,10 @@ function loadCertifications(items) {
 function renderCertificationEntry(item) {
     const pillClass = getPillClass(item.isPresent);
     const pill = `<span class="${pillClass}"><i class="fas fa-certificate"></i> ${item.startDate} - ${item.endDate}</span>`;
+    const titleLink = safeLinkOrNull(item?.link);
+    const title = titleLink
+        ? `<a href="${titleLink}" target="_blank" rel="noopener noreferrer">${escapeHtml(item.title)}</a>`
+        : escapeHtml(item.title);
     
     const description = item.description
         ? `<p class="cv-description">${escapeHtml(item.description)}</p>`
@@ -177,7 +184,7 @@ function renderCertificationEntry(item) {
         <div class="cv-entry">
             <div class="cv-entry-header">
                 <div>
-                    <h3>${escapeHtml(item.title)}</h3>
+                    <h3>${title}</h3>
                     <p class="cv-organization">${escapeHtml(item.institution)}</p>
                 </div>
                 <div class="cv-period">${pill}${metaPills}</div>
@@ -211,8 +218,7 @@ async function loadPublicationsSummary() {
     if (!container) return;
 
     try {
-        const res = await fetch('data/publications.json');
-        const publications = await res.json();
+        const publications = await fetchJson('data/publications.json', 'publications data');
 
         const recent = asArray(publications).slice(0, 5);
 
@@ -283,4 +289,4 @@ function renderVolunteeringEntry(item) {
     `;
 }
 
-document.addEventListener('DOMContentLoaded', loadCV);
+onReady(loadCV);

@@ -18,7 +18,10 @@
       "Communication and dissemination of project results through scientific reports, presentations at conferences and specialized publications."
     ],
     "images": [
-      "images/photos/field_work/cadiz/boat_strait.png"
+      {
+        "src": "images/photos/field_work/cadiz/boat_strait.png",
+        "alt": "Fieldwork boat in the Strait of Gibraltar during SEANIMALMOVE monitoring campaign"
+      }
     ],
     "links": [
       {"type": "github", "url": "https://github.com/SEANIMALMOVE", "label": "GitHub Organization"}
@@ -43,8 +46,14 @@
       "Collaboration with an interdisciplinary ecology and computer science team."
     ],
     "images": [
-      "images/photos/field_work/donana/birders.png",
-      "images/photos/field_work/donana/indoor_donana.png"
+      {
+        "src": "images/photos/field_work/donana/birders.png",
+        "alt": "Bird monitoring team in Doñana fieldwork session"
+      },
+      {
+        "src": "images/photos/field_work/donana/indoor_donana.png",
+        "alt": "Indoor workflow setup for Doñana bioacoustic data processing"
+      }
     ],
     "links": [
       {"type": "github", "url": "https://github.com/BIRDeepORG", "label": "GitHub Organization"},
