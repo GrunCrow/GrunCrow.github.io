@@ -58,6 +58,37 @@ body {
     color: var(--text);
 }
 
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+img,
+svg,
+video,
+canvas,
+iframe {
+    max-width: 100%;
+}
+
+body,
+main,
+section,
+.card {
+    min-width: 0;
+}
+
+p,
+li,
+a,
+h1,
+h2,
+h3,
+h4 {
+    overflow-wrap: anywhere;
+}
+
 .skip-to-content {
     position: absolute;
     left: -9999px;
@@ -303,6 +334,39 @@ nav ul li a:focus-visible {
     }
 }
 
+@media (max-width: 520px) {
+    header {
+        gap: 10px;
+        padding: 12px;
+    }
+
+    nav ul {
+        gap: 8px;
+    }
+
+    nav ul li a {
+        font-size: 0.8rem;
+        padding: 6px 8px;
+    }
+
+    .page,
+    .home-container,
+    .projects-page-container,
+    .publications-container,
+    .cv-container,
+    .social-container {
+        padding-left: 12px;
+        padding-right: 12px;
+    }
+
+    .card,
+    .social-platform-card,
+    .cv-entry,
+    .project-box {
+        padding: 16px;
+    }
+}
+
 /* Style for publications.html div 
 #sections div {
     background-color: #f9f9f9;
@@ -312,6 +376,7 @@ nav ul li a:focus-visible {
 
 .page {
     max-width: 1100px;
+    width: 100%;
     margin: 0 auto;
     padding: 24px 16px 96px;
 }
@@ -764,6 +829,7 @@ img {
     display: flex;
     gap: 32px;
     max-width: 1400px;
+    width: 100%;
     margin: 0 auto;
     padding: 24px 16px 96px;
 }
@@ -1036,6 +1102,7 @@ img {
 /* Home Page Styles */
 .home-container {
     max-width: 1100px;
+    width: 100%;
     margin: 0 auto;
     padding: 36px 16px 110px;
 }
@@ -1381,6 +1448,7 @@ img {
     display: flex;
     gap: 32px;
     max-width: 1400px;
+    width: 100%;
     margin: 0 auto;
     padding: 24px 16px 96px;
     align-items: flex-start;
@@ -1624,6 +1692,7 @@ footer {
     display: flex;
     gap: 32px;
     max-width: 1400px;
+    width: 100%;
     margin: 0 auto;
     padding: 24px 16px 96px;
     align-items: flex-start;
@@ -1914,6 +1983,7 @@ footer {
     display: flex;
     gap: 32px;
     max-width: 1400px;
+    width: 100%;
     margin: 0 auto;
     padding: 24px 16px 96px;
     align-items: flex-start;
@@ -2488,13 +2558,19 @@ footer {
     display: flex;
     flex-direction: column;
     gap: 8px;
+    align-items: flex-end;
+}
+
 .platform-embed-note {
     color: var(--muted);
     text-align: center;
     padding: 24px;
     margin: 0;
 }
-    align-items: flex-end;
+
+.twitter-timeline {
+    width: 100% !important;
+    max-width: 100% !important;
 }
 
 .project-description,
@@ -2655,4 +2731,174 @@ footer {
 .github-fallback-list {
     color: var(--muted);
     line-height: 1.8;
+}
+
+@media (max-width: 960px) {
+    .projects-page-container,
+    .publications-container {
+        flex-direction: column;
+        gap: 16px;
+    }
+
+    .site-sidebar,
+    .projects-sidebar,
+    .publications-sidebar,
+    .congresses-sidebar {
+        position: static;
+        top: auto;
+        width: 100%;
+        max-height: none;
+        overflow: visible;
+    }
+
+    .projects-main-content,
+    .publications-content {
+        width: 100%;
+    }
+
+    .section-header,
+    .project-head,
+    .pub-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+    }
+
+    .section-info,
+    .project-head-badges {
+        text-align: left;
+        align-items: flex-start;
+    }
+
+    .pub-date {
+        margin-left: 0;
+        white-space: normal;
+    }
+
+    .pub-venue .pill {
+        white-space: normal;
+        line-height: 1.35;
+    }
+}
+
+@media (min-width: 1600px) {
+    body {
+        font-size: 16.5px;
+    }
+
+    main p,
+    main li {
+        line-height: 1.72;
+    }
+
+    .page {
+        max-width: 1240px;
+    }
+
+    .home-container {
+        max-width: 1320px;
+        padding-top: 44px;
+        padding-bottom: 124px;
+    }
+
+    .projects-page-container,
+    .publications-container,
+    .cv-container,
+    .social-container {
+        max-width: 1680px;
+        gap: 40px;
+        padding-top: 30px;
+        padding-bottom: 124px;
+    }
+
+    .site-sidebar {
+        width: 320px;
+    }
+
+    .home-container .card:not(.hero-section) {
+        padding: 34px 40px;
+    }
+
+    .hero-section {
+        gap: 48px;
+        padding: 52px 56px;
+    }
+
+    .hero-content h2 {
+        font-size: 2.8rem;
+    }
+
+    .hero-content .lead {
+        font-size: 1.28rem;
+        line-height: 1.75;
+    }
+
+    .focus-grid {
+        gap: 24px;
+    }
+}
+
+@media (min-width: 2200px) {
+    body {
+        font-size: 17px;
+    }
+
+    .home-container,
+    .page {
+        max-width: 1400px;
+    }
+
+    .projects-page-container,
+    .publications-container,
+    .cv-container,
+    .social-container {
+        max-width: 1840px;
+    }
+
+    .site-sidebar {
+        width: 340px;
+    }
+}
+
+@media (max-width: 768px) {
+    .project-images-rectangles {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 10px;
+        align-items: stretch;
+    }
+
+    .project-images-rectangles img {
+        height: clamp(130px, 34vw, 200px);
+        max-height: none;
+        object-fit: contain;
+        background: rgba(0, 0, 76, 0.03);
+    }
+
+    .project-images-circles {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        justify-items: center;
+    }
+
+    .project-images-circles img {
+        width: min(100%, 140px);
+        height: auto;
+        aspect-ratio: 1 / 1;
+    }
+
+    .highlight-content {
+        flex-direction: column;
+        gap: 12px;
+    }
+}
+
+@media (max-width: 480px) {
+    .project-images-rectangles,
+    .events-content .project-images-rectangles,
+    .project-images-circles {
+        grid-template-columns: 1fr;
+    }
+
+    .project-images-rectangles img {
+        height: auto;
+    }
 }
