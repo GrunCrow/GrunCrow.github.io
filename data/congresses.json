@@ -1,5 +1,19 @@
 [
     {
+    "id": "irac-2026",
+    "title": "5th International Radar Aeroecology Conference (IRAC 2026)",
+    "conference": "5th International Radar Aeroecology Conference",
+    "organization": "International Radar Aeroecology Network",
+    "location": "Amsterdam, The Netherlands",
+    "date": "June 22-26, 2026",
+    "type": "oral",
+    "featured": false,
+    "description": "The 5th International Radar Aeroecology Conference brought together researchers working on radar-based monitoring of flying animals and aeroecology. The event highlighted international developments in the use of radar systems to monitor and understand animal movement at scale.",
+    "links": [
+        {"type": "web", "url": "https://hirad.science/irac-2026", "label": "Conference website"}
+    ]
+    },
+    {
     "id": "sibecol_aeet-2025",
     "title": "Optimizing BirdNET for local ecosystems, fine-tuning for ecoacoustic monitoring",
     "conference": "III meeting of the Iberian Ecological Society (SIBECOL) & XVII National Conference of the Spanish Association of Terrestrial Ecology (AEET)",

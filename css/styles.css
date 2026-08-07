@@ -1283,17 +1283,104 @@ img {
     opacity: 0.84;
 }
 
+.hero-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin: 0 0 12px;
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.82);
+}
+
+.hero-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 24px;
+}
+
+.hero-note {
+    margin: 12px 0 0;
+    max-width: 42rem;
+    color: rgba(255, 255, 255, 0.86);
+    font-size: 0.96rem;
+    line-height: 1.6;
+}
+
 .hero-discover-link {
     display: inline-flex;
     align-items: center;
     gap: 10px;
-    margin-top: 26px;
+    margin-top: 18px;
     color: rgba(255, 255, 255, 0.9);
     font-size: 0.95rem;
     font-weight: 600;
     text-decoration: none;
     opacity: 0;
     animation: heroReveal 0.62s cubic-bezier(0.2, 0.7, 0.2, 1) 0.58s forwards;
+}
+
+.highlights-card {
+    background: linear-gradient(135deg, rgba(255,255,255,0.96), rgba(244,246,251,0.97));
+}
+
+.highlights-intro {
+    margin-bottom: 20px;
+}
+
+.highlights-intro h2 {
+    margin: 0 0 10px;
+}
+
+.highlights-intro p:last-child {
+    margin: 0;
+    color: var(--muted);
+    max-width: 62rem;
+}
+
+.highlights-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 16px;
+}
+
+.highlight-card {
+    padding: 18px;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    background: rgba(255,255,255,0.86);
+    box-shadow: 0 8px 18px rgba(0, 0, 76, 0.05);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.highlight-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 20px rgba(0, 0, 76, 0.09);
+}
+
+.highlight-card h3 {
+    margin: 0 0 8px;
+    font-size: 1.05rem;
+}
+
+.highlight-card p {
+    margin: 0 0 12px;
+    color: var(--muted);
+    line-height: 1.6;
+}
+
+.highlight-card a {
+    font-weight: 700;
+    color: var(--primary);
+    text-decoration: none;
+}
+
+.highlight-card a:hover,
+.highlight-card a:focus-visible {
+    color: var(--accent);
 }
 
 .hero-discover-link i {
@@ -1524,8 +1611,13 @@ img {
         flex-wrap: wrap;
     }
 
+    .hero-actions,
     .hero-discover-link {
         justify-content: center;
+    }
+
+    .highlights-grid {
+        grid-template-columns: 1fr;
     }
 
     .hero-stats .stat-item {

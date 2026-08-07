@@ -1,5 +1,18 @@
 [
     {
+        "id": "ecoinf-2026-pam-bottlenecks",
+        "featured": true,
+        "title": "Overcoming software bottlenecks for scalable passive acoustic monitoring: A survey-informed expert consensus",
+        "type": "journal",
+        "status": "published",
+        "journal": "Ecological Informatics",
+        "editorial": "Elsevier",
+        "date": "August 2026",
+        "authors": "Martino E. Malerba, Kristian Bell, Maria M. Palacios, Kristen M. Bellisario, Camille Desjonqueres, Alba Márquez-Rodríguez, Irene Mendoza, Christoph F.J. Meyer, Vijay Ramesh, Xavier Raick, Tessa A. Rhinehart, Connor M. Wood, Morgan A. Ziegenhorn, Giuseppa Buscaino, Marconi Campos-Cerqueira, Marina H.L. Duarte, Amandine Gasc, Tara Hanf-Dressler, Francis Juanes, Leandro Aparecido do Nascimento, [...], Cristian Pérez Granados",
+        "doi": "https://doi.org/10.1016/j.ecoinf.2026.103971",
+        "abstract": "Passive acoustic monitoring (PAM) enables minimally invasive sampling of wildlife across broad spatial, temporal and taxonomic scales. Its ongoing and widespread use has generated unprecedented volumes of acoustic data, shifting the primary bottleneck from data collection to the storage, processing, integration, and interpretation of PAM outputs. Although many software tools exist to address these challenges, differences in their design, scope, and usability often result in fragmented, complex analytical workflows. To identify the key barriers and opportunities shaping the implementation of PAM surveys, we conducted a structured, community-informed consultation developed through iterative engagement, comprising international practitioners working across terrestrial and aquatic ecosystems. Thirty experts identified and ranked their most critical bottlenecks in current PAM workflows, spanning data storage, processing, and interpretation. The top challenge identified related to accurate species identification using deep learning and artificial intelligence (AI) models, especially in noisy soundscapes or for underrepresented taxa. Eight additional priority challenges included workflow fragmentation, limited availability of user-friendly analytical and visualisation tools, uneven access to software, manual validation bottlenecks, computational constraints, and difficulties in data handling, standardisation, and sharing. Using a follow-up consultation with 24 of the original 30 experts, we propose practical mitigation strategies for these priority challenges, supported by step-by-step guidance to help overcome key barriers. Together, these insights provide a roadmap toward more scalable, open-access, and collaborative software systems, which are increasingly essential to realise the full potential of PAM in global biodiversity monitoring."
+    },
+    {
         "id": "eaai-2026",
         "title": "Iterative Deep Learning for cetacean whistle detection in the Strait of Gibraltar",
         "featured": true,
